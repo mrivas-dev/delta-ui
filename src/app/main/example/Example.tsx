@@ -27,7 +27,7 @@ function Example() {
 			}
 			content={
 				<div className="p-24">
-					<h4>Content</h4>
+					<h4>{t('CONTENT')}</h4>
 					<br />
 					<DemoContent />
 				</div>
