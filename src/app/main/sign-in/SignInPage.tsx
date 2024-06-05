@@ -13,8 +13,14 @@ import Alert from '@mui/material/Alert';
 import JwtLoginTab from './tabs/JwtSignInTab';
 import FirebaseSignInTab from './tabs/FirebaseSignInTab';
 import AwsSignInTab from './tabs/AwsSignInTab';
+import CustomSignInTab from './tabs/CustomSignInTab';
 
 const tabs = [
+	{
+		id: 'custom',
+		title: 'Custom',
+		logo: 'assets/images/logo/customLogin.png',
+	},
 	{
 		id: 'jwt',
 		title: 'JWT',
@@ -51,7 +57,7 @@ function SignInPage() {
 				<CardContent className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
 					<img
 						className="w-48"
-						src="assets/images/logo/logo.svg"
+						src="assets/images/logo/logoDelta.png"
 						alt="logo"
 					/>
 
@@ -100,6 +106,7 @@ function SignInPage() {
 						))}
 					</Tabs>
 
+					{selectedTabId === 'custom' && <CustomSignInTab />}
 					{selectedTabId === 'jwt' && <JwtLoginTab />}
 					{selectedTabId === 'firebase' && <FirebaseSignInTab />}
 					{selectedTabId === 'aws' && <AwsSignInTab />}
