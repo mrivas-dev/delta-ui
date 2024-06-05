@@ -6,6 +6,19 @@ import { FuseSettingsConfigType } from '@fuse/core/FuseSettings/FuseSettings';
 export type User = {
 	uid: string;
 	role: string[] | string | null;
+	carpetadrive: string | null;
+	created_at: string;
+	deleted_at: string | null;
+	email: string | null;
+	email_verified_at: string | null;
+	id: number;
+	name: string;
+	permisosampliados: string | null;
+	permissions: number;
+	tipologin: string | null;
+	tipouser: number;
+	ubicafirma: string | null;
+	updated_at: string;
 	data: {
 		displayName: string;
 		photoURL?: string;

@@ -41,13 +41,13 @@ function UserNavbarHeader() {
 					}}
 					className="avatar uppercase h-96 w-96 text-32 font-bold"
 					src={user.data.photoURL}
-					alt={user.data.displayName}
+					alt={user.name}
 				>
-					{user?.data?.displayName?.charAt(0)}
+					{user?.name?.charAt(0)}
 				</Avatar>
 			</div>
 			<Typography className="username whitespace-nowrap text-14 font-medium">
-				{user?.data?.displayName}
+				{user?.name}
 			</Typography>
 			<Typography
 				className="email whitespace-nowrap text-13 font-medium"

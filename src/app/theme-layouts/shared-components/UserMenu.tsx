@@ -45,7 +45,7 @@ function UserMenu() {
 						component="span"
 						className="flex font-semibold"
 					>
-						{user.data.displayName}
+						{user.name}
 					</Typography>
 					<Typography
 						className="text-11 font-medium capitalize"
@@ -74,7 +74,7 @@ function UserMenu() {
 						}}
 						className="md:mx-4"
 					>
-						{user?.data?.displayName?.[0]}
+						{user?.name?.[0]}
 					</Avatar>
 				)}
 			</Button>
