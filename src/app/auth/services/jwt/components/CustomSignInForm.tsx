@@ -16,7 +16,7 @@ import useJwtAuth from '../useJwtAuth';
  * Form Validation Schema
  */
 const schema = z.object({
-    email: z.string().email('You must enter a valid email').nonempty('You must enter an email'),
+    email: z.string().nonempty('You must enter SOMETHING'),
     password: z
         .string()
         .min(4, 'Password is too short - must be at least 4 chars.')
@@ -35,7 +35,7 @@ const defaultValues = {
     remember: true
 };
 
-function JwtSignInForm() {
+function CustomSignInForm() {
     const { signIn, isLoading } = useJwtAuth();
 
     const { control, formState, handleSubmit, setValue, setError } = useForm<FormType>({
@@ -47,16 +47,23 @@ function JwtSignInForm() {
     const { isValid, dirtyFields, errors } = formState;
 
     useEffect(() => {
-        setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
-        setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
+        setValue('email', 'emilys', { shouldDirty: true, shouldValidate: true });
+        setValue('password', 'emilyspass', { shouldDirty: true, shouldValidate: true });
     }, [setValue]);
 
     function onSubmit(formData: FormType) {
         const { email, password } = formData;
-        console.log({ isLoading });
         signIn({
-            email,
+            username: email,
             password
+        }).then((response: any) => {
+            if (response.name === "AxiosError") {
+                const errorData = response.response.data;
+                setError('password', {
+                    type: 'manual',
+                    message: errorData.message
+                });
+            }
         }).catch(
             (
                 error: AxiosError<
@@ -67,7 +74,6 @@ function JwtSignInForm() {
                 >
             ) => {
                 const errorData = error.response.data;
-
                 errorData.forEach((err) => {
                     setError(err.type, {
                         type: 'manual',
@@ -154,7 +160,7 @@ function JwtSignInForm() {
                 color="secondary"
                 className=" mt-16 w-full"
                 aria-label="Sign in"
-                disabled={_.isEmpty(dirtyFields) || !isValid}
+                disabled={_.isEmpty(dirtyFields) || !isValid || isLoading}
                 type="submit"
                 size="large"
             >
@@ -164,4 +170,4 @@ function JwtSignInForm() {
     );
 }
 
-export default JwtSignInForm;
+export default CustomSignInForm;

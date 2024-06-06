@@ -22,7 +22,8 @@ export type JwtAuthConfig = {
 };
 
 export type SignInPayload = {
-	email: string;
+	username?: string;
+	email?: string;
 	password: string;
 };
 
@@ -102,7 +103,6 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 
 		setIsAuthenticated(false);
 		setUser(null);
-
 		handleError(error);
 	}, []);
 
@@ -169,7 +169,6 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 			if (isTokenValid(accessToken)) {
 				try {
 					setIsLoading(true);
-
 					const response: AxiosResponse<User> = await axios.get(config.getUserUrl, {
 						headers: { Authorization: `Bearer ${accessToken}` }
 					});
@@ -214,18 +213,19 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 		handleFailure: (T: AxiosError) => void
 	): Promise<User | AxiosError> => {
 		try {
+			setIsLoading(true);
 			const response: AxiosResponse<{ user: User; access_token: string }> = await axios.post(url, data);
 			const userData = response?.data?.user;
 			const accessToken = response?.data?.access_token;
 
 			handleSuccess(userData, accessToken);
-
+			setIsLoading(false);
 			return userData;
 		} catch (error) {
 			const axiosError = error as AxiosError;
 
 			handleFailure(axiosError);
-
+			setIsLoading(false);
 			return axiosError;
 		}
 	};
