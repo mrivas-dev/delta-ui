@@ -1,5 +1,4 @@
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -9,7 +8,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CardContent from '@mui/material/CardContent';
 import _ from '@lodash';
-import Alert from '@mui/material/Alert';
 import JwtLoginTab from './tabs/JwtSignInTab';
 import FirebaseSignInTab from './tabs/FirebaseSignInTab';
 import AwsSignInTab from './tabs/AwsSignInTab';
@@ -64,25 +62,6 @@ function SignInPage() {
 					<Typography className="mt-32 text-4xl font-extrabold leading-tight tracking-tight">
 						Sign in
 					</Typography>
-					<div className="mt-2 flex items-baseline font-medium">
-						<Typography>Don't have an account?</Typography>
-						<Link
-							className="ml-4"
-							to="/sign-up"
-						>
-							Sign up
-						</Link>
-					</div>
-
-					<Alert
-						icon={false}
-						severity="info"
-						className="mt-24 px-16 text-13 leading-relaxed"
-					>
-						You are browsing <b>Fuse React Demo</b>. Click on the "Sign in" button to access the Demo and
-						Documentation.
-					</Alert>
-
 					<Tabs
 						value={_.findIndex(tabs, { id: selectedTabId })}
 						variant="fullWidth"

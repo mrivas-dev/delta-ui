@@ -89,10 +89,9 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 	 */
 	const handleSignUpSuccess = useCallback((userData: User, accessToken: string) => {
 		setSession(accessToken);
-
 		setIsAuthenticated(true);
-
 		setUser(userData);
+		console.log("setAuthenticated")
 	}, []);
 
 	/**
@@ -214,9 +213,9 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 	): Promise<User | AxiosError> => {
 		try {
 			setIsLoading(true);
-			const response: AxiosResponse<{ user: User; access_token: string }> = await axios.post(url, data);
-			const userData = response?.data?.user;
-			const accessToken = response?.data?.access_token;
+			const response: AxiosResponse<{ user: User; token: string }> = await axios.post(url, data);
+			const userData = response?.data as any;
+			const accessToken = response?.data?.token;
 
 			handleSuccess(userData, accessToken);
 			setIsLoading(false);

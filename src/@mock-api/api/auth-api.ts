@@ -24,7 +24,7 @@ export const authApiMocks = (mock: ExtendedMockAdapter) => {
 
 		const { email, password } = data;
 
-		const user = _.cloneDeep(usersApi.find((_user) => _user.data.email === email));
+		const user = _.cloneDeep(usersApi.find((_user) => _user.email === email));
 
 		const error = [];
 
@@ -117,7 +117,7 @@ export const authApiMocks = (mock: ExtendedMockAdapter) => {
 	mock.onPost('/auth/sign-up').reply((request) => {
 		const data = JSON.parse(request.data as string) as { displayName: string; password: string; email: string };
 		const { displayName, password, email } = data;
-		const isEmailExists = usersApi.find((_user) => _user.data.email === email);
+		const isEmailExists = usersApi.find((_user) => _user.email === email);
 		const error = [];
 
 		if (isEmailExists) {

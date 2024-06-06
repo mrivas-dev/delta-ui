@@ -1,6 +1,6 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 import _ from '@lodash';
@@ -11,6 +11,8 @@ import Checkbox from '@mui/material/Checkbox';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import useJwtAuth from '../useJwtAuth';
+import { Alert } from '@mui/material';
+import { mock_user_list } from '@mock-api/api/mock-users-list';
 
 /**
  * Form Validation Schema
@@ -36,6 +38,8 @@ const defaultValues = {
 };
 
 function CustomSignInForm() {
+    const [mockUsername, setMockUsername] = useState(null);
+    const [mockPassword, setMockPassword] = useState(null);
     const { signIn, isLoading } = useJwtAuth();
 
     const { control, formState, handleSubmit, setValue, setError } = useForm<FormType>({
@@ -46,10 +50,17 @@ function CustomSignInForm() {
 
     const { isValid, dirtyFields, errors } = formState;
 
+    const changeName = () => {
+        const rand = Math.floor(Math.random() * mock_user_list.length - 1);
+        const mockedUser = mock_user_list[rand];
+        setMockUsername(mockedUser.username);
+        setMockPassword(mockedUser.password);
+    }
+
     useEffect(() => {
-        setValue('email', 'emilys', { shouldDirty: true, shouldValidate: true });
-        setValue('password', 'emilyspass', { shouldDirty: true, shouldValidate: true });
-    }, [setValue]);
+        setValue('email', mockUsername || 'emilys', { shouldDirty: true, shouldValidate: true });
+        setValue('password', mockPassword || 'emilyspass', { shouldDirty: true, shouldValidate: true });
+    }, [setValue, mockUsername]);
 
     function onSubmit(formData: FormType) {
         const { email, password } = formData;
@@ -73,100 +84,114 @@ function CustomSignInForm() {
                     }[]
                 >
             ) => {
-                const errorData = error.response.data;
-                errorData.forEach((err) => {
-                    setError(err.type, {
-                        type: 'manual',
-                        message: err.message
+                console.log({ error });
+                const errorData = error?.response?.data;
+                if (errorData?.length) {
+                    errorData.forEach((err) => {
+                        setError(err.type, {
+                            type: 'manual',
+                            message: err.message
+                        });
                     });
-                });
+                }
             }
-        );
+        )
     }
 
     return (
-        <form
-            name="loginForm"
-            noValidate
-            className="mt-32 flex w-full flex-col justify-center"
-            onSubmit={handleSubmit(onSubmit)}
-        >
-            <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                    <TextField
-                        {...field}
-                        className="mb-24"
-                        label="Email"
-                        autoFocus
-                        type="email"
-                        error={!!errors.email}
-                        helperText={errors?.email?.message}
-                        variant="outlined"
-                        required
-                        fullWidth
-                    />
-                )}
-            />
+        <>
+            <Alert
+                icon={false}
+                severity="info"
+                className="mt-24 px-16 text-13 leading-relaxed cursor-pointer"
+                onClick={() => { changeName() }}
+            >
+                Click here to change the user
+            </Alert>
 
-            <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                    <TextField
-                        {...field}
-                        className="mb-24"
-                        label="Password"
-                        type="password"
-                        error={!!errors.password}
-                        helperText={errors?.password?.message}
-                        variant="outlined"
-                        required
-                        fullWidth
-                    />
-                )}
-            />
-
-            <div className="flex flex-col items-center justify-center sm:flex-row sm:justify-between">
+            <form
+                name="loginForm"
+                noValidate
+                className="mt-32 flex w-full flex-col justify-center"
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <Controller
-                    name="remember"
+                    name="email"
                     control={control}
                     render={({ field }) => (
-                        <FormControl>
-                            <FormControlLabel
-                                label="Remember me"
-                                control={
-                                    <Checkbox
-                                        size="small"
-                                        {...field}
-                                    />
-                                }
-                            />
-                        </FormControl>
+                        <TextField
+                            {...field}
+                            className="mb-24"
+                            label="Email"
+                            autoFocus
+                            type="email"
+                            error={!!errors.email}
+                            helperText={errors?.email?.message}
+                            variant="outlined"
+                            required
+                            fullWidth
+                        />
                     )}
                 />
 
-                <Link
-                    className="text-md font-medium"
-                    to="/pages/auth/forgot-password"
-                >
-                    Forgot password?
-                </Link>
-            </div>
+                <Controller
+                    name="password"
+                    control={control}
+                    render={({ field }) => (
+                        <TextField
+                            {...field}
+                            className="mb-24"
+                            label="Password"
+                            type="password"
+                            error={!!errors.password}
+                            helperText={errors?.password?.message}
+                            variant="outlined"
+                            required
+                            fullWidth
+                        />
+                    )}
+                />
 
-            <Button
-                variant="contained"
-                color="secondary"
-                className=" mt-16 w-full"
-                aria-label="Sign in"
-                disabled={_.isEmpty(dirtyFields) || !isValid || isLoading}
-                type="submit"
-                size="large"
-            >
-                Sign in
-            </Button>
-        </form>
+                <div className="flex flex-col items-center justify-center sm:flex-row sm:justify-between">
+                    <Controller
+                        name="remember"
+                        control={control}
+                        render={({ field }) => (
+                            <FormControl>
+                                <FormControlLabel
+                                    label="Remember me"
+                                    control={
+                                        <Checkbox
+                                            size="small"
+                                            {...field}
+                                        />
+                                    }
+                                />
+                            </FormControl>
+                        )}
+                    />
+
+                    <Link
+                        className="text-md font-medium"
+                        to="/pages/auth/forgot-password"
+                    >
+                        Forgot password?
+                    </Link>
+                </div>
+
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className=" mt-16 w-full"
+                    aria-label="Sign in"
+                    disabled={_.isEmpty(dirtyFields) || !isValid || isLoading}
+                    type="submit"
+                    size="large"
+                >
+                    Sign in
+                </Button>
+            </form>
+        </>
     );
 }
 

@@ -13,6 +13,9 @@ export type User = {
 	email_verified_at: string | null;
 	id: number;
 	name: string;
+	firstName: string;
+	lastName: string;
+	image?: string;
 	permisosampliados: string | null;
 	permissions: number;
 	tipologin: string | null;
