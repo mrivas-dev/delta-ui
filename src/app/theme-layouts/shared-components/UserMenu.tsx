@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -12,6 +14,11 @@ import { selectUser } from 'src/app/auth/user/store/userSlice';
 import useAuth from 'src/app/auth/useAuth';
 import { darken } from '@mui/material/styles';
 import { useAppSelector } from 'app/store/hooks';
+import en from './i18n/en';
+import es from './i18n/es';
+
+i18next.addResourceBundle('en', 'userMenu', en);
+i18next.addResourceBundle('es', 'userMenu', es);
 
 /**
  * The user menu.
@@ -20,6 +27,7 @@ function UserMenu() {
 	const user = useAppSelector(selectUser);
 	const { signOut } = useAuth();
 	const [userMenu, setUserMenu] = useState<HTMLElement | null>(null);
+	const { t } = useTranslation('userMenu');
 
 	const userMenuClick = (event: React.MouseEvent<HTMLElement>) => {
 		setUserMenu(event.currentTarget);
@@ -115,7 +123,7 @@ function UserMenu() {
 							<ListItemIcon className="min-w-40">
 								<FuseSvgIcon>heroicons-outline:user-add </FuseSvgIcon>
 							</ListItemIcon>
-							<ListItemText primary="Sign up" />
+							<ListItemText primary={`${t('SIGNUP')}`} />
 						</MenuItem>
 					</>
 				) : (
@@ -127,7 +135,7 @@ function UserMenu() {
 						<ListItemIcon className="min-w-40">
 							<FuseSvgIcon>heroicons-outline:logout</FuseSvgIcon>
 						</ListItemIcon>
-						<ListItemText primary="Sign out" />
+						<ListItemText primary={`${t('SIGNOUT')}`} />
 					</MenuItem>
 				)}
 			</Popover>

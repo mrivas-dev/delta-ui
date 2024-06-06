@@ -1,4 +1,3 @@
-import DemoContent from '@fuse/core/DemoContent';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
@@ -29,7 +28,6 @@ function Example() {
 				<div className="p-24">
 					<h4>{t('CONTENT')}</h4>
 					<br />
-					<DemoContent />
 				</div>
 			}
 		/>
