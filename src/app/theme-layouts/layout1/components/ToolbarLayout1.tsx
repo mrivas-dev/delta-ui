@@ -47,24 +47,7 @@ function ToolbarLayout1(props: ToolbarLayout1Props) {
 			>
 				<Toolbar className="min-h-48 p-0 md:min-h-64">
 					<div className="flex flex-1 px-16">
-						{config.navbar.display && config.navbar.position === 'left' && (
-							<>
-								<Hidden lgDown>
-									{(config.navbar.style === 'style-3' || config.navbar.style === 'style-3-dense') && (
-										<NavbarToggleButton className="mx-0 h-40 w-40 p-0" />
-									)}
-
-									{config.navbar.style === 'style-1' && !navbar.open && (
-										<NavbarToggleButton className="mx-0 h-40 w-40 p-0" />
-									)}
-								</Hidden>
-
-								<Hidden lgUp>
-									<NavbarToggleButton className="mx-0 h-40 w-40 p-0 sm:mx-8" />
-								</Hidden>
-							</>
-						)}
-
+						<NavbarToggleButton className="mx-0 h-40 w-40 p-0 sm:mx-8" />
 						<Hidden lgDown>
 							<NavigationShortcuts />
 						</Hidden>

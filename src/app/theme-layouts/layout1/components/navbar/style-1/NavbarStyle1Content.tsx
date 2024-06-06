@@ -48,8 +48,6 @@ function NavbarStyle1Content(props: NavbarStyle1ContentProps) {
 				<div className="mx-4 flex flex-1">
 					<Logo />
 				</div>
-
-				<NavbarToggleButton className="h-40 w-40 p-0" />
 			</div>
 
 			<StyledContent
