@@ -53,18 +53,18 @@ function UserMenu() {
 						component="span"
 						className="flex font-semibold"
 					>
-						{`${user.firstName} ${user.lastName}`}
+						{`${user.user.name}`}
 					</Typography>
 					<Typography
 						className="text-11 font-medium capitalize"
 						color="text.secondary"
 					>
-						{user.role?.toString()}
-						{(!user.role || (Array.isArray(user.role) && user.role.length === 0)) && 'Guest'}
+						{user.user.role?.toString()}
+						{(!user.user.role || (Array.isArray(user.user.role) && user.user.role.length === 0)) && 'Guest'}
 					</Typography>
 				</div>
 
-				{user.image ? (
+				{user.user.image ? (
 					<Avatar
 						sx={{
 							background: (theme) => theme.palette.background.default,
@@ -72,7 +72,7 @@ function UserMenu() {
 						}}
 						className="md:mx-4"
 						alt="user photo"
-						src={user.image}
+						src={user.user.image}
 					/>
 				) : (
 					<Avatar
@@ -82,7 +82,7 @@ function UserMenu() {
 						}}
 						className="md:mx-4"
 					>
-						{user?.name?.[0]}
+						{user.user?.name?.charAt(0)}
 					</Avatar>
 				)}
 			</Button>
@@ -103,7 +103,7 @@ function UserMenu() {
 					paper: 'py-8'
 				}}
 			>
-				{!user.role || user.role.length === 0 ? (
+				{!user.user.role || user.user.role.length === 0 ? (
 					<>
 						<MenuItem
 							component={Link}

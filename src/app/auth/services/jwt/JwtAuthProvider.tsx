@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useCallback, useMemo } from 
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { PartialDeep } from 'type-fest';
-import { User } from '../../user';
+import { User, UserDelta } from '../../user';
 import config from './jwtAuthConfig';
 
 export type JwtAuthStatus = 'configuring' | 'authenticated' | 'unauthenticated';
@@ -34,10 +34,10 @@ export type SignUpPayload = {
 };
 
 export type JwtAuthContextType = {
-	user?: User;
-	updateUser: (U: User) => void;
-	signIn?: (credentials: SignInPayload) => Promise<User | AxiosError>;
-	signUp?: (U: SignUpPayload) => Promise<User | AxiosError>;
+	user?: UserDelta;
+	updateUser: (U: UserDelta) => void;
+	signIn?: (credentials: SignInPayload) => Promise<UserDelta | AxiosError>;
+	signUp?: (U: SignUpPayload) => Promise<UserDelta | AxiosError>;
 	signOut?: () => void;
 	refreshToken?: () => void;
 	isAuthenticated: boolean;
@@ -66,7 +66,7 @@ export type JwtAuthProviderProps = {
 };
 
 function JwtAuthProvider(props: JwtAuthProviderProps) {
-	const [user, setUser] = useState<User>(null);
+	const [user, setUser] = useState<UserDelta>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [authStatus, setAuthStatus] = useState('configuring');
@@ -76,24 +76,19 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 	/**
 	 * Handle sign-in success
 	 */
-	const handleSignInSuccess = useCallback((userData: User, accessToken: string) => {
+	const handleSignInSuccess = useCallback((userData: UserDelta, accessToken: string) => {
 		setSession(accessToken);
 		setIsAuthenticated(true);
-		const hydratedUser: User = {
+		userData.user.role = 'admin';
+		const hydratedUser: UserDelta = {
 			...userData,
-			role: 'admin',
-			data: {
-				displayName: `${userData.firstName} ${userData.lastName}`,
-				photoURL: userData.image,
-				email: userData.email,
-				loginRedirectUrl: '/example',
-				settings: { },
-				shortcuts: [
-					"apps.calendar",
-					"apps.mailbox",
-					"apps.contacts"
-				]
-			}
+			loginRedirectUrl: '/example',
+			settings: {},
+			shortcuts: [
+				"apps.calendar",
+				"apps.mailbox",
+				"apps.contacts"
+			]
 		};
 		setUser(hydratedUser);
 	}, []);
@@ -101,7 +96,7 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 	/**
 	 * Handle sign-up success
 	 */
-	const handleSignUpSuccess = useCallback((userData: User, accessToken: string) => {
+	const handleSignUpSuccess = useCallback((userData: UserDelta, accessToken: string) => {
 		setSession(accessToken);
 		setIsAuthenticated(true);
 		setUser(userData);
@@ -180,7 +175,7 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 			if (isTokenValid(accessToken)) {
 				try {
 					setIsLoading(true);
-					const response: AxiosResponse<User> = await axios.get(config.getUserUrl, {
+					const response: AxiosResponse<UserDelta> = await axios.get(config.getUserUrl, {
 						headers: { Authorization: `Bearer ${accessToken}` }
 					});
 
@@ -219,12 +214,12 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 	const handleRequest = async (
 		url: string,
 		data: SignInPayload | SignUpPayload,
-		handleSuccess: (T: User, H: string) => void,
+		handleSuccess: (T: UserDelta, H: string) => void,
 		handleFailure: (T: AxiosError) => void
 	): Promise<User | AxiosError> => {
 		try {
 			setIsLoading(true);
-			const response: AxiosResponse<{ user: User; token: string }> = await axios.post(url, data);
+			const response: AxiosResponse<{ user: UserDelta; token: string }> = await axios.post(url, data);
 			const userData = response?.data as any;
 			const accessToken = response?.data?.token;
 
@@ -263,9 +258,9 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 	/**
 	 * Update user
 	 */
-	const updateUser = useCallback(async (userData: PartialDeep<User>) => {
+	const updateUser = useCallback(async (userData: PartialDeep<UserDelta>) => {
 		try {
-			const response: AxiosResponse<User, PartialDeep<User>> = await axios.put(config.updateUserUrl, userData);
+			const response: AxiosResponse<UserDelta, PartialDeep<UserDelta>> = await axios.put(config.updateUserUrl, userData);
 
 			const updatedUserData = response?.data;
 

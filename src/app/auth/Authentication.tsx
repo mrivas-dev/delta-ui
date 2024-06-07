@@ -8,7 +8,7 @@ import { fetchUserAttributes } from '@aws-amplify/auth';
 import { resetUser, selectUserRole, setUser } from './user/store/userSlice';
 import useAuth from './useAuth';
 import UserModel from './user/models/UserModel';
-import { User } from './user';
+import { User, UserDelta } from './user';
 import useJwtAuth from './services/jwt/useJwtAuth';
 import useFirebaseAuth from './services/firebase/useFirebaseAuth';
 
@@ -101,7 +101,7 @@ function Authentication(props: AuthenticationProps) {
 	/**
 	 * Handle sign in
 	 */
-	const handleSignIn = useCallback((provider: string, userState: User) => {
+	const handleSignIn = useCallback((provider: string, userState: UserDelta) => {
 		dispatch(setUser(userState)).then(() => {
 			setAuthProvider(provider);
 			setIsLoading(false);
@@ -124,40 +124,40 @@ function Authentication(props: AuthenticationProps) {
 			return;
 		}
 
-		if (amplifyUser) {
-			fetchUserAttributes()
-				.then((userAttributes) => {
-					handleSignIn(
-						'amplify',
-						UserModel({
-							uid: amplifyUser.userId,
-							data: {
-								displayName: userAttributes?.name,
-								email: userAttributes?.email
-							},
-							role: ['admin']
-						})
-					);
-				})
-				.catch((err) => {
-					console.error(err);
-				});
-		}
+		// if (amplifyUser) {
+		// 	fetchUserAttributes()
+		// 		.then((userAttributes) => {
+		// 			handleSignIn(
+		// 				'amplify',
+		// 				UserModel({
+		// 					uid: amplifyUser.userId,
+		// 					data: {
+		// 						displayName: userAttributes?.name,
+		// 						email: userAttributes?.email
+		// 					},
+		// 					role: ['admin']
+		// 				})
+		// 			);
+		// 		})
+		// 		.catch((err) => {
+		// 			console.error(err);
+		// 		});
+		// }
 
 		if (jwtUser) {
 			handleSignIn('jwt', jwtUser);
 		}
 
-		if (firebaseUser) {
-			handleSignIn(
-				'firebase',
-				UserModel({
-					uid: firebaseUser.uid,
-					data: firebaseUser.data,
-					role: ['admin']
-				})
-			);
-		}
+		// if (firebaseUser) {
+		// 	handleSignIn(
+		// 		'firebase',
+		// 		UserModel({
+		// 			uid: firebaseUser.uid,
+		// 			data: firebaseUser.data,
+		// 			role: ['admin']
+		// 		})
+		// 	);
+		// }
 	}, [inProgress, authenticated, amplifyUser, jwtUser, firebaseUser, isLoading]);
 
 	return useMemo(

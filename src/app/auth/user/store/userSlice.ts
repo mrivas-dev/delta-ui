@@ -1,25 +1,25 @@
 /* eslint import/no-extraneous-dependencies: off */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import settingsConfig from 'app/configs/settingsConfig';
-import { User } from 'src/app/auth/user';
+import { User, UserDelta } from 'src/app/auth/user';
 import { PartialDeep } from 'type-fest';
 import _ from '@lodash';
 import { RootState } from 'app/store/store';
 import userModel from '../models/UserModel';
 
-function updateRedirectUrl(user: PartialDeep<User>) {
+function updateRedirectUrl(user: PartialDeep<UserDelta>) {
 	/*
     You can redirect the logged-in user to a specific route depending on his role
     */
-	if (user?.data?.loginRedirectUrl && user?.data?.loginRedirectUrl !== '') {
-		settingsConfig.loginRedirectUrl = user.data.loginRedirectUrl; // for example 'apps/academy'
+	if (user?.loginRedirectUrl && user?.loginRedirectUrl !== '') {
+		settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example 'apps/academy'
 	}
 }
 
 /**
  * Sets the user object in the Redux store.
  */
-export const setUser = createAsyncThunk<User, User>('user/setUser', async (user) => {
+export const setUser = createAsyncThunk<UserDelta, UserDelta>('user/setUser', async (user) => {
 	updateRedirectUrl(user);
 
 	return user;
@@ -35,7 +35,7 @@ export const resetUser = createAsyncThunk('user/resetUser', async () => {
 /**
  * The initial state of the user slice.
  */
-const initialState: User = userModel({});
+const initialState: UserDelta = userModel({});
 
 /**
  * The User slice
@@ -49,7 +49,7 @@ export const userSlice = createSlice({
 		 */
 		setUserShortcuts: (state, action) => {
 			const oldState = _.cloneDeep(state);
-			const newUser = _.setIn(oldState, 'data.shortcuts', action.payload) as User;
+			const newUser = _.setIn(oldState, 'shortcuts', action.payload) as UserDelta;
 
 			if (_.isEqual(oldState, newUser)) {
 				return undefined;
@@ -62,7 +62,7 @@ export const userSlice = createSlice({
 		 */
 		setUserSettings: (state, action) => {
 			const oldState = _.cloneDeep(state);
-			const newUser = _.setIn(oldState, 'data.settings', action.payload) as User;
+			const newUser = _.setIn(oldState, 'settings', action.payload) as UserDelta;
 
 			if (_.isEqual(oldState, newUser)) {
 				return undefined;
@@ -75,20 +75,20 @@ export const userSlice = createSlice({
 		 */
 		updateUser: (state, action) => {
 			const oldState = _.cloneDeep(state);
-			const user = action.payload as PartialDeep<User>;
+			const user = action.payload as PartialDeep<UserDelta>;
 			const newUser = _.merge({}, oldState, user);
 
 			if (_.isEqual(oldState, newUser)) {
 				return undefined;
 			}
 
-			return newUser as User;
+			return newUser as UserDelta;
 		},
 		userSignOut: () => initialState
 	},
 	extraReducers: (builder) => {
 		builder.addCase(setUser.fulfilled, (state, action) => {
-			const user = action.payload as PartialDeep<User>;
+			const user = action.payload as PartialDeep<UserDelta>;
 			const newUser = _.defaults(user, state);
 
 			if (_.isEqual(state, newUser)) {
@@ -111,19 +111,19 @@ export const { userSignOut, updateUser, setUserShortcuts, setUserSettings } = us
 
 export const selectUser = (state: RootState) => state?.user;
 
-export const selectUserId = (state: RootState) => state?.user?.uid;
+export const selectUserId = (state: RootState) => state?.user?.user?.uid;
 
-export const selectUserRole = (state: RootState) => state?.user?.role;
+export const selectUserRole = (state: RootState) => state?.user?.user?.role;
 
 export const selectIsUserGuest = (state: RootState) => {
-	const userRole = state?.user?.role;
+	const userRole = state?.user?.user?.role;
 
 	return !userRole || userRole?.length === 0;
 };
 
-export const selectUserShortcuts = (state: RootState) => state.user?.data?.shortcuts;
+export const selectUserShortcuts = (state: RootState) => state.user?.shortcuts;
 
-export const selectUserSettings = (state: RootState) => state.user?.data?.settings;
+export const selectUserSettings = (state: RootState) => state.user?.settings;
 
 export type userSliceType = typeof userSlice;
 

@@ -22,6 +22,7 @@ export type User = {
 	tipouser: number;
 	ubicafirma: string | null;
 	updated_at: string;
+	user: {}
 	data: {
 		displayName: string;
 		photoURL?: string;
@@ -31,3 +32,30 @@ export type User = {
 		loginRedirectUrl?: string; // The URL to redirect to after login.
 	};
 };
+
+export type UserDelta = {
+	googleDrive: boolean,
+	success: boolean,
+	token: string,
+	loginRedirectUrl?: string;
+	shortcuts?: string[];
+	settings?: Partial<FuseSettingsConfigType>;
+	user: {
+		image?: string;
+		uid: string;
+		role: string[] | string | null;
+		carpetadrive: string,
+		created_at: string | null,
+		deleted_at: string | null,
+		email: string,
+		email_verified_at: string,
+		id: number,
+		name: string,
+		permisosampliados: null,
+		permissions: number | null,
+		tipologin: number | null,
+		tipouser: number | null,
+		ubicafirma: string | null,
+		updated_at: string,
+	}
+}

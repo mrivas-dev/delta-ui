@@ -11,8 +11,6 @@ import Checkbox from '@mui/material/Checkbox';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import useJwtAuth from '../useJwtAuth';
-import { Alert } from '@mui/material';
-import { mock_user_list } from '@mock-api/api/mock-users-list';
 
 /**
  * Form Validation Schema
@@ -50,22 +48,15 @@ function CustomSignInForm() {
 
     const { isValid, dirtyFields, errors } = formState;
 
-    const changeName = () => {
-        const rand = Math.floor(Math.random() * mock_user_list.length - 1);
-        const mockedUser = mock_user_list[rand];
-        setMockUsername(mockedUser.username);
-        setMockPassword(mockedUser.password);
-    }
-
     useEffect(() => {
-        setValue('email', mockUsername || 'emilys', { shouldDirty: true, shouldValidate: true });
-        setValue('password', mockPassword || 'emilyspass', { shouldDirty: true, shouldValidate: true });
+        setValue('email', 'mattusrivas@gmail.com', { shouldDirty: true, shouldValidate: true });
+        setValue('password', 'mato', { shouldDirty: true, shouldValidate: true });
     }, [setValue, mockUsername]);
 
     function onSubmit(formData: FormType) {
         const { email, password } = formData;
         signIn({
-            username: email,
+            email,
             password
         }).then((response: any) => {
             if (response.name === "AxiosError") {
@@ -99,15 +90,6 @@ function CustomSignInForm() {
 
     return (
         <>
-            <Alert
-                icon={false}
-                severity="info"
-                className="mt-24 px-16 text-13 leading-relaxed cursor-pointer"
-                onClick={() => { changeName() }}
-            >
-                Click here to change the user
-            </Alert>
-
             <form
                 name="loginForm"
                 noValidate

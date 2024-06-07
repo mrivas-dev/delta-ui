@@ -9,7 +9,7 @@ import Utf8 from 'crypto-js/enc-utf8';
 import jwtDecode from 'jwt-decode';
 import { PartialDeep } from 'type-fest';
 import UserModel from 'src/app/auth/user/models/UserModel';
-import { User } from 'src/app/auth/user';
+import { User, UserDelta } from 'src/app/auth/user';
 import axios, { AxiosRequestConfig } from 'axios';
 import mockApi from '../mock-api.json';
 import ExtendedMockAdapter from '../ExtendedMockAdapter';
@@ -113,53 +113,6 @@ export const authApiMocks = (mock: ExtendedMockAdapter) => {
 
 		return null;
 	}
-
-	mock.onPost('/auth/sign-up').reply((request) => {
-		const data = JSON.parse(request.data as string) as { displayName: string; password: string; email: string };
-		const { displayName, password, email } = data;
-		const isEmailExists = usersApi.find((_user) => _user.email === email);
-		const error = [];
-
-		if (isEmailExists) {
-			error.push({
-				type: 'email',
-				message: 'The email address is already in use'
-			});
-		}
-
-		if (error.length === 0) {
-			const newUser = UserModel({
-				role: ['admin'],
-				data: {
-					displayName,
-					photoURL: 'assets/images/avatars/Abbott.jpg',
-					email,
-					shortcuts: [],
-					settings: {}
-				}
-			}) as UserAuthType;
-
-			newUser.uid = FuseUtils.generateGUID();
-			newUser.password = password;
-
-			usersApi = [...usersApi, newUser];
-
-			const user = _.cloneDeep(newUser);
-
-			delete (user as Partial<UserAuthType>).password;
-
-			const access_token = generateJWTToken({ id: user.uid });
-
-			const response = {
-				user,
-				access_token
-			};
-
-			return [200, response];
-		}
-
-		return [200, { error }];
-	});
 
 	mock.onPut('/auth/user').reply((config) => {
 		const access_token = config?.headers?.Authorization as string;

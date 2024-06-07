@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useMemo, useState } from 'react';
 import { PartialDeep } from 'type-fest';
-import { User } from './user';
+import { User, UserDelta } from './user';
 import Authentication from './Authentication';
 import AWSAuthProvider from './services/aws/AWSAuthProvider';
 import JwtAuthProvider from './services/jwt/JwtAuthProvider';
@@ -18,7 +18,7 @@ export type SignUpPayload = {
 };
 
 export type AuthContextType = {
-	updateUser?: (U: PartialDeep<User>) => void;
+	updateUser?: (U: PartialDeep<UserDelta>) => void;
 	isAuthenticated: boolean;
 	setIsAuthenticated: (T: boolean) => void;
 	setAuthProvider: (T: string) => void;

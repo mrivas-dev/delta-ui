@@ -1,20 +1,20 @@
 import _ from '@lodash';
 import { PartialDeep } from 'type-fest';
-import { User } from 'src/app/auth/user';
+import { User, UserDelta } from 'src/app/auth/user';
 
 /**
  * Creates a new user object with the specified data.
  */
-function UserModel(data: PartialDeep<User>): User {
+function UserModel(data: PartialDeep<UserDelta>): any {
 	data = data || {};
 
 	return _.defaults(data, {
-		uid: '',
-		role: null, // guest
-		data: {
-			displayName: 'Guest User',
-			photoURL: '',
-			email: '',
+		loginRedirectUrl: '/',
+		user: {
+			uid: '',
+			role: null,
+			name: 'Guest User',
+			email: 'No email',
 			shortcuts: [],
 			settings: {}
 		}
