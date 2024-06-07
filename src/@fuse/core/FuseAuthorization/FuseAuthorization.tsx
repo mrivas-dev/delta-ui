@@ -46,7 +46,6 @@ class FuseAuthorization extends Component<FuseAuthorizationProps, State> {
 
 	componentDidMount() {
 		const { accessGranted } = this.state;
-
 		if (!accessGranted) {
 			this.redirectRoute();
 		}
@@ -82,7 +81,6 @@ class FuseAuthorization extends Component<FuseAuthorizationProps, State> {
 		const userHasPermission = FuseUtils.hasPermission(route.auth, userRole);
 
 		const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404'];
-
 		if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
 			setSessionRedirectUrl(pathname);
 		}

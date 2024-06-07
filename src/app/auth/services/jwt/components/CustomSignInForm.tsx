@@ -84,7 +84,6 @@ function CustomSignInForm() {
                     }[]
                 >
             ) => {
-                console.log({ error });
                 const errorData = error?.response?.data;
                 if (errorData?.length) {
                     errorData.forEach((err) => {

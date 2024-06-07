@@ -55,7 +55,7 @@ const defaultAuthContext: JwtAuthContextType = {
 	signUp: null,
 	signOut: null,
 	refreshToken: null,
-	setIsLoading: () => {},
+	setIsLoading: () => { },
 	authStatus: 'configuring'
 };
 
@@ -78,10 +78,24 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 	 */
 	const handleSignInSuccess = useCallback((userData: User, accessToken: string) => {
 		setSession(accessToken);
-
 		setIsAuthenticated(true);
-
-		setUser(userData);
+		const hydratedUser: User = {
+			...userData,
+			role: 'admin',
+			data: {
+				displayName: `${userData.firstName} ${userData.lastName}`,
+				photoURL: userData.image,
+				email: userData.email,
+				loginRedirectUrl: '/example',
+				settings: { },
+				shortcuts: [
+					"apps.calendar",
+					"apps.mailbox",
+					"apps.contacts"
+				]
+			}
+		};
+		setUser(hydratedUser);
 	}, []);
 
 	/**
@@ -91,7 +105,6 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 		setSession(accessToken);
 		setIsAuthenticated(true);
 		setUser(userData);
-		console.log("setAuthenticated")
 	}, []);
 
 	/**
@@ -164,7 +177,6 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 	useEffect(() => {
 		const attemptAutoLogin = async () => {
 			const accessToken = getAccessToken();
-
 			if (isTokenValid(accessToken)) {
 				try {
 					setIsLoading(true);
@@ -173,7 +185,6 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 					});
 
 					const userData = response?.data;
-
 					handleSignInSuccess(userData, accessToken);
 
 					return true;
