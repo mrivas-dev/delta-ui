@@ -1,21 +1,19 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { selectFuseCurrentLayoutConfig, selectNavbarTheme } from '@fuse/core/FuseSettings/fuseSettingsSlice';
-import { Layout1ConfigDefaultsType } from 'app/theme-layouts/layout1/Layout1Config';
-import NavbarToggleFabLayout1 from 'app/theme-layouts/layout1/components/NavbarToggleFabLayout1';
+import { LayoutConfigDefaultsType } from 'app/theme-layouts/layout/LayoutConfig';
+import NavbarToggleFabLayout from 'app/theme-layouts/layout/components/NavbarToggleFabLayout';
 import { useLocation } from 'react-router';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import { navbarCloseMobile, selectFuseNavbar } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
-import NavbarStyle1 from './navbar/style-1/NavbarStyle1';
-import NavbarStyle2 from './navbar/style-2/NavbarStyle2';
-import NavbarStyle3 from './navbar/style-3/NavbarStyle3';
+import NavbarStyle from './navbar/style/NavbarStyle';
 
 /**
- * The navbar wrapper layout 1.
+ * The navbar wrapper layout.
  */
-function NavbarWrapperLayout1() {
-	const config = useAppSelector(selectFuseCurrentLayoutConfig) as Layout1ConfigDefaultsType;
+function NavbarWrapperLayout() {
+	const config = useAppSelector(selectFuseCurrentLayoutConfig) as LayoutConfigDefaultsType;
 	const navbar = useAppSelector(selectFuseNavbar);
 	const location = useLocation();
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -34,15 +32,12 @@ function NavbarWrapperLayout1() {
 		<>
 			<ThemeProvider theme={navbarTheme}>
 				<>
-					{config.navbar.style === 'style-1' && <NavbarStyle1 />}
-					{config.navbar.style === 'style-2' && <NavbarStyle2 />}
-					{config.navbar.style === 'style-3' && <NavbarStyle3 />}
-					{config.navbar.style === 'style-3-dense' && <NavbarStyle3 dense />}
+					<NavbarStyle />
 				</>
 			</ThemeProvider>
-			{config.navbar.display && !config.toolbar.display && !navbar.open && <NavbarToggleFabLayout1 />}
+			{config.navbar.display && !config.toolbar.display && !navbar.open && <NavbarToggleFabLayout />}
 		</>
 	);
 }
 
-export default NavbarWrapperLayout1;
+export default NavbarWrapperLayout;

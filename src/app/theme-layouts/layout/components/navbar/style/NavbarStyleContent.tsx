@@ -2,15 +2,13 @@ import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
 import { memo } from 'react';
-import NavbarToggleButton from 'app/theme-layouts/shared-components/navbar/NavbarToggleButton';
-import UserNavbarHeader from '../../shared-components/UserNavbarHeader';
-import Logo from '../../shared-components/Logo';
-import Navigation from '../../shared-components/navigation/Navigation';
+import Navigation from 'app/theme-layouts/shared-components/navigation/Navigation';
+import Logo from '../../../../shared-components/Logo';
+import UserNavbarHeader from '../../../../shared-components/UserNavbarHeader';
 
 const Root = styled('div')(({ theme }) => ({
 	backgroundColor: theme.palette.background.default,
 	color: theme.palette.text.primary,
-
 	'& ::-webkit-scrollbar-thumb': {
 		boxShadow: `inset 0 0 0 20px ${
 			theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.24)' : 'rgba(255, 255, 255, 0.24)'
@@ -33,24 +31,22 @@ const StyledContent = styled(FuseScrollbars)(() => ({
 	backgroundAttachment: 'local, scroll'
 }));
 
-type NavbarMobileLayout2Props = {
+type NavbarStyleContentProps = {
 	className?: string;
 };
 
 /**
- * The navbar mobile layout 2.
+ * The navbar style content.
  */
-function NavbarMobileLayout2(props: NavbarMobileLayout2Props) {
+function NavbarStyleContent(props: NavbarStyleContentProps) {
 	const { className = '' } = props;
 
 	return (
-		<Root className={clsx('flex h-full flex-col overflow-hidden', className)}>
-			<div className="flex h-48 shrink-0 flex-row items-center px-20 md:h-72">
-				<div className="mx-4 flex flex-1">
+		<Root className={clsx('flex h-full flex-auto flex-col overflow-hidden', className)}>
+			<div className="flex justify-center h-48 shrink-0 flex-row items-center px-20 md:h-72">
+				<div className="mx-4 flex flex">
 					<Logo />
 				</div>
-
-				<NavbarToggleButton className="h-40 w-40 p-0" />
 			</div>
 
 			<StyledContent
@@ -73,4 +69,4 @@ function NavbarMobileLayout2(props: NavbarMobileLayout2Props) {
 	);
 }
 
-export default memo(NavbarMobileLayout2);
+export default memo(NavbarStyleContent);

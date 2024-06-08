@@ -1,23 +1,23 @@
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import { selectFuseCurrentLayoutConfig } from '@fuse/core/FuseSettings/fuseSettingsSlice';
-import { Layout1ConfigDefaultsType } from 'app/theme-layouts/layout1/Layout1Config';
+import { LayoutConfigDefaultsType } from 'app/theme-layouts/layout/LayoutConfig';
 import { navbarToggle, navbarToggleMobile } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
 import NavbarToggleFab from 'app/theme-layouts/shared-components/navbar/NavbarToggleFab';
 
-type NavbarToggleFabLayout1Props = {
+type NavbarToggleFabLayoutProps = {
 	className?: string;
 };
 
 /**
- * The navbar toggle fab layout 1.
+ * The navbar toggle fab layout.
  */
-function NavbarToggleFabLayout1(props: NavbarToggleFabLayout1Props) {
+function NavbarToggleFabLayout(props: NavbarToggleFabLayoutProps) {
 	const { className } = props;
 
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
-	const config = useAppSelector(selectFuseCurrentLayoutConfig) as Layout1ConfigDefaultsType;
+	const config = useAppSelector(selectFuseCurrentLayoutConfig) as LayoutConfigDefaultsType;
 
 	const dispatch = useAppDispatch();
 
@@ -32,4 +32,4 @@ function NavbarToggleFabLayout1(props: NavbarToggleFabLayout1Props) {
 	);
 }
 
-export default NavbarToggleFabLayout1;
+export default NavbarToggleFabLayout;

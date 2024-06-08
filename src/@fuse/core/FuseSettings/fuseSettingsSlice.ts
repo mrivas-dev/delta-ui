@@ -50,7 +50,7 @@ type layoutProps = {
  */
 function getInitialSettings(): FuseSettingsConfigType {
 	const defaultLayoutStyle =
-		settingsConfig.layout && settingsConfig.layout.style ? settingsConfig.layout.style : 'layout1';
+		settingsConfig.layout && settingsConfig.layout.style ? settingsConfig.layout.style : 'layout';
 
 	const layout: layoutProps = {
 		style: defaultLayoutStyle,
@@ -146,7 +146,7 @@ export const fuseSettingsSlice = createSlice({
 			.addCase(setUser.fulfilled, (state, action) => {
 				const defaults = generateSettings(
 					state.defaults,
-					action.payload?.data?.settings as FuseSettingsConfigType
+					action.payload?.settings as FuseSettingsConfigType
 				);
 				return {
 					...state,

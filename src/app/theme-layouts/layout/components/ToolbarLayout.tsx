@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import clsx from 'clsx';
 import { memo } from 'react';
 import { selectFuseCurrentLayoutConfig, selectToolbarTheme } from '@fuse/core/FuseSettings/fuseSettingsSlice';
-import { Layout1ConfigDefaultsType } from 'app/theme-layouts/layout1/Layout1Config';
+import { LayoutConfigDefaultsType } from 'app/theme-layouts/layout/LayoutConfig';
 import NavbarToggleButton from 'app/theme-layouts/shared-components/navbar/NavbarToggleButton';
 import { selectFuseNavbar } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
 import { useAppSelector } from 'app/store/hooks';
@@ -17,16 +17,16 @@ import NavigationSearch from '../../shared-components/navigation/NavigationSearc
 import UserMenu from '../../shared-components/UserMenu';
 import QuickPanelToggleButton from '../../shared-components/quickPanel/QuickPanelToggleButton';
 
-type ToolbarLayout1Props = {
+type ToolbarLayoutProps = {
 	className?: string;
 };
 
 /**
- * The toolbar layout 1.
+ * The toolbar layout.
  */
-function ToolbarLayout1(props: ToolbarLayout1Props) {
+function ToolbarLayout(props: ToolbarLayoutProps) {
 	const { className } = props;
-	const config = useAppSelector(selectFuseCurrentLayoutConfig) as Layout1ConfigDefaultsType;
+	const config = useAppSelector(selectFuseCurrentLayoutConfig) as LayoutConfigDefaultsType;
 	const navbar = useAppSelector(selectFuseNavbar);
 	const toolbarTheme = useAppSelector(selectToolbarTheme);
 
@@ -79,4 +79,4 @@ function ToolbarLayout1(props: ToolbarLayout1Props) {
 	);
 }
 
-export default memo(ToolbarLayout1);
+export default memo(ToolbarLayout);

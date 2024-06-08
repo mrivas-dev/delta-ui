@@ -3,11 +3,11 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 import useJwtAuth from './services/jwt/useJwtAuth';
 import { AuthContext, AuthContextType } from './AuthenticationProvider';
 import useFirebaseAuth from './services/firebase/useFirebaseAuth';
-import { User } from './user';
+import { UserDelta } from './user';
 
 interface AuthProvider {
 	signOut: () => void;
-	updateUser: (user: User) => void;
+	updateUser: (user: UserDelta) => void;
 }
 
 type AuthProviders = {
@@ -26,8 +26,7 @@ function useAuth(): AuthContextType & { signOut: () => void } {
 
 	const authProviders: AuthProviders = {
 		amplify: { signOut: amplifySignOut, updateUser: () => {} },
-		jwt: { signOut: jwtSignOut, updateUser: jwtUpdateUser },
-		firebase: { signOut: firebaseSignOut, updateUser: firebaseUpdateUser }
+		jwt: { signOut: jwtSignOut, updateUser: jwtUpdateUser }
 	};
 
 	const signOut = () => {
@@ -35,7 +34,7 @@ function useAuth(): AuthContextType & { signOut: () => void } {
 		authProviders[authProvider]?.signOut();
 	};
 
-	const updateUser = (user: User) => {
+	const updateUser = (user: UserDelta) => {
 		const authProvider = context.getAuthProvider();
 		authProviders[authProvider]?.updateUser(user);
 	};

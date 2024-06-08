@@ -1,7 +1,5 @@
 import React, { ComponentType } from 'react';
-import Layout1 from './layout1/Layout1';
-import Layout2 from './layout2/Layout2';
-import Layout3 from './layout3/Layout3';
+import Layout from './layout/Layout';
 
 /**
  * The type definition for the theme layouts.
@@ -14,9 +12,7 @@ export type themeLayoutsType = {
  * The theme layouts.
  */
 const themeLayouts: themeLayoutsType = {
-	layout1: Layout1,
-	layout2: Layout2,
-	layout3: Layout3
+	layout: Layout
 };
 
 export default themeLayouts;

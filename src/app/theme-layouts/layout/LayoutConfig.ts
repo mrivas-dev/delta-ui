@@ -1,14 +1,14 @@
 /**
- * The Layout1 Config object.
+ * The Layout Config object.
  */
-const Layout1Config = {
-	title: 'Layout 1 - Vertical',
+const LayoutConfig = {
+	title: 'Main Layout - Vertical',
 	defaults: {
 		mode: 'container',
 		containerWidth: 1570,
 		navbar: {
 			display: true,
-			style: 'style-1',
+			style: 'style',
 			folded: true,
 			position: 'left',
 			open: true
@@ -79,25 +79,13 @@ const Layout1Config = {
 					type: 'radio',
 					options: [
 						{
-							name: 'Slide (style-1)',
-							value: 'style-1'
-						},
-						{
-							name: 'Folded (style-2)',
-							value: 'style-2'
-						},
-						{
-							name: 'Tabbed (style-3)',
-							value: 'style-3'
-						},
-						{
-							name: 'Tabbed Dense (style-3-dense)',
-							value: 'style-3-dense'
+							name: 'Slide (style)',
+							value: 'style'
 						}
 					]
 				},
 				folded: {
-					title: 'Folded (style-2, style-3)',
+					title: 'Folded (style, style)',
 					type: 'switch'
 				}
 			}
@@ -153,6 +141,6 @@ const Layout1Config = {
 	}
 };
 
-export type Layout1ConfigDefaultsType = (typeof Layout1Config)['defaults'];
+export type LayoutConfigDefaultsType = (typeof LayoutConfig)['defaults'];
 
-export default Layout1Config;
+export default LayoutConfig;

@@ -4,9 +4,9 @@ import { styled } from '@mui/material/styles';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { selectFuseCurrentLayoutConfig } from '@fuse/core/FuseSettings/fuseSettingsSlice';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import { Layout1ConfigDefaultsType } from 'app/theme-layouts/layout1/Layout1Config';
+import { LayoutConfigDefaultsType } from 'app/theme-layouts/layout/LayoutConfig';
 import { navbarCloseMobile, selectFuseNavbar } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
-import NavbarStyle1Content from './NavbarStyle1Content';
+import NavbarStyleContent from './NavbarStyleContent';
 
 const navbarWidth = 280;
 
@@ -49,11 +49,11 @@ const StyledNavBarMobile = styled(SwipeableDrawer)(() => ({
 }));
 
 /**
- * The navbar style 1.
+ * The navbar style.
  */
-function NavbarStyle1() {
+function NavbarStyle() {
 	const dispatch = useAppDispatch();
-	const config = useAppSelector(selectFuseCurrentLayoutConfig) as Layout1ConfigDefaultsType;
+	const config = useAppSelector(selectFuseCurrentLayoutConfig) as LayoutConfigDefaultsType;
 	const navbar = useAppSelector(selectFuseNavbar);
 
 	return (
@@ -64,7 +64,7 @@ function NavbarStyle1() {
 					open={navbar.open}
 					position={config.navbar.position}
 				>
-					<NavbarStyle1Content />
+					<NavbarStyleContent />
 				</StyledNavBar>
 			</Hidden>
 
@@ -83,11 +83,11 @@ function NavbarStyle1() {
 						keepMounted: true // Better open performance on mobile.
 					}}
 				>
-					<NavbarStyle1Content />
+					<NavbarStyleContent />
 				</StyledNavBarMobile>
 			</Hidden>
 		</>
 	);
 }
 
-export default NavbarStyle1;
+export default NavbarStyle;

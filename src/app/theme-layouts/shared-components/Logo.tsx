@@ -22,7 +22,7 @@ function Logo() {
 	return (
 		<Root className="flex items-center">
 			<img
-				className="logo-icon h-32 w-32"
+				className="logo-icon h-64 w-64"
 				src="assets/images/logo/logoDelta.png"
 				alt="logo"
 			/>
