@@ -22,15 +22,15 @@ const navigationConfig: FuseNavItemType[] = [
 				title: 'Home',
 				translate: 'HOME',
 				type: 'item',
-				icon: 'material-solid:dashboard',
-				url: 'example'
+				icon: 'heroicons-outline:chart-pie',
+				url: 'home'
 			},
 			{
 				id: 'images.studies',
 				title: 'Studies',
 				translate: 'STUDIES',
 				type: 'item',
-				icon: 'cast',
+				icon: 'power_input',
 				url: 'studies'
 			},
 			{
@@ -38,7 +38,7 @@ const navigationConfig: FuseNavItemType[] = [
 				title: 'Reports',
 				translate: 'REPORTS',
 				type: 'item',
-				icon: 'power_input',
+				icon: 'heroicons-outline:clipboard-check',
 				url: 'reports'
 			}
 		]

@@ -82,7 +82,7 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 		userData.user.role = 'admin';
 		const hydratedUser: UserDelta = {
 			...userData,
-			loginRedirectUrl: '/example',
+			loginRedirectUrl: '/home',
 			settings: {},
 			shortcuts: [
 				"apps.calendar",
