@@ -1,13 +1,13 @@
 const locale = {
-	HOME: 'Inicio',
-	STUDIES: 'Estudios',
-	REPORTS: 'Reportes',
-	COMPANY: 'Empresa',
-	PROVIDERS: 'Prestadores',
-	USERS: 'Usuarios',
+	HOME_TITLE: 'Inicio',
+	STUDIES_TITLE: 'Estudios',
+	REPORTS_TITLE: 'Reportes',
+	COMPANY_TITLE: 'Empresa',
+	PROVIDERS_TITLE: 'Prestadores',
+	USERS_TITLE: 'Usuarios',
 	IMAGES_TITLE: 'Imágenes',
-	ADMIN_TITLE: 'Administración',
 	IMAGES_SUBTITLE: 'Herramientas para tratamiento de imágenes',
+	ADMIN_TITLE: 'Administración',
 	ADMIN_SUBTITLE: 'Administración de datos'
 
 };

@@ -12,48 +12,43 @@ i18next.addResourceBundle('es', 'navigation', es);
 const navigationConfig: FuseNavItemType[] = [
 	{
 		id: 'images',
-		title: 'Images',
-		subtitle: 'Tools for image tratement',
-		translate: 'IMAGES_TITLE',
+		title: 'IMAGES_TITLE',
+		subtitle: 'IMAGES_SUBTITLE',
 		type: 'group',
 		children: [
 			{
 				id: 'images.dashboard',
-				title: 'Home',
-				translate: 'HOME',
+				title: 'HOME_TITLE',
 				type: 'item',
 				icon: 'heroicons-outline:chart-pie',
 				url: 'home'
 			},
 			{
+				id: 'images.reports',
+				title: 'REPORTS_TITLE',
+				type: 'item',
+				icon: 'heroicons-outline:clipboard-check',
+				url: 'reports'
+			},
+			{
 				id: 'images.studies',
-				title: 'Studies',
-				translate: 'STUDIES',
+				title: 'STUDIES_TITLE',
 				type: 'item',
 				icon: 'power_input',
 				url: 'studies'
 			},
-			{
-				id: 'images.reports',
-				title: 'Reports',
-				translate: 'REPORTS',
-				type: 'item',
-				icon: 'heroicons-outline:clipboard-check',
-				url: 'reports'
-			}
 		]
 	},
 	{
 		id: 'admin',
-		title: 'Admin',
-		subtitle: 'Data management',
+		title: 'ADMIN_TITLE',
+		subtitle: 'ADMIN_SUBTITLE',
 		type: 'group',
 		icon: '',
-		translate: 'ADMIN_TITLE',
 		children: [
 			{
                 id: 'admin.company',
-                title: 'Company',
+                title: 'COMPANY_TITLE',
 				translate: 'COMPANY',
                 type: 'item',
                 icon: 'business',
@@ -61,16 +56,14 @@ const navigationConfig: FuseNavItemType[] = [
             },
             {
                 id: 'admin.providers',
-                title: 'Providers',
-				translate: 'PROVIDERS',
+                title: 'PROVIDERS_TITLE',
                 type: 'item',
                 icon: 'group_work',
                 url: '/settings/providers'
             },
             {
                 id: 'admin.users',
-                title: 'Users',
-				translate: 'USERS',
+                title: 'USERS_TITLE',
                 type: 'item',
                 icon: 'supervised_user_circle',
                 url: '/settings/users'

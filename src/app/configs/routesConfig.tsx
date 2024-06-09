@@ -8,6 +8,7 @@ import SignUpConfig from '../main/sign-up/SignUpConfig';
 import SignOutConfig from '../main/sign-out/SignOutConfig';
 import Error404Page from '../main/404/Error404Page';
 import HomeConfig from '../main/home/HomeConfig';
+import Reports from '../main/reports/Reports';
 
 const routeConfigs: FuseRouteConfigsType = [HomeConfig, SignOutConfig, SignInConfig, SignUpConfig];
 
@@ -19,6 +20,11 @@ const routes: FuseRoutesType = [
 	{
 		path: '/',
 		element: <Navigate to="/home" />,
+		auth: settingsConfig.defaultAuth
+	},
+	{
+		path: '/reports',
+		element: <Reports />,
 		auth: settingsConfig.defaultAuth
 	},
 	{

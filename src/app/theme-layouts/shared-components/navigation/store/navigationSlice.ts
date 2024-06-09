@@ -116,10 +116,18 @@ export const selectNavigation = createSelector(
 		const navigation = FuseNavigationHelper.unflattenNavigation(navigationSimple);
 
 		function setAdditionalData(data: FuseNavItemType[]): FuseNavItemType[] {
+			console.log({data});
 			return data?.map((item) => ({
 				hasPermission: Boolean(FuseUtils.hasPermission(item?.auth, userRole)),
 				...item,
-				...(item?.translate && item?.title ? { title: i18next.t(`navigation:${item?.translate}`) } : {}),
+				...(item?.title
+					? { title: i18next.t(`navigation:${item?.title}`) }
+					: {}
+				),
+				...(item?.subtitle
+					? { subtitle: i18next.t(`navigation:${item?.subtitle}`) }
+					: {}
+				),
 				...(item?.children ? { children: setAdditionalData(item?.children) } : {})
 			}));
 		}
