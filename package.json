@@ -165,6 +165,7 @@
         "typescript-plugin-css-modules": "5.0.2",
         "util": "0.12.5",
         "vite": "^5.0.12",
+        "vite-plugin-mkcert": "^1.17.5",
         "vite-plugin-svgr": "4.2.0",
         "vite-tsconfig-paths": "4.3.1"
     },

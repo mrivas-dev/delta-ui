@@ -116,7 +116,6 @@ export const selectNavigation = createSelector(
 		const navigation = FuseNavigationHelper.unflattenNavigation(navigationSimple);
 
 		function setAdditionalData(data: FuseNavItemType[]): FuseNavItemType[] {
-			console.log({data});
 			return data?.map((item) => ({
 				hasPermission: Boolean(FuseUtils.hasPermission(item?.auth, userRole)),
 				...item,

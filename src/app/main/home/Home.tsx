@@ -1,6 +1,8 @@
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
+import { useGetInitUserQuery } from './HomeApi';
+import { useEffect } from 'react';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -16,6 +18,11 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 
 function Home() {
 	const { t } = useTranslation('homePage');
+	// const { data, isLoading } = useGetInitUserQuery();
+
+	// useEffect(() => {
+	// 	console.log({ data });
+	// }, [data])
 
 	return (
 		<Root
