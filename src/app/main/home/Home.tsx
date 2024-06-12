@@ -1,8 +1,11 @@
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
-import { useGetInitUserQuery } from './HomeApi';
-import { useEffect } from 'react';
+import { useGetUserPacsQuery } from './HomeApi';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from 'app/store/hooks';
+import { setUserPacs } from 'src/app/auth/user/store/userSlice';
+import HomeHeader from './HomeHeader';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -18,19 +21,20 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 
 function Home() {
 	const { t } = useTranslation('homePage');
-	// const { data, isLoading } = useGetInitUserQuery();
+	const dispatch = useAppDispatch();
+	const [pacList, setPacList] = useState<any[]>([]);
+	const { data, isLoading } = useGetUserPacsQuery();
 
-	// useEffect(() => {
-	// 	console.log({ data });
-	// }, [data])
+	useEffect(() => {
+		if(data && data?.pacs){
+			dispatch(setUserPacs(data));
+			setPacList(data?.pacs);
+		}
+	}, [data]);
 
 	return (
 		<Root
-			header={
-				<div className="p-24">
-					<h4>{t('TITLE')}</h4>
-				</div>
-			}
+			header={<HomeHeader isLoading={isLoading} pacList={pacList} />}
 			content={
 				<div className="p-24">
 					<h4>{t('CONTENT')}</h4>

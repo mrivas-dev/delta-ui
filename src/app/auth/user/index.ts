@@ -40,6 +40,7 @@ export type UserDelta = {
 	loginRedirectUrl?: string;
 	shortcuts?: string[];
 	settings?: Partial<FuseSettingsConfigType>;
+	pacs?: Partial<any>;
 	user: {
 		image?: string;
 		uid: string;

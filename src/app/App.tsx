@@ -1,3 +1,4 @@
+import axios from 'axios';
 import FuseLayout from '@fuse/core/FuseLayout';
 import FuseTheme from '@fuse/core/FuseTheme';
 import { SnackbarProvider } from 'notistack';
@@ -13,13 +14,14 @@ import { useSelector } from 'react-redux';
 import withAppProviders from './withAppProviders';
 import AuthenticationProvider from './auth/AuthenticationProvider';
 
-// import axios from 'axios';
 /**
  * Axios HTTP Request defaults
  */
 // axios.defaults.baseURL = "";
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 // axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+
+axios.defaults.withCredentials = true;
 
 const emotionCacheOptions = {
 	rtl: {

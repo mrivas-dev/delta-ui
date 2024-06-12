@@ -1,6 +1,7 @@
 const locale = {
-	TITLE: 'Pagina de ejemplo',
-	CONTENT: 'Contenido'
+	HOME_HEADER_TITLE: 'Bienvenido/a',
+	HOME_HEADER_BUTTON_TODAY: 'Hoy',
+	HOME_HEADER_BUTTON_YESTERDAY: 'Ayer',
 };
 
 export default locale;

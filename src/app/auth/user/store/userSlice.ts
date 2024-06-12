@@ -71,6 +71,19 @@ export const userSlice = createSlice({
 			return newUser;
 		},
 		/**
+		 * Updates the user's pacs
+		 */
+		setUserPacs: (state, action) => {
+			const oldState = _.cloneDeep(state);
+			const newUser = _.setIn(oldState, 'pacs', action.payload) as UserDelta;
+
+			if (_.isEqual(oldState, newUser)) {
+				return undefined;
+			}
+
+			return newUser;
+		},
+		/**
 		 * Updates the user object in the Redux store.
 		 */
 		updateUser: (state, action) => {
@@ -107,7 +120,7 @@ export const userSlice = createSlice({
 	}
 });
 
-export const { userSignOut, updateUser, setUserShortcuts, setUserSettings } = userSlice.actions;
+export const { userSignOut, updateUser, setUserShortcuts, setUserSettings, setUserPacs } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state?.user;
 
