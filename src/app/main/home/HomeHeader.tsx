@@ -7,6 +7,7 @@ import _ from '@lodash';
 import Button from '@mui/material/Button';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import FuseLoading from '@fuse/core/FuseLoading';
+import { useTranslation } from 'react-i18next';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
 import { useAppSelector } from 'app/store/hooks';
 import { useGetHomeProjectsQuery } from './HomeApi';
@@ -15,6 +16,7 @@ import { useGetHomeProjectsQuery } from './HomeApi';
  * The HomeHeader page.
  */
 function HomeHeader() {
+	const { t } = useTranslation('homePage');
 	const { data: projects, isLoading } = useGetHomeProjectsQuery();
 
 	const { user } = useAppSelector(selectUser);
@@ -55,26 +57,11 @@ function HomeHeader() {
 				<div className="flex flex-auto items-center min-w-0">
 					<div className="flex flex-col min-w-0 mx-16">
 						<Typography className="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-							{`Welcome back, ${user.name}!`}
+							{`${t('HOME_HEADER_TITLE')}, ${user.name}!`}
 						</Typography>
-
-						<div className="flex items-center">
-							<FuseSvgIcon
-								size={20}
-								color="action"
-							>
-								heroicons-solid:bell
-							</FuseSvgIcon>
-							<Typography
-								className="mx-6 leading-6 truncate"
-								color="text.secondary"
-							>
-								You have 2 new messages and 15 new tasks
-							</Typography>
-						</div>
 					</div>
 				</div>
-				<div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
+				{/* <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
 					<Button
 						className="whitespace-nowrap"
 						variant="contained"
@@ -91,7 +78,7 @@ function HomeHeader() {
 					>
 						Settings
 					</Button>
-				</div>
+				</div> */}
 			</div>
 			<div className="flex items-center">
 				<Button

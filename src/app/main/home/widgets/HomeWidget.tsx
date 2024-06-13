@@ -5,6 +5,7 @@ import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import { memo, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import { ApexOptions } from 'apexcharts';
 import FuseLoading from '@fuse/core/FuseLoading';
@@ -15,6 +16,7 @@ import { useGetHomeWidgetsQuery } from '../HomeApi';
  * The HomeWidget widget.
  */
 function HomeWidget() {
+	const { t } = useTranslation('homePage');
 	const theme = useTheme();
 	const [awaitRender, setAwaitRender] = useState(true);
 	const [tabValue, setTabValue] = useState(0);
@@ -34,7 +36,7 @@ function HomeWidget() {
 	const { overview, series, ranges, labels } = widget;
 	const currentRange = Object.keys(ranges)[tabValue];
 
-	const chartOptions: ApexOptions = {
+	const chartOptions: ApexOptions = Object.preventExtensions({
 		chart: {
 			fontFamily: 'inherit',
 			foreColor: 'inherit',
@@ -106,7 +108,7 @@ function HomeWidget() {
 				}
 			}
 		}
-	};
+	});
 
 	useEffect(() => {
 		setAwaitRender(false);
@@ -120,7 +122,7 @@ function HomeWidget() {
 		<Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
 			<div className="flex flex-col sm:flex-row items-start justify-between">
 				<Typography className="text-lg font-medium tracking-tight leading-6 truncate">
-					Github Issues Summary
+					{t('HOME_WIDGET_CARD_TITLE')}
 				</Typography>
 				<div className="mt-12 sm:mt-0 sm:ml-8">
 					<Tabs
@@ -158,7 +160,7 @@ function HomeWidget() {
 						className="font-medium"
 						color="text.secondary"
 					>
-						New vs. Closed
+						{t('HOME_WIDGET_STUDIES_QUANTITY_WIDGET_TITLE')}
 					</Typography>
 					<div className="flex flex-col flex-auto">
 						<ReactApexChart
@@ -174,20 +176,24 @@ function HomeWidget() {
 						className="font-medium"
 						color="text.secondary"
 					>
-						Overview
+						{t('HOME_WIDGET_STUDIES_OVERVIEW_WIDGET_TITLE')}
 					</Typography>
 					<div className="flex-auto grid grid-cols-4 gap-16 mt-24">
 						<div className="col-span-2 flex flex-col items-center justify-center py-32 px-4 rounded-2xl bg-indigo-50 text-indigo-800">
 							<Typography className="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
 								{overview[currentRange]['new-issues']}
 							</Typography>
-							<Typography className="mt-4 text-sm sm:text-lg font-medium">New Issues</Typography>
+							<Typography className="mt-4 text-sm sm:text-lg font-medium">
+								{t('HOME_WIDGET_STUDIES_TOTAL_WEEK_WIDGET_TITLE')}
+							</Typography>
 						</div>
 						<div className="col-span-2 flex flex-col items-center justify-center py-32 px-4 rounded-2xl bg-green-50 text-green-800">
 							<Typography className="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
 								{overview[currentRange]['closed-issues']}
 							</Typography>
-							<Typography className="mt-4 text-sm sm:text-lg font-medium">Closed</Typography>
+							<Typography className="mt-4 text-sm sm:text-lg font-medium">
+								{t('HOME_WIDGET_STUDIES_TOTAL_DAY_WIDGET_TITLE')}
+							</Typography>
 						</div>
 						<Box
 							sx={{
@@ -201,7 +207,9 @@ function HomeWidget() {
 							<Typography className="text-5xl font-semibold leading-none tracking-tight">
 								{overview[currentRange].fixed}
 							</Typography>
-							<Typography className="mt-4 text-sm font-medium text-center">Fixed</Typography>
+							<Typography className="mt-4 text-sm font-medium text-center">
+								{t('HOME_WIDGET_STUDIES_TOTAL_CR')}
+							</Typography>
 						</Box>
 						<Box
 							sx={{
@@ -215,7 +223,9 @@ function HomeWidget() {
 							<Typography className="text-5xl font-semibold leading-none tracking-tight">
 								{overview[currentRange]['wont-fix']}
 							</Typography>
-							<Typography className="mt-4 text-sm font-medium text-center">Won't Fix</Typography>
+							<Typography className="mt-4 text-sm font-medium text-center">
+								{t('HOME_WIDGET_STUDIES_TOTAL_TX')}
+							</Typography>
 						</Box>
 						<Box
 							sx={{
@@ -229,7 +239,9 @@ function HomeWidget() {
 							<Typography className="text-5xl font-semibold leading-none tracking-tight">
 								{overview[currentRange]['re-opened']}
 							</Typography>
-							<Typography className="mt-4 text-sm font-medium text-center">Re-opened</Typography>
+							<Typography className="mt-4 text-sm font-medium text-center">
+								{t('HOME_WIDGET_STUDIES_TOTAL_MG')}
+							</Typography>
 						</Box>
 						<Box
 							sx={{
@@ -243,7 +255,9 @@ function HomeWidget() {
 							<Typography className="text-5xl font-semibold leading-none tracking-tight">
 								{overview[currentRange]['needs-triage']}
 							</Typography>
-							<Typography className="mt-4 text-sm font-medium text-center">Needs Triage</Typography>
+							<Typography className="mt-4 text-sm font-medium text-center">
+								{t('HOME_WIDGET_STUDIES_TOTAL_US')}
+							</Typography>
 						</Box>
 					</div>
 				</div>
