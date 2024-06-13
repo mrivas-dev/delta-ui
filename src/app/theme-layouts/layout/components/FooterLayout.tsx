@@ -18,7 +18,7 @@ function FooterLayout(props: FooterLayoutProps) {
 
 	return (
 		<ThemeProvider theme={footerTheme}>
-			<AppBar
+			{/* <AppBar
 				id="fuse-footer"
 				className={clsx('relative z-20 shadow', className)}
 				color="default"
@@ -33,7 +33,7 @@ function FooterLayout(props: FooterLayoutProps) {
 				<Toolbar className="min-h-48 md:min-h-64 px-8 sm:px-12 py-0 flex items-center overflow-x-auto">
 					Footer
 				</Toolbar>
-			</AppBar>
+			</AppBar> */}
 		</ThemeProvider>
 	);
 }

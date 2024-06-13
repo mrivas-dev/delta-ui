@@ -2,7 +2,7 @@ import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import _ from '@lodash';
 import Button from '@mui/material/Button';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
@@ -17,16 +17,22 @@ import { useGetHomeProjectsQuery } from './HomeApi';
  */
 function HomeHeader() {
 	const { t } = useTranslation('homePage');
-	const { data: projects, isLoading } = useGetHomeProjectsQuery();
+	const { data: pacInfo, isLoading } = useGetHomeProjectsQuery();
 
 	const { user } = useAppSelector(selectUser);
 
-	const [selectedProject, setSelectedProject] = useState<{ id: number; menuEl: HTMLElement | null }>({
-		id: 1,
+	const [selectedProject, setSelectedProject] = useState<{ id: string; menuEl: HTMLElement | null }>({
+		id: "DELTACLOUD",
 		menuEl: null
 	});
 
-	function handleChangeProject(id: number) {
+	useEffect(()=>{
+		if(pacInfo?.pacs.length){
+			handleChangeProject(pacInfo?.pacs[0].codigo)
+		}
+	}, [pacInfo?.pacs]);
+
+	function handleChangeProject(id: string) {
 		setSelectedProject({
 			id,
 			menuEl: null
@@ -61,24 +67,6 @@ function HomeHeader() {
 						</Typography>
 					</div>
 				</div>
-				{/* <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
-					<Button
-						className="whitespace-nowrap"
-						variant="contained"
-						color="primary"
-						startIcon={<FuseSvgIcon size={20}>heroicons-solid:mail</FuseSvgIcon>}
-					>
-						Messages
-					</Button>
-					<Button
-						className="whitespace-nowrap"
-						variant="contained"
-						color="secondary"
-						startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
-					>
-						Settings
-					</Button>
-				</div> */}
 			</div>
 			<div className="flex items-center">
 				<Button
@@ -97,7 +85,7 @@ function HomeHeader() {
 						</FuseSvgIcon>
 					}
 				>
-					{_.find(projects, ['id', selectedProject.id])?.name}
+					{_.find(pacInfo.pacs, ['codigo', selectedProject.id])?.nombre}
 				</Button>
 				<Menu
 					id="project-menu"
@@ -105,15 +93,15 @@ function HomeHeader() {
 					open={Boolean(selectedProject.menuEl)}
 					onClose={handleCloseProjectMenu}
 				>
-					{projects &&
-						projects.map((project) => (
+					{pacInfo &&
+						pacInfo.pacs.map((project) => (
 							<MenuItem
-								key={project.id}
+								key={project.codigo}
 								onClick={() => {
-									handleChangeProject(project.id);
+									handleChangeProject(project.codigo);
 								}}
 							>
-								{project.name}
+								{project.nombre}
 							</MenuItem>
 						))}
 				</Menu>

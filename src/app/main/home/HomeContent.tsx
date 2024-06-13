@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import HomeWidget from './widgets/HomeWidget';
 
-
 /**
  * The HomeContent component.
  */

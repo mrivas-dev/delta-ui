@@ -1,6 +1,7 @@
 import { createSelector, WithSlice } from '@reduxjs/toolkit';
 import { apiService as api } from 'app/store/apiService';
 import HomeDataType from './widgets/types/HomeDataType';
+import { BASE_URL, PACK_INFO_API_URL } from 'src/app/constants/api';
 
 export const addTagTypes = ['project_dashboard_widgets', 'project_dashboard_projects'] as const;
 
@@ -21,7 +22,7 @@ const HomeApi = api
 				GetHomeProjectsApiResponse,
 				GetHomeProjectsApiArg
 			>({
-				query: () => ({ url: `/mock-api/dashboards/project/projects` }),
+				query: () => ({ url: `${BASE_URL}${PACK_INFO_API_URL}` }),
 				providesTags: ['project_dashboard_projects']
 			})
 		}),
@@ -34,12 +35,42 @@ export type GetHomeWidgetsApiResponse = {
 };
 export type GetHomeWidgetsApiArg = void;
 
-export type GetHomeProjectsApiResponse = /** status 200 OK */ ProjectType[];
+export type GetHomeProjectsApiResponse = SelPacsResponse;
 export type GetHomeProjectsApiArg = void;
 
 export type ProjectType = {
 	id: number;
 	name: string;
+};
+
+export type PacType = {
+	id: number;
+	addinforme: boolean;
+	agregaStu: string;
+	assignWL: string;
+	codigo: string;
+	downCD: boolean;
+	fecha_fija: string;
+	marcaStudy: boolean;
+	modalidad_fija: any[];
+	nombre: string;
+	noupload: boolean;
+	observaciones: number;
+	origenWlscu: string;
+	otroVisor: boolean;
+	pedidomedico: boolean;
+	shareWhat: boolean;
+	teclaInfo: boolean;
+	tipo: string;
+	uriAlt: string;
+	uriVisor: string;
+	usertf: boolean;
+}
+
+export type SelPacsResponse = {
+	pacs: PacType[];
+	success: boolean;
+	usuariosGoogle: any[];
 };
 
 export const { useGetHomeWidgetsQuery, useGetHomeProjectsQuery } = HomeApi;
@@ -52,7 +83,7 @@ export type HomeApiType = {
  * Lazy load
  * */
 declare module 'app/store/lazyLoadedSlices' {
-	export interface LazyLoadedSlices extends WithSlice<typeof HomeApi> {}
+	export interface LazyLoadedSlices extends WithSlice<typeof HomeApi> { }
 }
 
 export const selectHomeWidgets = createSelector(
