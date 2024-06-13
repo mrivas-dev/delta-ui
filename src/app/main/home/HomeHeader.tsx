@@ -1,50 +1,46 @@
+import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import _ from '@lodash';
 import Button from '@mui/material/Button';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { useTranslation } from 'react-i18next';
-import { useAppSelector } from 'app/store/hooks';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
-import en from './i18n/en';
-import es from './i18n/es';
-import i18next from 'i18next';
+import { useAppSelector } from 'app/store/hooks';
+import { useGetHomeProjectsQuery } from './HomeApi';
 
-i18next.addResourceBundle('en', 'homePage', en);
-i18next.addResourceBundle('es', 'homePage', es);
 /**
  * The HomeHeader page.
  */
-const HomeHeader = ({ isLoading, pacList }) => {
-	const { t } = useTranslation('homePage');
-	const { user } = useAppSelector(selectUser);
-	const [selectedFilter, setSelectedFilter] = useState<string>("TODAY");
+function HomeHeader() {
+	const { data: projects, isLoading } = useGetHomeProjectsQuery();
 
-	const [selectedPac, setSelectedPac] = useState<{ id: number; menuEl: HTMLElement | null }>({
+	const { user } = useAppSelector(selectUser);
+
+	const [selectedProject, setSelectedProject] = useState<{ id: number; menuEl: HTMLElement | null }>({
 		id: 1,
 		menuEl: null
 	});
 
-	function handleChangePac(id: number) {
-		setSelectedPac({
+	function handleChangeProject(id: number) {
+		setSelectedProject({
 			id,
 			menuEl: null
 		});
 	}
 
-	function handleOpenPacMenu(event: React.MouseEvent<HTMLElement>) {
-		setSelectedPac({
-			id: selectedPac.id,
+	function handleOpenProjectMenu(event: React.MouseEvent<HTMLElement>) {
+		setSelectedProject({
+			id: selectedProject.id,
 			menuEl: event.currentTarget
 		});
 	}
 
-	function handleClosePacMenu() {
-		setSelectedPac({
-			id: selectedPac.id,
+	function handleCloseProjectMenu() {
+		setSelectedProject({
+			id: selectedProject.id,
 			menuEl: null
 		});
 	}
@@ -59,32 +55,47 @@ const HomeHeader = ({ isLoading, pacList }) => {
 				<div className="flex flex-auto items-center min-w-0">
 					<div className="flex flex-col min-w-0 mx-16">
 						<Typography className="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-							{`${t('HOME_HEADER_TITLE')} ${user.name}`}
+							{`Welcome back, ${user.name}!`}
 						</Typography>
+
+						<div className="flex items-center">
+							<FuseSvgIcon
+								size={20}
+								color="action"
+							>
+								heroicons-solid:bell
+							</FuseSvgIcon>
+							<Typography
+								className="mx-6 leading-6 truncate"
+								color="text.secondary"
+							>
+								You have 2 new messages and 15 new tasks
+							</Typography>
+						</div>
 					</div>
 				</div>
 				<div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
 					<Button
 						className="whitespace-nowrap"
-						variant={selectedFilter === 'TODAY' ? 'contained' : 'outlined'}
-						onClick={() => { setSelectedFilter('TODAY') }}
-						color={selectedFilter === 'TODAY' ? 'secondary' : 'primary'}
+						variant="contained"
+						color="primary"
+						startIcon={<FuseSvgIcon size={20}>heroicons-solid:mail</FuseSvgIcon>}
 					>
-						{t('REPORTS_HEADER_BUTTON_TODAY')}
+						Messages
 					</Button>
 					<Button
 						className="whitespace-nowrap"
-						variant={selectedFilter === 'YESTERDAY' ? 'contained' : 'outlined'}
-						onClick={() => { setSelectedFilter('YESTERDAY') }}
-						color={selectedFilter === 'YESTERDAY' ? 'secondary' : 'primary'}
+						variant="contained"
+						color="secondary"
+						startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
 					>
-						{t('REPORTS_HEADER_BUTTON_YESTERDAY')}
+						Settings
 					</Button>
 				</div>
 			</div>
 			<div className="flex items-center">
 				<Button
-					onClick={handleOpenPacMenu}
+					onClick={handleOpenProjectMenu}
 					className="flex items-center border border-solid border-b-0 rounded-t-xl rounded-b-0 h-40 px-16 text-13 sm:text-16"
 					sx={{
 						backgroundColor: (theme) => theme.palette.background.default,
@@ -99,29 +110,29 @@ const HomeHeader = ({ isLoading, pacList }) => {
 						</FuseSvgIcon>
 					}
 				>
-					{_.find(pacList, ['id', selectedPac.id])?.nombre}
+					{_.find(projects, ['id', selectedProject.id])?.name}
 				</Button>
 				<Menu
-					id="pac-menu"
-					anchorEl={selectedPac.menuEl}
-					open={Boolean(selectedPac.menuEl)}
-					onClose={handleClosePacMenu}
+					id="project-menu"
+					anchorEl={selectedProject.menuEl}
+					open={Boolean(selectedProject.menuEl)}
+					onClose={handleCloseProjectMenu}
 				>
-					{pacList &&
-						pacList.map((project) => (
+					{projects &&
+						projects.map((project) => (
 							<MenuItem
 								key={project.id}
 								onClick={() => {
-									handleChangePac(project.id);
+									handleChangeProject(project.id);
 								}}
 							>
-								{project.nombre}
+								{project.name}
 							</MenuItem>
 						))}
 				</Menu>
 			</div>
 		</div>
 	);
-};
+}
 
 export default HomeHeader;

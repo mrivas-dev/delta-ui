@@ -5,6 +5,10 @@ import { useAppDispatch } from 'app/store/hooks';
 import apiService from 'app/store/apiService';
 import ExtendedMockAdapter from './ExtendedMockAdapter';
 import { authApiMocks } from './api/auth-api';
+import { analyticsDashboardApiMocks } from './api/dashboards/analytics-api';
+import { cryptoDashboardApiMocks } from './api/dashboards/crypto-api';
+import { financeDashboardApiMocks } from './api/dashboards/finance-api';
+import { projectDashboardApiMocks } from './api/dashboards/project-api';
 
 const mockAdapterOptions = {
 	delayResponse: 0
@@ -26,11 +30,16 @@ function MockAdapterProvider(props: MockAdapterProviderProps) {
 	const isInitialMount = useRef(true);
 	useEffect(() => {
 		const setupAllMocks = () => {
-			[authApiMocks].forEach((mockSetup) => {
+			[
+				authApiMocks,
+				financeDashboardApiMocks,
+				analyticsDashboardApiMocks,
+				cryptoDashboardApiMocks,
+				projectDashboardApiMocks
+			].forEach((mockSetup) => {
 				mockSetup(mock);
 			});
 		};
-
 		if (enabled) {
 			setupAllMocks();
 			mock.onAny().passThrough();

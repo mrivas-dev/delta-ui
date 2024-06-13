@@ -1,55 +1,48 @@
 import { createSelector, WithSlice } from '@reduxjs/toolkit';
 import { apiService as api } from 'app/store/apiService';
-import { BASE_URL, INIT_API_URL, PACK_INFO_API_URL } from 'src/app/constants/api';
+import HomeDataType from './widgets/types/HomeDataType';
 
-export const addTagTypes = ['home_init_user', 'home_user_pacs'] as const;
+export const addTagTypes = ['project_dashboard_widgets', 'project_dashboard_projects'] as const;
+
 const HomeApi = api
 	.enhanceEndpoints({
 		addTagTypes
 	})
 	.injectEndpoints({
 		endpoints: (build) => ({
-			getInitUser: build.query<
-				GetUserInitApiResponse,
-				GetUserInitApiArg
+			getHomeWidgets: build.query<
+				GetHomeWidgetsApiResponse,
+				GetHomeWidgetsApiArg
 			>({
-				query: () => ({ url: `${BASE_URL}${INIT_API_URL}` }),
-				providesTags: ['home_init_user']
+				query: () => ({ url: `/mock-api/dashboards/project/widgets` }),
+				providesTags: ['project_dashboard_widgets']
 			}),
-			getUserPacs: build.query<
-				GetUserPacsApiResponse,
-				GetUserInitApiArg
+			getHomeProjects: build.query<
+				GetHomeProjectsApiResponse,
+				GetHomeProjectsApiArg
 			>({
-				query: () => ({ url: `${BASE_URL}${PACK_INFO_API_URL}` }),
-				providesTags: ['home_user_pacs']
-			}),
+				query: () => ({ url: `/mock-api/dashboards/project/projects` }),
+				providesTags: ['project_dashboard_projects']
+			})
 		}),
 		overrideExisting: false
 	});
 export default HomeApi;
 
-export type GetUserPacsApiResponse = {
-	pacs: any[];
-	success: boolean;
-	usuariosGoogle: any[];
+export type GetHomeWidgetsApiResponse = {
+	[key: string]: HomeDataType;
 };
-export type GetUserPacArgs = void;
+export type GetHomeWidgetsApiArg = void;
 
-
-export type GetUserInitApiResponse = {
-	[key: string]: any;
-};
-export type GetUserInitApiArg = void;
-
-export type GetProjectDashboardProjectsApiResponse = /** status 200 OK */ ProjectType[];
-export type GetProjectDashboardProjectsApiArg = void;
+export type GetHomeProjectsApiResponse = /** status 200 OK */ ProjectType[];
+export type GetHomeProjectsApiArg = void;
 
 export type ProjectType = {
 	id: number;
 	name: string;
 };
 
-export const { useGetInitUserQuery, useGetUserPacsQuery } = HomeApi;
+export const { useGetHomeWidgetsQuery, useGetHomeProjectsQuery } = HomeApi;
 
 export type HomeApiType = {
 	[HomeApi.reducerPath]: ReturnType<typeof HomeApi.reducer>;
@@ -59,15 +52,15 @@ export type HomeApiType = {
  * Lazy load
  * */
 declare module 'app/store/lazyLoadedSlices' {
-	export interface LazyLoadedSlices extends WithSlice<typeof HomeApi> { }
+	export interface LazyLoadedSlices extends WithSlice<typeof HomeApi> {}
 }
 
-export const selectProjectDashboardWidgets = createSelector(
-	HomeApi.endpoints.getInitUser.select(),
+export const selectHomeWidgets = createSelector(
+	HomeApi.endpoints.getHomeWidgets.select(),
 	(results) => results.data
 );
 
 export const selectWidget = <T>(id: string) =>
-	createSelector(selectProjectDashboardWidgets, (widgets) => {
+	createSelector(selectHomeWidgets, (widgets) => {
 		return widgets?.[id] as T;
 	});

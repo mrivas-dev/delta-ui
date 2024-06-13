@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 import ReportsAppHeader from './ReportsAppHeader';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { useGetProjectDashboardWidgetsQuery } from './ReportsApi';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -20,17 +19,16 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 
 function Reports() {
 	const { t } = useTranslation('reportsPage');
-	const { data: widgets, isLoading } = useGetProjectDashboardWidgetsQuery();
-
+	
 	const [tabValue, setTabValue] = useState(0);
 
 	function handleChangeTab(event: React.SyntheticEvent, value: number) {
 		setTabValue(value);
 	}
 
-	if (isLoading) {
-		return <FuseLoading />;
-	}
+	// if (isLoading) {
+	// 	return <FuseLoading />;
+	// }
 
 	return (
 		<Root
