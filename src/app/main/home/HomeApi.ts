@@ -3,7 +3,7 @@ import { apiService as api } from 'app/store/apiService';
 import HomeDataType from './widgets/types/HomeDataType';
 import { BASE_URL, PACK_INFO_API_URL } from 'src/app/constants/api';
 
-export const addTagTypes = ['project_dashboard_widgets', 'project_dashboard_projects'] as const;
+export const addTagTypes = ['project_dashboard_widgets', 'project_dashboard_pacs'] as const;
 
 const HomeApi = api
 	.enhanceEndpoints({
@@ -18,12 +18,12 @@ const HomeApi = api
 				query: () => ({ url: `/mock-api/dashboards/project/widgets` }),
 				providesTags: ['project_dashboard_widgets']
 			}),
-			getHomeProjects: build.query<
-				GetHomeProjectsApiResponse,
-				GetHomeProjectsApiArg
+			getHomePacs: build.query<
+				GetHomePacsApiResponse,
+				GetHomePacsApiArg
 			>({
 				query: () => ({ url: `${BASE_URL}${PACK_INFO_API_URL}` }),
-				providesTags: ['project_dashboard_projects']
+				providesTags: ['project_dashboard_pacs']
 			})
 		}),
 		overrideExisting: false
@@ -35,8 +35,8 @@ export type GetHomeWidgetsApiResponse = {
 };
 export type GetHomeWidgetsApiArg = void;
 
-export type GetHomeProjectsApiResponse = SelPacsResponse;
-export type GetHomeProjectsApiArg = void;
+export type GetHomePacsApiResponse = SelPacsResponse;
+export type GetHomePacsApiArg = void;
 
 export type ProjectType = {
 	id: number;
@@ -73,7 +73,7 @@ export type SelPacsResponse = {
 	usuariosGoogle: any[];
 };
 
-export const { useGetHomeWidgetsQuery, useGetHomeProjectsQuery } = HomeApi;
+export const { useGetHomeWidgetsQuery, useGetHomePacsQuery } = HomeApi;
 
 export type HomeApiType = {
 	[HomeApi.reducerPath]: ReturnType<typeof HomeApi.reducer>;

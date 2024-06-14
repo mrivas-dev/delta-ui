@@ -10,29 +10,29 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from 'react-i18next';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
 import { useAppSelector } from 'app/store/hooks';
-import { useGetHomeProjectsQuery } from './HomeApi';
+import { useGetHomePacsQuery } from './HomeApi';
 
 /**
  * The HomeHeader page.
  */
 function HomeHeader() {
 	const { t } = useTranslation('homePage');
-	const { data: pacInfo, isLoading } = useGetHomeProjectsQuery();
+	const { data: pacInfo, isLoading } = useGetHomePacsQuery();
 
 	const { user } = useAppSelector(selectUser);
 
-	const [selectedProject, setSelectedProject] = useState<{ id: string; menuEl: HTMLElement | null }>({
-		id: "DELTACLOUD",
+	const [selectedProject, setSelectedProject] = useState<{ id: number; menuEl: HTMLElement | null }>({
+		id: 1,
 		menuEl: null
 	});
 
 	useEffect(()=>{
 		if(pacInfo?.pacs.length){
-			handleChangeProject(pacInfo?.pacs[0].codigo)
+			handleChangeProject(pacInfo?.pacs[0].id)
 		}
 	}, [pacInfo?.pacs]);
 
-	function handleChangeProject(id: string) {
+	function handleChangeProject(id: number) {
 		setSelectedProject({
 			id,
 			menuEl: null
@@ -85,7 +85,7 @@ function HomeHeader() {
 						</FuseSvgIcon>
 					}
 				>
-					{_.find(pacInfo.pacs, ['codigo', selectedProject.id])?.nombre}
+					{_.find(pacInfo.pacs, ['id', selectedProject.id])?.nombre}
 				</Button>
 				<Menu
 					id="project-menu"
@@ -96,9 +96,9 @@ function HomeHeader() {
 					{pacInfo &&
 						pacInfo.pacs.map((project) => (
 							<MenuItem
-								key={project.codigo}
+								key={`${project.id}-${project.codigo}`}
 								onClick={() => {
-									handleChangeProject(project.codigo);
+									handleChangeProject(project.id);
 								}}
 							>
 								{project.nombre}

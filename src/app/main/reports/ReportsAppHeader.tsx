@@ -1,7 +1,7 @@
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import _ from '@lodash';
 import Button from '@mui/material/Button';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import en from './i18n/en';
 import es from './i18n/es';
 import i18next from 'i18next';
+import { useGetReportPacsQuery } from './ReportsApi';
 
 i18next.addResourceBundle('en', 'reportsPage', en);
 i18next.addResourceBundle('es', 'reportsPage', es);
@@ -18,8 +19,8 @@ i18next.addResourceBundle('es', 'reportsPage', es);
  */
 function ReportsAppHeader() {
 	const { t } = useTranslation('reportsPage');
-	const isLoading = false;
-	const projects = [];
+
+	const { data: pacInfo, isLoading } = useGetReportPacsQuery();
 
 	const [selectedFilter, setSelectedFilter] = useState<string>("TODAY");
 
@@ -27,6 +28,12 @@ function ReportsAppHeader() {
 		id: 1,
 		menuEl: null
 	});
+
+	useEffect(() => {
+		if (pacInfo?.pacs.length) {
+			handleChangeProject(pacInfo?.pacs[0].id)
+		}
+	}, [pacInfo?.pacs]);
 
 	function handleChangeProject(id: number) {
 		setSelectedProject({
@@ -99,7 +106,7 @@ function ReportsAppHeader() {
 						</FuseSvgIcon>
 					}
 				>
-					{_.find(projects, ['id', selectedProject.id])?.name}
+					{_.find(pacInfo.pacs, ['id', selectedProject.id])?.nombre}
 				</Button>
 				<Menu
 					id="project-menu"
@@ -107,15 +114,15 @@ function ReportsAppHeader() {
 					open={Boolean(selectedProject.menuEl)}
 					onClose={handleCloseProjectMenu}
 				>
-					{projects &&
-						projects.map((project) => (
+					{pacInfo &&
+						pacInfo.pacs.map((project) => (
 							<MenuItem
-								key={project.id}
+								key={`${project.id}-${project.codigo}`}
 								onClick={() => {
 									handleChangeProject(project.id);
 								}}
 							>
-								{project.name}
+								{project.nombre}
 							</MenuItem>
 						))}
 				</Menu>
