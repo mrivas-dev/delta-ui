@@ -1,18 +1,17 @@
+import { useState } from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { Button, Collapse, IconButton, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import { useState } from 'react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-const ReportFilters = () => {
-    const [checked, setChecked] = useState(true);
 
-    const handleChange = () => {
-        setChecked((prev) => !prev);
-    };
+const ReportFilters = ({ initialFilters, changeFilters }) => {
+    const [showFilters, setShowFilters] = useState(true);
+
     return (
-
-
         <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
             <div>
                 Filtrar
@@ -20,20 +19,20 @@ const ReportFilters = () => {
                     disableRipple
                     className="h-16 w-16 p-0 ltr:ml-4 rtl:mr-4"
                     color="inherit"
-                    onClick={() => { setChecked((prev) => !prev) }}
+                    onClick={() => { setShowFilters((prev) => !prev) }}
                     size="large"
                 >
                     <FuseSvgIcon
                         size={16}
                         className="arrow-icon"
                     >
-                        {checked
+                        {showFilters
                             ? 'heroicons-outline:arrow-sm-down'
                             : 'heroicons-outline:arrow-sm-up'}
                     </FuseSvgIcon>
                 </IconButton>
             </div>
-            <Collapse in={checked}>
+            <Collapse in={showFilters}>
                 <Stack
                     direction={{ md: 'column', lg: 'row' }}
                     justifyContent={{ md: 'center', lg: 'space-between' }}>
@@ -54,20 +53,9 @@ const ReportFilters = () => {
                                 inputProps={{ 'aria-label': 'search google maps' }}
                             />
                         </Paper>
-                        <Paper
-                            component="form"
-                            variant='outlined'
-                            sx={{ p: '2px 4px', margin: '0 10px', display: 'flex', alignItems: 'center', width: "25%" }}
-                        >
-                            <div className="ml-10 mt-10 mb-10">
-                                <FuseSvgIcon>material-twotone:date_range</FuseSvgIcon>
-                            </div>
-                            <InputBase
-                                sx={{ ml: 1, flex: 1 }}
-                                placeholder="Buscar estudio"
-                                inputProps={{ 'aria-label': 'search google maps' }}
-                            />
-                        </Paper>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker disableFuture label="Fecha" />
+                        </LocalizationProvider>
                         <Paper
                             component="form"
                             variant='outlined'
@@ -78,7 +66,7 @@ const ReportFilters = () => {
                             </div>
                             <InputBase
                                 sx={{ ml: 1, flex: 1 }}
-                                placeholder="Buscar estudio"
+                                placeholder="Equipo"
                                 inputProps={{ 'aria-label': 'search google maps' }}
                             />
                         </Paper>
@@ -92,7 +80,7 @@ const ReportFilters = () => {
                             </div>
                             <InputBase
                                 sx={{ ml: 1, flex: 1 }}
-                                placeholder="Buscar estudio"
+                                placeholder="Estudio"
                                 inputProps={{ 'aria-label': 'search google maps' }}
                             />
                         </Paper>

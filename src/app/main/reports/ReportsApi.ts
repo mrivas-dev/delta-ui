@@ -1,9 +1,9 @@
 import { WithSlice } from '@reduxjs/toolkit';
 import { apiService as api } from 'app/store/apiService';
 
-import { BASE_URL, PACK_INFO_API_URL } from 'src/app/constants/api';
+import { BASE_URL, IMG_STUDIES_API, PACK_INFO_API_URL } from 'src/app/constants/api';
 
-export const addTagTypes = ['project_reports_pacs'] as const;
+export const addTagTypes = ['project_reports_pacs', 'project_reports_studies'] as const;
 
 const ReportApi = api
 	.enhanceEndpoints({
@@ -17,7 +17,13 @@ const ReportApi = api
 			>({
 				query: () => ({ url: `${BASE_URL}${PACK_INFO_API_URL}` }),
 				providesTags: ['project_reports_pacs']
-			})
+			}),
+			getStudies: build.mutation<
+			any,
+			any
+		>({
+			query: (filters) => ({ url: `${BASE_URL}${IMG_STUDIES_API}`, method: 'POST', data: filters })
+		}),
 		}),
 		overrideExisting: false
 	});
@@ -63,7 +69,7 @@ export type SelPacsResponse = {
 	usuariosGoogle: any[];
 };
 
-export const { useGetReportPacsQuery } = ReportApi;
+export const { useGetReportPacsQuery, useGetStudiesMutation } = ReportApi;
 
 export type ReportApiType = {
 	[ReportApi.reducerPath]: ReturnType<typeof ReportApi.reducer>;

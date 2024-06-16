@@ -1,19 +1,20 @@
 /* eslint-disable react/no-unstable-nested-components */
+import React from 'react';
 import { useMemo } from 'react';
 import { type MRT_ColumnDef } from 'material-react-table';
 import DataTable from 'app/shared-components/data-table/DataTable';
 import { ListItemIcon, MenuItem, Paper } from '@mui/material';
-import * as React from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { EcommerceOrder, useDeleteECommerceOrdersMutation, useGetECommerceOrdersQuery } from './ECommerceApi';
-import OrdersStatus from './OrdersStatus';
+import { EcommerceOrder, useDeleteECommerceOrdersMutation, useGetECommerceOrdersQuery } from '../ECommerceApi';
+import OrdersStatus from '../OrdersStatus';
 
-function OrdersTable() {
+const ReportTable = ({ filters }) => {
 	const { data: orders, isLoading } = useGetECommerceOrdersQuery();
+
 	const [removeOrders] = useDeleteECommerceOrdersMutation();
 
 	const columns = useMemo<MRT_ColumnDef<EcommerceOrder>[]>(
@@ -68,6 +69,9 @@ function OrdersTable() {
 	if (isLoading) {
 		return <FuseLoading />;
 	}
+
+
+
 
 	return (
 		<Paper
@@ -134,4 +138,4 @@ function OrdersTable() {
 	);
 }
 
-export default OrdersTable;
+export default ReportTable;
