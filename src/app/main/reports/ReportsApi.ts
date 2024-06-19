@@ -19,11 +19,11 @@ const ReportApi = api
 				providesTags: ['project_reports_pacs']
 			}),
 			getStudies: build.mutation<
-			any,
-			any
-		>({
-			query: (filters) => ({ url: `${BASE_URL}${IMG_STUDIES_API}`, method: 'POST', data: filters })
-		}),
+				GetStudiesApiResponse,
+				GetStudiesApiArg
+			>({
+				query: (filters) => ({ url: `${BASE_URL}${IMG_STUDIES_API}`, method: 'POST', data: filters })
+			}),
 		}),
 		overrideExisting: false
 	});
@@ -33,6 +33,9 @@ export type GetHomeWidgetsApiArg = void;
 
 export type GetReportPacsApiResponse = SelPacsResponse;
 export type GetReportPacsApiArg = void;
+
+export type GetStudiesApiResponse = StudiesResponse;
+export type GetStudiesApiArg = any;
 
 export type ProjectType = {
 	id: number;
@@ -68,6 +71,43 @@ export type SelPacsResponse = {
 	success: boolean;
 	usuariosGoogle: any[];
 };
+
+export type StudiesResponse = {
+	data: StudiesType[];
+	current_page: number;
+	from: number;
+	last_page: number;
+	per_page: number;
+	success: boolean;
+	to: number;
+	total: number;
+};
+
+export type StudiesType = {
+	AccessionNumber: string;
+	Allergies: string;
+	InstanceAvailability: string;
+	IssuerOfPatientID: string;
+	MedicalAlerts: string;
+	Modality: string;
+	NumberOfStudyRelatedInstances: string;
+	OtherPatientIDs: string;
+	PatientBirthDate: string;
+	PatientID: string;
+	PatientName: string;
+	PatientSex: string;
+	QueryRetrieveLevel: string;
+	RequestedProcedureDescription: string;
+	RetrieveAETitle: string;
+	SeriesDate: string;
+	SeriesNro: 1;
+	SpecificCharacterSet: string;
+	StudyDate: string;
+	StudyDescription: string;
+	StudyInstanceUID: string;
+	StudyTime: string;
+	sortStudyDate: string;
+}
 
 export const { useGetReportPacsQuery, useGetStudiesMutation } = ReportApi;
 

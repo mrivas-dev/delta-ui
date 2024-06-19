@@ -26,14 +26,9 @@ const INITIAL_FILTERS = {
 const ReportContent = () => {
 
 	const [filters, setFilters] = useState<any>(INITIAL_FILTERS);
-
+	const [studiesData, setStudiesData] = useState<any[]>([]);
+	const [studiesLoading, setStudiesLoading] = useState<boolean>(false);
 	const [studiesMutation] = useGetStudiesMutation({});
-	// const getStudies = () => {
-	// 	studiesMutation(filters)
-	// .then((data) => {
-	// 	console.log({ data });
-	// });
-	// }
 
 	const container = {
 		show: {
@@ -53,8 +48,12 @@ const ReportContent = () => {
 	}
 
 	useEffect(() => {
-		studiesMutation(filters).then((data) => {
-			console.log({ data });
+		setStudiesLoading(true);
+		studiesMutation(filters).then((response: any) => {
+			if (response?.data?.success) {
+				setStudiesData(response?.data?.data);
+			}
+			setStudiesLoading(false);
 		});
 	}, [filters]);
 
@@ -70,7 +69,7 @@ const ReportContent = () => {
 				className="sm:col-span-2 md:col-span-4"
 			>
 				<ReportFilters initialFilters={INITIAL_FILTERS} changeFilters={onFiltersChange} />
-				<ReportTable filters={INITIAL_FILTERS} />
+				<ReportTable isLoading={studiesLoading} studies={studiesData} filters={INITIAL_FILTERS} />
 			</motion.div>
 		</motion.div>
 	);
