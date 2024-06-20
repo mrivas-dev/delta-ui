@@ -31,8 +31,8 @@ const PacServerProvider = (props: PacServerProviderProps) => {
 	const [selectedServer, setSelectedServer] = useState<PacServerType | null>(null);
 
 	const chosePac = (selectedPac: PacServerType): void => {
-		setSelectedServer(pacInfo.pacs[0]);
-		localStorage.setItem(pacServerProviderLocalStorageKey, JSON.stringify(pacInfo.pacs[0]));
+		setSelectedServer(selectedPac);
+		localStorage.setItem(pacServerProviderLocalStorageKey, JSON.stringify(selectedPac));
 	}
 
 	useEffect(() => {

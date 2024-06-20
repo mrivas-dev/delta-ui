@@ -71,7 +71,7 @@ function ReportsAppHeader() {
 						</Typography>
 					</div>
 				</div>
-				<div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
+				{/* <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
 					<Button
 						className="whitespace-nowrap"
 						variant={selectedFilter === 'TODAY' ? 'contained' : 'outlined'}
@@ -88,7 +88,7 @@ function ReportsAppHeader() {
 					>
 						{t('REPORTS_HEADER_BUTTON_YESTERDAY')}
 					</Button>
-				</div>
+				</div> */}
 			</div>
 			<div className="flex items-center">
 				<Button

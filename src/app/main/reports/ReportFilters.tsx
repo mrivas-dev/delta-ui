@@ -1,19 +1,26 @@
 import { useState } from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { Button, Collapse, IconButton, Stack } from '@mui/material';
+import { Box, Button, Collapse, IconButton, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import en from './i18n/en';
+import es from './i18n/es';
 
+i18next.addResourceBundle('en', 'reportsPage', en);
+i18next.addResourceBundle('es', 'reportsPage', es);
 
-const ReportFilters = ({ initialFilters, changeFilters }) => {
+const ReportFilters = ({ filters, changeFilters }) => {
+    const { t } = useTranslation('reportsPage');
     const [showFilters, setShowFilters] = useState(true);
 
     return (
         <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
-            <div>
+            <Box className="pb-12">
                 Filtrar
                 <IconButton
                     disableRipple
@@ -31,7 +38,7 @@ const ReportFilters = ({ initialFilters, changeFilters }) => {
                             : 'heroicons-outline:arrow-sm-up'}
                     </FuseSvgIcon>
                 </IconButton>
-            </div>
+            </Box>
             <Collapse in={showFilters}>
                 <Stack
                     direction={{ md: 'column', lg: 'row' }}
@@ -89,16 +96,18 @@ const ReportFilters = ({ initialFilters, changeFilters }) => {
                         <Button
                             className="whitespace-nowrap"
                             variant="outlined"
-                            color="primary"
+                            onClick={() => { changeFilters({ searchApproved: !filters.searchApproved }) }}
+                            color={filters.searchApproved ? 'secondary' : 'primary'}
                         >
-                            Aprobados
+                            {t('REPORTS_FILTER_APPROVED')}
                         </Button>
                         <Button
                             className="whitespace-nowrap"
                             variant="outlined"
-                            color="primary"
+                            onClick={() => { changeFilters({ searchSigned: !filters.searchSigned }) }}
+                            color={filters.searchSigned ? 'secondary' : 'primary'}
                         >
-                            Firmados
+                            {t('REPORTS_FILTER_SIGNED')}
                         </Button>
                     </div>
                 </Stack>

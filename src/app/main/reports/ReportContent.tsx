@@ -22,7 +22,7 @@ const INITIAL_FILTERS = {
 		tipoBusqueda: "EST",
 		tipoEst: [],
 	}
-}
+};
 
 const ReportContent = () => {
 	const { getSelectedPac } = usePacServer();
@@ -45,7 +45,8 @@ const ReportContent = () => {
 	};
 
 	const onFiltersChange = (newFilters) => {
-		setFilters(newFilters);
+		console.log({ newFilters: { ...filters, ...newFilters } });
+		setFilters((oldFilters) => ({ ...oldFilters, ...newFilters }));
 	}
 
 	useEffect(() => {
@@ -69,7 +70,10 @@ const ReportContent = () => {
 				variants={item}
 				className="sm:col-span-2 md:col-span-4"
 			>
-				<ReportFilters initialFilters={INITIAL_FILTERS} changeFilters={onFiltersChange} />
+				<ReportFilters
+					filters={filters}
+					changeFilters={onFiltersChange}
+				/>
 				<ReportTable isLoading={studiesLoading} studies={studiesData} filters={INITIAL_FILTERS} />
 			</motion.div>
 		</motion.div>
