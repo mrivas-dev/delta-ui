@@ -18,7 +18,6 @@ import { useGetHomeWidgetsQuery } from '../HomeApi';
 function HomeWidget() {
 	const { t } = useTranslation('homePage');
 	const theme = useTheme();
-	const [awaitRender, setAwaitRender] = useState(true);
 	const [tabValue, setTabValue] = useState(0);
 
 	const { data: widgets, isLoading } = useGetHomeWidgetsQuery();
@@ -109,14 +108,6 @@ function HomeWidget() {
 			}
 		}
 	});
-
-	useEffect(() => {
-		setAwaitRender(false);
-	}, []);
-
-	if (awaitRender) {
-		return null;
-	}
 
 	return (
 		<Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">

@@ -58,10 +58,6 @@ const ReportContent = () => {
 		});
 	}, [filters]);
 
-	useEffect(() => {
-		console.log({ cambio: getSelectedPac() });
-	}, [getSelectedPac]);
-
 	return (
 		<motion.div
 			className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0 p-24"

@@ -1,9 +1,8 @@
 import { createSelector, WithSlice } from '@reduxjs/toolkit';
 import { apiService as api } from 'app/store/apiService';
 import HomeDataType from './widgets/types/HomeDataType';
-import { BASE_URL, PACK_INFO_API_URL } from 'src/app/constants/api';
 
-export const addTagTypes = ['project_dashboard_widgets', 'project_dashboard_pacs'] as const;
+export const addTagTypes = ['project_dashboard_widgets'] as const;
 
 const HomeApi = api
 	.enhanceEndpoints({
@@ -17,13 +16,6 @@ const HomeApi = api
 			>({
 				query: () => ({ url: `/mock-api/dashboards/project/widgets` }),
 				providesTags: ['project_dashboard_widgets']
-			}),
-			getHomePacs: build.query<
-				GetHomePacsApiResponse,
-				GetHomePacsApiArg
-			>({
-				query: () => ({ url: `${BASE_URL}${PACK_INFO_API_URL}` }),
-				providesTags: ['project_dashboard_pacs']
 			})
 		}),
 		overrideExisting: false
@@ -35,45 +27,12 @@ export type GetHomeWidgetsApiResponse = {
 };
 export type GetHomeWidgetsApiArg = void;
 
-export type GetHomePacsApiResponse = SelPacsResponse;
-export type GetHomePacsApiArg = void;
-
 export type ProjectType = {
 	id: number;
 	name: string;
 };
 
-export type PacType = {
-	id: number;
-	addinforme: boolean;
-	agregaStu: string;
-	assignWL: string;
-	codigo: string;
-	downCD: boolean;
-	fecha_fija: string;
-	marcaStudy: boolean;
-	modalidad_fija: any[];
-	nombre: string;
-	noupload: boolean;
-	observaciones: number;
-	origenWlscu: string;
-	otroVisor: boolean;
-	pedidomedico: boolean;
-	shareWhat: boolean;
-	teclaInfo: boolean;
-	tipo: string;
-	uriAlt: string;
-	uriVisor: string;
-	usertf: boolean;
-}
-
-export type SelPacsResponse = {
-	pacs: PacType[];
-	success: boolean;
-	usuariosGoogle: any[];
-};
-
-export const { useGetHomeWidgetsQuery, useGetHomePacsQuery } = HomeApi;
+export const { useGetHomeWidgetsQuery } = HomeApi;
 
 export type HomeApiType = {
 	[HomeApi.reducerPath]: ReturnType<typeof HomeApi.reducer>;

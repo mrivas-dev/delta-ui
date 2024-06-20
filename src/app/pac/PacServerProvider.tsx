@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import { useGetPacServerQuery } from './PacServerApi';
 import { useAppSelector } from 'app/store/hooks';
 import { selectUser } from '../auth/user/store/userSlice';
@@ -30,6 +30,17 @@ const PacServerProvider = (props: PacServerProviderProps) => {
 	const { data: pacInfo, isLoading: isPacServerProviderListLoading } = useGetPacServerQuery(null, { skip: !user?.id });
 	const [selectedServer, setSelectedServer] = useState<PacServerType | null>(null);
 
+	const chosePac = (selectedPac: PacServerType): void => {
+		setSelectedServer(pacInfo.pacs[0]);
+		localStorage.setItem(pacServerProviderLocalStorageKey, JSON.stringify(pacInfo.pacs[0]));
+	}
+
+	useEffect(() => {
+		if (pacInfo?.success && pacInfo?.pacs?.length && !selectedServer) {
+			chosePac(pacInfo.pacs[0]);
+		}
+	}, [pacInfo]);
+
 
 	/**
 	 * Get pac server provider list
@@ -55,8 +66,7 @@ const PacServerProvider = (props: PacServerProviderProps) => {
 	 */
 	const setPacServerProvider = useCallback((pacProvider: any) => {
 		if (pacProvider?.id) {
-			setSelectedServer(pacProvider);
-			localStorage.setItem(pacServerProviderLocalStorageKey, JSON.stringify(pacProvider));
+			chosePac(pacProvider);
 		}
 	}, []);
 

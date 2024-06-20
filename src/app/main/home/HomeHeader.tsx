@@ -1,4 +1,3 @@
-import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
@@ -10,15 +9,17 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from 'react-i18next';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
 import { useAppSelector } from 'app/store/hooks';
-import { useGetHomePacsQuery } from './HomeApi';
+import { PacServerType } from 'src/app/pac/PacServerTypes';
+import usePacServer from 'src/app/pac/usePacServer';
 
 /**
  * The HomeHeader page.
  */
 function HomeHeader() {
 	const { t } = useTranslation('homePage');
-	const { data: pacInfo, isLoading } = useGetHomePacsQuery();
-
+	const { getPacs, isPacServerProviderListLoading, getPacServerProvider, setPacServerProvider } = usePacServer();
+	const [pacList, setPacList] = useState<PacServerType[]>([]);
+	
 	const { user } = useAppSelector(selectUser);
 
 	const [selectedProject, setSelectedProject] = useState<{ id: number; menuEl: HTMLElement | null }>({
@@ -26,13 +27,15 @@ function HomeHeader() {
 		menuEl: null
 	});
 
-	useEffect(()=>{
-		if(pacInfo?.pacs.length){
-			handleChangeProject(pacInfo?.pacs[0].id)
+	useEffect(() => {
+		if (getPacs()?.length && !pacList.length) {
+			setPacList(getPacs());
+			handleChangeProject(getPacServerProvider()?.id || pacList[0]?.id);
 		}
-	}, [pacInfo?.pacs]);
+	}, [getPacs]);
 
 	function handleChangeProject(id: number) {
+		setPacServerProvider(pacList.find((e => e.id === id)));
 		setSelectedProject({
 			id,
 			menuEl: null
@@ -53,7 +56,7 @@ function HomeHeader() {
 		});
 	}
 
-	if (isLoading) {
+	if (isPacServerProviderListLoading) {
 		return <FuseLoading />;
 	}
 
@@ -85,7 +88,7 @@ function HomeHeader() {
 						</FuseSvgIcon>
 					}
 				>
-					{_.find(pacInfo.pacs, ['id', selectedProject.id])?.nombre}
+					{_.find(pacList, ['id', selectedProject.id])?.nombre}
 				</Button>
 				<Menu
 					id="project-menu"
@@ -93,8 +96,8 @@ function HomeHeader() {
 					open={Boolean(selectedProject.menuEl)}
 					onClose={handleCloseProjectMenu}
 				>
-					{pacInfo &&
-						pacInfo.pacs.map((project) => (
+					{pacList?.length &&
+						pacList.map((project) => (
 							<MenuItem
 								key={`${project.id}-${project.codigo}`}
 								onClick={() => {

@@ -4,6 +4,7 @@ import HomeHeader from './HomeHeader';
 import HomeContent from './HomeContent';
 import { useGetHomeWidgetsQuery } from './HomeApi';
 import FuseLoading from '@fuse/core/FuseLoading';
+import usePacServer from 'src/app/pac/usePacServer';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -13,9 +14,9 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 const Home = () => {
-	const { data, isLoading } = useGetHomeWidgetsQuery();
-
-	if (isLoading) {
+	const { isLoading } = useGetHomeWidgetsQuery();
+	const { isPacServerProviderListLoading } = usePacServer();
+	if (isLoading || isPacServerProviderListLoading) {
 		return <FuseLoading />;
 	}
 	return (
