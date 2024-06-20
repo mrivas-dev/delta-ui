@@ -20,7 +20,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function Reports() {
-	const { data, isLoading } = useGetReportPacsQuery();
+	const { isLoading } = useGetReportPacsQuery();
 
 	if (isLoading) {
 		return <FuseLoading />;

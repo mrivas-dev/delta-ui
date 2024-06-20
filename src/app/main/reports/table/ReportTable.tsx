@@ -1,47 +1,16 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import { useMemo } from 'react';
-import { MRT_GlobalFilterTextField, MRT_TableBodyCellValue, MRT_TablePagination, MRT_ToolbarAlertBanner, flexRender, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
+import { MRT_TableBodyCellValue, MRT_TablePagination, MRT_ToolbarAlertBanner, flexRender, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
 import { Box, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { useDeleteECommerceOrdersMutation, useGetECommerceOrdersQuery } from '../ECommerceApi';
-import { renderPatient, renderStudyActions, renderStudyDescription, renderStudyInfo } from './utils';
+import { ReportTableColumns } from './ReportTableColumns';
 
 
 const ReportTable = ({ studies, filters, isLoading }) => {
-	const { data: orders } = useGetECommerceOrdersQuery();
-
-	const [removeOrders] = useDeleteECommerceOrdersMutation();
 
 	const columns = useMemo<MRT_ColumnDef<any>[]>(
-		() => [
-			{
-				id: 'customer',
-				accessorFn: (row) => renderPatient(row),
-				header: 'Paciente'
-			},
-			{
-				id: 'study',
-				accessorFn: (row) => renderStudyInfo(row),
-				header: 'Estudio'
-			},
-			{
-				id: 'title',
-				accessorFn: (row) => renderStudyDescription(row),
-				header: 'Titulo'
-			},
-			{
-				id: 'date',
-				accessorKey: 'StudyDate',
-				header: 'Fecha'
-			},
-			{
-				id: 'actions',
-				accessorFn: (row) => renderStudyActions(row),
-				header: ''
-			}
-		],
+		() => ReportTableColumns,
 		[]
 	);
 	const table = useMaterialReactTable({

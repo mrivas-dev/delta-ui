@@ -3,6 +3,7 @@ import ReportFilters from './ReportFilters';
 import ReportTable from './table/ReportTable';
 import { useGetStudiesMutation } from './ReportsApi';
 import { useEffect, useState } from 'react';
+import usePacServer from 'src/app/pac/usePacServer';
 
 const PAGE_QUANTITY = 10;
 
@@ -24,7 +25,7 @@ const INITIAL_FILTERS = {
 }
 
 const ReportContent = () => {
-
+	const { getSelectedPac } = usePacServer();
 	const [filters, setFilters] = useState<any>(INITIAL_FILTERS);
 	const [studiesData, setStudiesData] = useState<any[]>([]);
 	const [studiesLoading, setStudiesLoading] = useState<boolean>(false);
@@ -56,6 +57,10 @@ const ReportContent = () => {
 			setStudiesLoading(false);
 		});
 	}, [filters]);
+
+	useEffect(() => {
+		console.log({ cambio: getSelectedPac() });
+	}, [getSelectedPac]);
 
 	return (
 		<motion.div

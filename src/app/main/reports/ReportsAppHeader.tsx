@@ -10,7 +10,8 @@ import { useTranslation } from 'react-i18next';
 import en from './i18n/en';
 import es from './i18n/es';
 import i18next from 'i18next';
-import { useGetReportPacsQuery } from './ReportsApi';
+import usePacServer from 'src/app/pac/usePacServer';
+import { PacServerType } from 'src/app/pac/PacServerTypes';
 
 i18next.addResourceBundle('en', 'reportsPage', en);
 i18next.addResourceBundle('es', 'reportsPage', es);
@@ -19,23 +20,23 @@ i18next.addResourceBundle('es', 'reportsPage', es);
  */
 function ReportsAppHeader() {
 	const { t } = useTranslation('reportsPage');
-
-	const { data: pacInfo, isLoading } = useGetReportPacsQuery();
-
+	const { getPacs, isPacServerProviderListLoading, getPacServerProvider, setPacServerProvider } = usePacServer();
+	const [pacList, setPacList] = useState<PacServerType[]>([]);
 	const [selectedFilter, setSelectedFilter] = useState<string>("TODAY");
-
 	const [selectedProject, setSelectedProject] = useState<{ id: number; menuEl: HTMLElement | null }>({
 		id: 1,
 		menuEl: null
 	});
 
 	useEffect(() => {
-		if (pacInfo?.pacs.length) {
-			handleChangeProject(pacInfo?.pacs[0].id)
+		if (getPacs()?.length && !pacList.length) {
+			setPacList(getPacs());
+			handleChangeProject(getPacServerProvider()?.id || pacList[0]?.id);
 		}
-	}, [pacInfo?.pacs]);
+	}, [getPacs]);
 
-	function handleChangeProject(id: number) {
+	const handleChangeProject = (id: number) => {
+		setPacServerProvider(pacList.find((e => e.id === id)));
 		setSelectedProject({
 			id,
 			menuEl: null
@@ -56,7 +57,7 @@ function ReportsAppHeader() {
 		});
 	}
 
-	if (isLoading) {
+	if (isPacServerProviderListLoading) {
 		return <FuseLoading />;
 	}
 
@@ -106,7 +107,7 @@ function ReportsAppHeader() {
 						</FuseSvgIcon>
 					}
 				>
-					{_.find(pacInfo.pacs, ['id', selectedProject.id])?.nombre}
+					{_.find(pacList, ['id', selectedProject.id])?.nombre}
 				</Button>
 				<Menu
 					id="project-menu"
@@ -114,8 +115,8 @@ function ReportsAppHeader() {
 					open={Boolean(selectedProject.menuEl)}
 					onClose={handleCloseProjectMenu}
 				>
-					{pacInfo &&
-						pacInfo.pacs.map((project) => (
+					{pacList?.length &&
+						pacList.map((project) => (
 							<MenuItem
 								key={`${project.id}-${project.codigo}`}
 								onClick={() => {

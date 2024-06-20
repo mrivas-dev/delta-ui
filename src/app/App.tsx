@@ -13,6 +13,7 @@ import { useAppSelector } from 'app/store/hooks';
 import { useSelector } from 'react-redux';
 import withAppProviders from './withAppProviders';
 import AuthenticationProvider from './auth/AuthenticationProvider';
+import PacServerProvider from './pac/PacServerProvider';
 
 /**
  * Axios HTTP Request defaults
@@ -68,7 +69,9 @@ function App() {
 								containerRoot: 'bottom-0 right-0 mb-52 md:mb-68 mr-8 lg:mr-80 z-99'
 							}}
 						>
-							<FuseLayout layouts={themeLayouts} />
+							<PacServerProvider>
+								<FuseLayout layouts={themeLayouts} />
+							</PacServerProvider>
 						</SnackbarProvider>
 					</AuthenticationProvider>
 				</FuseTheme>
