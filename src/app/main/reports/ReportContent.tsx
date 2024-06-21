@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react';
+import moment from 'moment';
 import { motion } from 'framer-motion';
 import ReportFilters from './ReportFilters';
 import ReportTable from './table/ReportTable';
 import { useGetStudiesMutation } from './ReportsApi';
-import { useEffect, useState } from 'react';
 import usePacServer from 'src/app/pac/usePacServer';
+
+export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR"];
 
 const PAGE_QUANTITY = 10;
 
@@ -14,7 +17,7 @@ const INITIAL_FILTERS = {
 	pag: 0,
 	texto: {
 		datosEst: "",
-		fecha: "",
+		fecha: moment().format("YYYY-MM-DD"),
 		hasta: "",
 		hastaVisible: false,
 		paciente: "",
@@ -24,30 +27,38 @@ const INITIAL_FILTERS = {
 	}
 };
 
+const container = {
+	show: {
+		transition: {
+			staggerChildren: 0.04
+		}
+	}
+};
+
+const item = {
+	hidden: { opacity: 0, y: 20 },
+	show: { opacity: 1, y: 0 }
+};
+
 const ReportContent = () => {
+
 	const { getSelectedPac } = usePacServer();
 	const [filters, setFilters] = useState<any>(INITIAL_FILTERS);
 	const [studiesData, setStudiesData] = useState<any[]>([]);
 	const [studiesLoading, setStudiesLoading] = useState<boolean>(false);
 	const [studiesMutation] = useGetStudiesMutation({});
 
-	const container = {
-		show: {
-			transition: {
-				staggerChildren: 0.04
-			}
-		}
-	};
-
-	const item = {
-		hidden: { opacity: 0, y: 20 },
-		show: { opacity: 1, y: 0 }
-	};
-
 	const onFiltersChange = (newFilters) => {
-		console.log({ newFilters: { ...filters, ...newFilters } });
+		console.log({ newFilters });
 		setFilters((oldFilters) => ({ ...oldFilters, ...newFilters }));
 	}
+
+	useEffect(() => {
+		if (!filters.texto?.servidor || getSelectedPac()?.id !== filters.texto?.servidor) {
+			const textFilters = { ...filters.texto, ...{ servidor: getSelectedPac()?.id } };
+			onFiltersChange({ ...filters, ...{ texto: textFilters } });
+		}
+	}, [getSelectedPac]);
 
 	useEffect(() => {
 		setStudiesLoading(true);

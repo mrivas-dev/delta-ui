@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import FusePageSimple from '@fuse/core/FusePageSimple';
-import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 import ReportsAppHeader from './ReportsAppHeader';
-import FuseLoading from '@fuse/core/FuseLoading';
 import ReportContent from './ReportContent';
-import { useGetReportPacsQuery } from './ReportsApi';
+
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -20,11 +17,6 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function Reports() {
-	const { isLoading } = useGetReportPacsQuery();
-
-	if (isLoading) {
-		return <FuseLoading />;
-	}
 
 	return (
 		<Root

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { Box, Button, Collapse, IconButton, Stack } from '@mui/material';
+import { Box, Button, Checkbox, Collapse, FormControl, IconButton, InputAdornment, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -10,13 +10,36 @@ import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import en from './i18n/en';
 import es from './i18n/es';
+import { MODALITY_LIST } from './ReportContent';
+import { DateTimePicker } from '@mui/x-date-pickers';
 
 i18next.addResourceBundle('en', 'reportsPage', en);
 i18next.addResourceBundle('es', 'reportsPage', es);
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
+
+const CalendarIcon = () => {
+    return <FuseSvgIcon>feather:calendar</FuseSvgIcon>
+}
+
+
 const ReportFilters = ({ filters, changeFilters }) => {
     const { t } = useTranslation('reportsPage');
     const [showFilters, setShowFilters] = useState(true);
+
+    const changeTextFilters = (newFilters) => {
+        const textFilters = { ...filters.texto, ...newFilters };
+        changeFilters({ ...filters, ...{ texto: textFilters } });
+    };
 
     return (
         <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
@@ -46,51 +69,123 @@ const ReportFilters = ({ filters, changeFilters }) => {
                     <Stack
                         direction={{ md: 'column', lg: 'row' }}
                     >
-                        <Paper
-                            component="form"
-                            variant='outlined'
-                            sx={{ p: '2px 4px', margin: '0 10px 0 0', display: 'flex', alignItems: 'center', width: "25%" }}
-                        >
-                            <div className="ml-10 mt-10 mb-10">
-                                <FuseSvgIcon>feather:search</FuseSvgIcon>
-                            </div>
-                            <InputBase
-                                sx={{ ml: 1, flex: 1 }}
-                                placeholder="Buscar estudio"
-                                inputProps={{ 'aria-label': 'search google maps' }}
+                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                            <InputLabel htmlFor="outlined-adornment-studies">Buscar estudios</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-studies"
+                                type="text"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <FuseSvgIcon>feather:search</FuseSvgIcon>
+                                    </InputAdornment>
+                                }
+                                label="Buscar estudios"
                             />
-                        </Paper>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker disableFuture label="Fecha" />
-                        </LocalizationProvider>
-                        <Paper
-                            component="form"
-                            variant='outlined'
-                            sx={{ p: '2px 4px', margin: '0 10px', display: 'flex', alignItems: 'center', width: "25%" }}
-                        >
-                            <div className="ml-10 mt-10 mb-10">
-                                <FuseSvgIcon>feather:settings</FuseSvgIcon>
-                            </div>
-                            <InputBase
-                                sx={{ ml: 1, flex: 1 }}
-                                placeholder="Equipo"
-                                inputProps={{ 'aria-label': 'search google maps' }}
+                        </FormControl>
+                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                            <DatePicker
+                                label="Fecha"
+                                onChange={(pickedFromDate: any) => {
+                                    changeTextFilters({ fecha: new Date(pickedFromDate).toISOString() })
+                                }}
+                                slotProps={{
+                                    textField: {
+                                        id: 'filter-date',
+                                        label: 'Fecha',
+                                        InputLabelProps: {
+                                            shrink: true
+                                        },
+                                        fullWidth: true,
+                                        variant: 'outlined'
+                                    },
+                                    actionBar: {
+                                        actions: ['clear', 'today']
+                                    }
+                                }}
+                                slots={{
+                                    openPickerIcon: CalendarIcon
+                                }}
                             />
-                        </Paper>
-                        <Paper
-                            component="form"
-                            variant='outlined'
-                            sx={{ p: '2px 4px', margin: '0 10px', display: 'flex', alignItems: 'center', width: "25%" }}
-                        >
-                            <div className="ml-10 mt-10 mb-10">
-                                <FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
-                            </div>
-                            <InputBase
-                                sx={{ ml: 1, flex: 1 }}
-                                placeholder="Estudio"
-                                inputProps={{ 'aria-label': 'search google maps' }}
-                            />
-                        </Paper>
+                        </FormControl>
+                        <div>
+                            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                                <InputLabel id="study-modality-label">Estudio</InputLabel>
+                                <Select
+                                    labelId="study-modality-label"
+                                    id="study-modality"
+                                    multiple
+                                    onChange={(event: any) => {
+                                        const {
+                                            target: { value },
+                                        } = event;
+                                        changeTextFilters({ tipoEst: value })
+                                    }}
+                                    value={filters?.texto?.tipoEst}
+                                    input={
+                                        <OutlinedInput
+                                            id="outlined-adornment-team"
+                                            type="text"
+                                            startAdornment={
+                                                <InputAdornment position="start">
+                                                    <FuseSvgIcon>feather:settings</FuseSvgIcon>
+                                                </InputAdornment>
+                                            }
+                                            label="Buscar estudios"
+                                        />
+                                    }
+                                    renderValue={(selected: any) => selected.join(', ')}
+                                    MenuProps={MenuProps}
+                                    variant="outlined"
+                                >
+                                    {MODALITY_LIST.map((modality: string) => (
+                                        <MenuItem key={modality} value={modality}>
+                                            <Checkbox checked={filters?.texto?.tipoEst.indexOf(modality) > -1} />
+                                            <ListItemText primary={modality} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>
+                        <div>
+                            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                                <InputLabel id="study-team-label">Equipo</InputLabel>
+                                <Select
+                                    labelId="study-team-label"
+                                    id="study-team"
+                                    multiple
+                                    onChange={(event: any) => {
+                                        const {
+                                            target: { value },
+                                        } = event;
+                                        changeTextFilters({ tipoEst: value })
+                                    }}
+                                    value={filters?.texto?.tipoEst}
+                                    input={
+                                        <OutlinedInput
+                                            id="outlined-adornment-team"
+                                            type="text"
+                                            startAdornment={
+                                                <InputAdornment position="start">
+                                                    <FuseSvgIcon>feather:file-text</FuseSvgIcon>
+                                                </InputAdornment>
+                                            }
+                                            label="Buscar equipo"
+                                        />
+
+                                    }
+                                    renderValue={(selected: any) => selected.join(', ')}
+                                    MenuProps={MenuProps}
+                                    variant="outlined"
+                                >
+                                    {MODALITY_LIST.map((modality: string) => (
+                                        <MenuItem key={modality} value={modality}>
+                                            <Checkbox checked={filters?.texto?.tipoEst.indexOf(modality) > -1} />
+                                            <ListItemText primary={modality} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>
                     </Stack>
                     <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
                         <Button
