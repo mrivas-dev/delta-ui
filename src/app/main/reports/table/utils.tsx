@@ -5,9 +5,10 @@ import {
     Edit as EditIcon,
     Delete as DeleteIcon,
     Email as EmailIcon,
-  } from '@mui/icons-material';
+} from '@mui/icons-material';
+import { StudiesType } from '../ReportType';
 
-export const renderPatient = (row) => {
+export const renderPatient = (row: StudiesType) => {
     return <PatientListItem patient={row} />;
 };
 

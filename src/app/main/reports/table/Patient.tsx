@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { darken, styled } from '@mui/material/styles';
-import { StudiesType } from '../ReportsApi';
+import { darken } from '@mui/material/styles';
+import { StudiesType } from '../ReportType';
 
 type PatientListItemPropsType = {
     patient: StudiesType;
@@ -16,10 +16,11 @@ type PatientListItemPropsType = {
  */
 const PatientListItem = (patient: PatientListItemPropsType) => {
 
+    console.log({patient, patientName: patient.patient})
     const parsePatientName = (name: string) => {
         const splitedName = name.split("^");
-        const lastName = splitedName[0].charAt(0).toUpperCase() + splitedName[0].slice(1).toLocaleLowerCase();
-        const firstName = splitedName[1].charAt(0).toUpperCase() + splitedName[1].slice(1).toLocaleLowerCase();
+        const lastName = splitedName[0]?.charAt(0).toUpperCase() + splitedName[0]?.slice(1).toLocaleLowerCase();
+        const firstName = splitedName[1]?.charAt(0).toUpperCase() + splitedName[1]?.slice(1).toLocaleLowerCase();
         const secondName = splitedName.length > 1 ? splitedName[2]?.charAt(0).toUpperCase() + splitedName[2]?.slice(1).toLocaleLowerCase() : '';
         return `${lastName}, ${firstName}${secondName ? ` ${secondName}` : ''}`;
     }
@@ -40,7 +41,7 @@ const PatientListItem = (patient: PatientListItemPropsType) => {
                     component="span"
                     className="flex font-semibold"
                 >
-                    {parsePatientName(patient.patient.PatientName)}
+                    {parsePatientName(patient.patient?.PatientName)}
                 </Typography>
                 <Typography
                     className="text-11 font-medium capitalize"
