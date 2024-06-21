@@ -13,6 +13,7 @@ const ReportTable = ({ studies, filters, isLoading }) => {
 		() => ReportTableColumns,
 		[]
 	);
+
 	const table = useMaterialReactTable({
 		columns,
 		data: studies?.length ? studies : [],
@@ -39,7 +40,7 @@ const ReportTable = ({ studies, filters, isLoading }) => {
 
 	return (
 		<Paper
-			className="mt-5 flex flex-col flex-auto shadow-3 rounded-t-16 overflow-hidden rounded-b-0 w-full h-full"
+			className="mt-5 flex flex-col flex-auto shadow-3 rounded-t-16 overflow-hidden rounded-b-0 w-full h-auto"
 			elevation={0}
 		>
 			<Stack sx={{ m: '2rem 0' }}>
@@ -85,6 +86,8 @@ const ReportTable = ({ studies, filters, isLoading }) => {
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center',
+						alignSelf: 'end',
+						padding: '16px'
 					}}
 				>
 					<MRT_TablePagination table={table} />
