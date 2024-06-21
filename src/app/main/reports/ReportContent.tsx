@@ -49,7 +49,6 @@ const ReportContent = () => {
 	const [studiesMutation] = useGetStudiesMutation({});
 
 	const onFiltersChange = (newFilters) => {
-		console.log({ newFilters });
 		setFilters((oldFilters) => ({ ...oldFilters, ...newFilters }));
 	}
 

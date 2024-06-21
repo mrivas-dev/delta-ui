@@ -16,7 +16,6 @@ type PatientListItemPropsType = {
  */
 const PatientListItem = (patient: PatientListItemPropsType) => {
 
-    console.log({patient, patientName: patient.patient})
     const parsePatientName = (name: string) => {
         const splitedName = name.split("^");
         const lastName = splitedName[0]?.charAt(0).toUpperCase() + splitedName[0]?.slice(1).toLocaleLowerCase();

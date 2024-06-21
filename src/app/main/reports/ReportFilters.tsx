@@ -1,23 +1,34 @@
 import { useState } from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { Box, Button, Checkbox, Collapse, FormControl, IconButton, InputAdornment, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, Stack } from '@mui/material';
+import {
+    Box,
+    Button,
+    Checkbox,
+    Collapse,
+    FormControl,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    ListItemText,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    Stack
+} from '@mui/material';
 import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import en from './i18n/en';
 import es from './i18n/es';
 import { MODALITY_LIST } from './ReportContent';
-import { DateTimePicker } from '@mui/x-date-pickers';
 
 i18next.addResourceBundle('en', 'reportsPage', en);
 i18next.addResourceBundle('es', 'reportsPage', es);
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
+
 const MenuProps = {
     PaperProps: {
         style: {
@@ -30,7 +41,6 @@ const MenuProps = {
 const CalendarIcon = () => {
     return <FuseSvgIcon>feather:calendar</FuseSvgIcon>
 }
-
 
 const ReportFilters = ({ filters, changeFilters }) => {
     const { t } = useTranslation('reportsPage');
@@ -85,6 +95,7 @@ const ReportFilters = ({ filters, changeFilters }) => {
                         <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                             <DatePicker
                                 label="Fecha"
+                                defaultValue={new Date(filters?.texto?.fecha)}
                                 onChange={(pickedFromDate: any) => {
                                     changeTextFilters({ fecha: new Date(pickedFromDate).toISOString() })
                                 }}
