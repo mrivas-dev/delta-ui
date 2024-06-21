@@ -98,10 +98,14 @@ const ReportFilters = ({ filters, changeFilters }) => {
                                         fullWidth: true,
                                         variant: 'outlined'
                                     },
+                                    inputAdornment: {
+                                        position: 'start',
+                                    },
                                     actionBar: {
                                         actions: ['clear', 'today']
                                     }
                                 }}
+
                                 slots={{
                                     openPickerIcon: CalendarIcon
                                 }}

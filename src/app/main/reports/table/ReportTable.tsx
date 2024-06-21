@@ -25,6 +25,9 @@ const ReportTable = ({ studies, filters, isLoading }) => {
 			rowsPerPageOptions: [5, 10, 15],
 			variant: 'outlined',
 		},
+		renderEmptyRowsFallback: ({ table }) => (
+			<span>Customized No Rows Overlay</span>
+		),
 		paginationDisplayMode: 'pages',
 	});
 
