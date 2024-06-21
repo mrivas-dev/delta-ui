@@ -1,13 +1,28 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
 import { useMemo } from 'react';
-import { MRT_TableBodyCellValue, MRT_TablePagination, MRT_ToolbarAlertBanner, flexRender, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
-import { Box, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+	MRT_TableBodyCellValue,
+	MRT_TablePagination,
+	MRT_ToolbarAlertBanner,
+	flexRender,
+	useMaterialReactTable,
+	type MRT_ColumnDef
+} from 'material-react-table';
+import {
+	Box,
+	Paper,
+	Stack,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow
+} from '@mui/material';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { ReportTableColumns } from './ReportTableColumns';
 
-
-const ReportTable = ({ studies, filters, isLoading }) => {
+const ReportTable = ({ studies, isLoading }) => {
 
 	const columns = useMemo<MRT_ColumnDef<any>[]>(
 		() => ReportTableColumns,
@@ -19,24 +34,26 @@ const ReportTable = ({ studies, filters, isLoading }) => {
 		data: studies?.length ? studies : [],
 		enableRowSelection: true,
 		initialState: {
-			pagination: { pageSize: 5, pageIndex: 0 },
+			pagination: { pageSize: 10, pageIndex: 0 },
 			showGlobalFilter: true,
 		},
 		muiPaginationProps: {
-			rowsPerPageOptions: [5, 10, 15],
+			showRowsPerPage: false,
 			variant: 'outlined',
+			color: 'primary',
+			shape: 'rounded'
 		},
 		renderEmptyRowsFallback: ({ table }) => (
 			<span>Customized No Rows Overlay</span>
 		),
 		paginationDisplayMode: 'pages',
+
 	});
 
 
 	if (isLoading) {
 		return <FuseLoading />;
 	}
-
 
 	return (
 		<Paper

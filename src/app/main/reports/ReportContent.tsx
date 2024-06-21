@@ -6,7 +6,7 @@ import ReportTable from './table/ReportTable';
 import { useGetStudiesMutation } from './ReportsApi';
 import usePacServer from 'src/app/pac/usePacServer';
 
-export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR"];
+export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR", "OT", "PR", "US", "XA"];
 
 const PAGE_QUANTITY = 10;
 
@@ -84,7 +84,7 @@ const ReportContent = () => {
 					filters={filters}
 					changeFilters={onFiltersChange}
 				/>
-				<ReportTable isLoading={studiesLoading} studies={studiesData} filters={INITIAL_FILTERS} />
+				<ReportTable isLoading={studiesLoading} studies={studiesData} />
 			</motion.div>
 		</motion.div>
 	);

@@ -7,13 +7,6 @@ type PatientListItemPropsType = {
     patient: StudiesType;
 };
 
-/**
- * The Patient list item.
- * 
- * 
- * 
- * 
- */
 const PatientListItem = (patient: PatientListItemPropsType) => {
 
     const parsePatientName = (name: string) => {
@@ -21,7 +14,7 @@ const PatientListItem = (patient: PatientListItemPropsType) => {
         const lastName = splitedName[0]?.charAt(0).toUpperCase() + splitedName[0]?.slice(1).toLocaleLowerCase();
         const firstName = splitedName[1]?.charAt(0).toUpperCase() + splitedName[1]?.slice(1).toLocaleLowerCase();
         const secondName = splitedName.length > 1 ? splitedName[2]?.charAt(0).toUpperCase() + splitedName[2]?.slice(1).toLocaleLowerCase() : '';
-        return `${lastName}, ${firstName}${secondName ? ` ${secondName}` : ''}`;
+        return `${lastName}${firstName ? `, ${firstName}` : ''}${secondName ? ` ${secondName}` : ''}`;
     }
 
     return (
@@ -50,9 +43,6 @@ const PatientListItem = (patient: PatientListItemPropsType) => {
                 </Typography>
             </div>
         </div>
-
-
-
     );
 }
 

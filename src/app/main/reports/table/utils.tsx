@@ -1,6 +1,6 @@
 import Chip from '@mui/material/Chip';
 import PatientListItem from "./Patient"
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import {
     Edit as EditIcon,
     Delete as DeleteIcon,
@@ -17,7 +17,11 @@ export const renderStudyInfo = (row) => {
 };
 
 export const renderStudyDescription = (row) => {
-    return `${row?.StudyDescription || 'Sin datos'}`
+    return row?.StudyDescription
+        ? `${row?.StudyDescription}`
+        : <Typography variant="subtitle1" className="text-gray-400" gutterBottom>
+            Sin datos
+        </Typography>
 };
 
 export const renderStudyActions = (row) => {

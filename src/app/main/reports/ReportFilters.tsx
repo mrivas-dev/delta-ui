@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import {
     Box,
@@ -46,10 +46,19 @@ const ReportFilters = ({ filters, changeFilters }) => {
     const { t } = useTranslation('reportsPage');
     const [showFilters, setShowFilters] = useState(true);
 
+    const [studiesInputValue, setStudiesInputValue] = useState("");
+
     const changeTextFilters = (newFilters) => {
         const textFilters = { ...filters.texto, ...newFilters };
         changeFilters({ ...filters, ...{ texto: textFilters } });
     };
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            changeTextFilters({ datosEst: studiesInputValue });
+        }, 500);
+        return () => clearTimeout(timeoutId);
+    }, [studiesInputValue, 500]);
 
     return (
         <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
@@ -89,6 +98,7 @@ const ReportFilters = ({ filters, changeFilters }) => {
                                         <FuseSvgIcon>feather:search</FuseSvgIcon>
                                     </InputAdornment>
                                 }
+                                onChange={(event) => { setStudiesInputValue(event.target.value); }}
                                 label="Buscar estudios"
                             />
                         </FormControl>
