@@ -8,7 +8,7 @@ import usePacServer from 'src/app/pac/usePacServer';
 
 export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR", "OT", "PR", "US", "XA"];
 
-const PAGE_QUANTITY = 10;
+const PAGE_QUANTITY = 30;
 
 const INITIAL_FILTERS = {
 	columna: null,

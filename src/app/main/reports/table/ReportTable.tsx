@@ -1,24 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useMemo } from 'react';
 import {
-	MRT_TableBodyCellValue,
-	MRT_TablePagination,
-	MRT_ToolbarAlertBanner,
-	flexRender,
+	MaterialReactTable,
 	useMaterialReactTable,
 	type MRT_ColumnDef
 } from 'material-react-table';
-import {
-	Box,
-	Paper,
-	Stack,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow
-} from '@mui/material';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { ReportTableColumns } from './ReportTableColumns';
 
@@ -31,87 +17,61 @@ const ReportTable = ({ studies, isLoading }) => {
 
 	const table = useMaterialReactTable({
 		columns,
+		layoutMode: 'semantic',
 		data: studies?.length ? studies : [],
+		enableColumnResizing: true,
 		enableRowSelection: true,
+		enableColumnFilters: false,
+		enableGlobalFilter: false, 
+		enableFullScreenToggle: false,
+		enableDensityToggle: false,
+		enableColumnOrdering: true,
 		initialState: {
-			pagination: { pageSize: 10, pageIndex: 0 },
-			showGlobalFilter: true,
+			pagination: { pageSize: 25, pageIndex: 0 }
 		},
 		muiPaginationProps: {
-			showRowsPerPage: false,
+			rowsPerPageOptions: [25, 50, 100],
 			variant: 'outlined',
 			color: 'primary',
-			shape: 'rounded'
+			shape: 'rounded',
 		},
 		renderEmptyRowsFallback: ({ table }) => (
-			<span>Customized No Rows Overlay</span>
+			<span>No data found (TODO)</span>
 		),
 		paginationDisplayMode: 'pages',
-
+		state: {
+			isLoading
+		},
+		muiTopToolbarProps: {
+			sx: {
+				minHeight: '5.5rem',
+				borderRadius: '16px',
+			}
+		},
+		muiBottomToolbarProps: {
+			sx: {
+				minHeight: '5.5rem',
+				borderRadius: '0 0 16px',
+			}
+		},
+		muiTableContainerProps: {
+			sx: {
+				overflow: 'hidden'
+			},
+		},
+		muiTablePaperProps: {
+			sx: {
+				padding: '16px',
+				marginTop: '16px',
+				borderRadius: '16px',
+			},
+		},
+		mrtTheme: (theme) => ({
+			baseBackgroundColor: '#fff',
+		}),
 	});
-
-
-	if (isLoading) {
-		return <FuseLoading />;
-	}
-
 	return (
-		<Paper
-			className="mt-5 flex flex-col flex-auto shadow-3 rounded-t-16 overflow-hidden rounded-b-0 w-full h-auto"
-			elevation={0}
-		>
-			<Stack sx={{ m: '2rem 0' }}>
-				<MRT_ToolbarAlertBanner stackAlertBanner table={table} />
-				<TableContainer>
-					<Table>
-						<TableHead>
-							{table.getHeaderGroups().map((headerGroup) => (
-								<TableRow key={headerGroup.id}>
-									{headerGroup.headers.map((header) => (
-										<TableCell align="center" variant="head" key={header.id}>
-											{header.isPlaceholder
-												? null
-												: flexRender(
-													header.column.columnDef.Header ??
-													header.column.columnDef.header,
-													header.getContext(),
-												)}
-										</TableCell>
-									))}
-								</TableRow>
-							))}
-						</TableHead>
-						<TableBody>
-							{table.getRowModel().rows.map((row, rowIndex) => (
-								<TableRow key={row.id} selected={row.getIsSelected()}>
-									{row.getVisibleCells().map((cell, _columnIndex) => (
-										<TableCell align="center" variant="body" key={cell.id}>
-											<MRT_TableBodyCellValue
-												cell={cell}
-												table={table}
-												staticRowIndex={rowIndex}
-											/>
-										</TableCell>
-									))}
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						alignSelf: 'end',
-						padding: '16px'
-					}}
-				>
-					<MRT_TablePagination table={table} />
-				</Box>
-			</Stack>
-
-		</Paper>
+		<MaterialReactTable table={table} />
 	);
 }
 

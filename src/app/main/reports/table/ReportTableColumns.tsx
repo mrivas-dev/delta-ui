@@ -9,26 +9,39 @@ export const ReportTableColumns = [
     {
         id: 'customer',
         accessorFn: (row) => renderPatient(row),
-        header: 'Paciente'
+        header: 'Paciente',
+        enableSorting: false,
+        enableColumnOrdening: true
     },
     {
         id: 'study',
         accessorFn: (row) => renderStudyInfo(row),
-        header: 'Estudio'
+        header: 'Estudio',
+        enableSorting: false,
+        enableColumnOrdening: true
     },
     {
         id: 'title',
         accessorFn: (row) => renderStudyDescription(row),
-        header: 'Titulo'
+        header: 'Titulo',
+        enableSorting: false,
+        enableColumnOrdening: true
     },
     {
         id: 'date',
         accessorKey: 'StudyDate',
-        header: 'Fecha'
+        header: 'Fecha',
+        enableSorting: true,
+        enableColumnOrdening: true
     },
     {
         id: 'actions',
         accessorFn: (row) => renderStudyActions(row),
-        header: ''
+        header: '',
+        enableSorting: false,
+        enableColumnActions: false,
+        enableColumnOrdering: false,
+        enableGrouping: false,
+        enableHiding: false,
     }
 ]

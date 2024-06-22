@@ -134,7 +134,7 @@ const ReportFilters = ({ filters, changeFilters }) => {
                         </FormControl>
                         <div>
                             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                                <InputLabel id="study-modality-label">Estudio</InputLabel>
+                                <InputLabel id="study-modality-label">Modality</InputLabel>
                                 <Select
                                     labelId="study-modality-label"
                                     id="study-modality"
