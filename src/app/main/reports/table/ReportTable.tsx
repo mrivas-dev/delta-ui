@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
 	MaterialReactTable,
 	useMaterialReactTable,
@@ -8,21 +8,38 @@ import {
 import tableConfig from "./ReportTableConfig";
 import { ReportTableColumns } from './ReportTableColumns';
 
-const ReportTable = ({ studies, isLoading }) => {
+const ReportTable = ({ studies, isLoading, filters, changeFilters }) => {
+
+	const [pagination, setPagination] = useState({
+		pageIndex: filters?.pag,
+		pageSize: filters?.cuantos
+	});
+
 
 	const columns = useMemo<MRT_ColumnDef<any>[]>(
 		() => ReportTableColumns,
 		[]
 	);
 
+	useEffect(() => {
+		if (pagination.pageSize !== filters?.cuantos || pagination.pageIndex !== filters?.pag) {
+			changeFilters({ ...filters, ...{ cuantos: pagination.pageSize, pag: pagination.pageIndex } })
+		}
+	}, [pagination]);
+
 	const table = useMaterialReactTable(
 		{
 			columns,
 			data: studies?.length ? studies : [],
 			state: {
-				isLoading
+				isLoading,
+				pagination
 			},
-			...tableConfig
+			...tableConfig,
+			initialState: {
+				pagination
+			},
+			onPaginationChange: setPagination
 		}
 	);
 

@@ -16,15 +16,19 @@ import {
     Stack
 } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
-import en from './i18n/en';
-import es from './i18n/es';
+import english from './i18n/en';
+import spanish from './i18n/es';
 import { MODALITY_LIST } from './ReportContent';
+import { es } from 'date-fns/locale';
 
-i18next.addResourceBundle('en', 'reportsPage', en);
-i18next.addResourceBundle('es', 'reportsPage', es);
+i18next.addResourceBundle('en', 'reportsPage', english);
+i18next.addResourceBundle('es', 'reportsPage', spanish);
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -102,36 +106,38 @@ const ReportFilters = ({ filters, changeFilters }) => {
                                 label="Buscar estudios"
                             />
                         </FormControl>
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                            <DatePicker
-                                label="Fecha"
-                                defaultValue={new Date(filters?.texto?.fecha)}
-                                onChange={(pickedFromDate: any) => {
-                                    changeTextFilters({ fecha: new Date(pickedFromDate).toISOString() })
-                                }}
-                                slotProps={{
-                                    textField: {
-                                        id: 'filter-date',
-                                        label: 'Fecha',
-                                        InputLabelProps: {
-                                            shrink: true
+                        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
+                            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                                <DatePicker
+                                    label="Fecha"
+                                    defaultValue={new Date(filters?.texto?.fecha)}
+                                    onChange={(pickedFromDate: any) => {
+                                        changeTextFilters({ fecha: new Date(pickedFromDate).toISOString() })
+                                    }}
+                                    slotProps={{
+                                        textField: {
+                                            id: 'filter-date',
+                                            label: 'Fecha',
+                                            InputLabelProps: {
+                                                shrink: true
+                                            },
+                                            fullWidth: true,
+                                            variant: 'outlined'
                                         },
-                                        fullWidth: true,
-                                        variant: 'outlined'
-                                    },
-                                    inputAdornment: {
-                                        position: 'start',
-                                    },
-                                    actionBar: {
-                                        actions: ['clear', 'today']
-                                    }
-                                }}
+                                        inputAdornment: {
+                                            position: 'start',
+                                        },
+                                        actionBar: {
+                                            actions: ['clear', 'today']
+                                        }
+                                    }}
 
-                                slots={{
-                                    openPickerIcon: CalendarIcon
-                                }}
-                            />
-                        </FormControl>
+                                    slots={{
+                                        openPickerIcon: CalendarIcon
+                                    }}
+                                />
+                            </FormControl>
+                        </LocalizationProvider>
                         <div>
                             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                                 <InputLabel id="study-modality-label">Modality</InputLabel>

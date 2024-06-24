@@ -8,11 +8,8 @@ const tableConfig: any = {
     enableFullScreenToggle: false,
     enableDensityToggle: false,
     enableColumnOrdering: true,
-    initialState: {
-        pagination: { pageSize: 25, pageIndex: 0 }
-    },
     muiPaginationProps: {
-        rowsPerPageOptions: [25, 50, 100],
+        rowsPerPageOptions: [30, 50, 100],
         variant: 'outlined',
         color: 'primary',
         shape: 'rounded',

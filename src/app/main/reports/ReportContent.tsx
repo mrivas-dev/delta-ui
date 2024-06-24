@@ -84,7 +84,7 @@ const ReportContent = () => {
 					filters={filters}
 					changeFilters={onFiltersChange}
 				/>
-				<ReportTable isLoading={studiesLoading} studies={studiesData} />
+				<ReportTable isLoading={studiesLoading} studies={studiesData} filters={filters} changeFilters={onFiltersChange}/>
 			</motion.div>
 		</motion.div>
 	);
