@@ -5,6 +5,8 @@ import ReportFilters from './ReportFilters';
 import ReportTable from './table/ReportTable';
 import { useGetStudiesMutation } from './ReportsApi';
 import usePacServer from 'src/app/pac/usePacServer';
+import { useAppDispatch, useAppSelector } from 'app/store/hooks';
+import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
 
 export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR", "OT", "PR", "US", "XA"];
 
@@ -43,19 +45,15 @@ const item = {
 const ReportContent = () => {
 
 	const { getSelectedPac } = usePacServer();
-	const [filters, setFilters] = useState<any>(INITIAL_FILTERS);
+	const dispatch = useAppDispatch();
+	const filters = useAppSelector(selectStudiesFilter);
 	const [studiesData, setStudiesData] = useState<any[]>([]);
 	const [studiesLoading, setStudiesLoading] = useState<boolean>(false);
 	const [studiesMutation] = useGetStudiesMutation({});
 
-	const onFiltersChange = (newFilters) => {
-		setFilters((oldFilters) => ({ ...oldFilters, ...newFilters }));
-	}
-
 	useEffect(() => {
 		if (!filters.texto?.servidor || getSelectedPac()?.id !== filters.texto?.servidor) {
-			const textFilters = { ...filters.texto, ...{ servidor: getSelectedPac()?.id } };
-			onFiltersChange({ ...filters, ...{ texto: textFilters } });
+			dispatch(changeStudiesTextFilters({ servidor: getSelectedPac()?.id }));
 		}
 	}, [getSelectedPac]);
 
@@ -80,11 +78,8 @@ const ReportContent = () => {
 				variants={item}
 				className="sm:col-span-2 md:col-span-4"
 			>
-				<ReportFilters
-					filters={filters}
-					changeFilters={onFiltersChange}
-				/>
-				<ReportTable isLoading={studiesLoading} studies={studiesData} filters={filters} changeFilters={onFiltersChange}/>
+				<ReportFilters />
+				<ReportTable isLoading={studiesLoading} studies={studiesData} />
 			</motion.div>
 		</motion.div>
 	);

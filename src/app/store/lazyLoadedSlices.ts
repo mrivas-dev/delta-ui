@@ -3,6 +3,7 @@ import { fuseSettingsSlice } from '@fuse/core/FuseSettings/fuseSettingsSlice';
 import { i18nSlice } from 'app/store/i18nSlice';
 import apiService from './apiService';
 import { userSlice } from '../auth/user/store/userSlice';
+import { studiesFilterSlice } from '../main/reports/filters/slice';
 
 // eslint-disable-next-line
 // @ts-ignore
@@ -17,6 +18,7 @@ export const rootReducer = combineSlices(
 	userSlice,
 	fuseSettingsSlice,
 	i18nSlice,
+	studiesFilterSlice,
 	/**
 	 * Dynamic slices
 	 */

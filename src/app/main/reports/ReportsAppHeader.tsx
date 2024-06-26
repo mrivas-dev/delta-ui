@@ -12,6 +12,10 @@ import es from './i18n/es';
 import i18next from 'i18next';
 import usePacServer from 'src/app/pac/usePacServer';
 import { PacServerType } from 'src/app/pac/PacServerTypes';
+import { useAppDispatch } from 'app/store/hooks';
+import { changeStudiesFilters, changeStudiesTextFilters } from './filters/slice';
+import { StudiesFiltersType } from './filters/types';
+import moment from 'moment';
 
 i18next.addResourceBundle('en', 'reportsPage', en);
 i18next.addResourceBundle('es', 'reportsPage', es);
@@ -22,7 +26,7 @@ function ReportsAppHeader() {
 	const { t } = useTranslation('reportsPage');
 	const { getPacs, isPacServerProviderListLoading, getPacServerProvider, setPacServerProvider } = usePacServer();
 	const [pacList, setPacList] = useState<PacServerType[]>([]);
-	const [selectedFilter, setSelectedFilter] = useState<string>("TODAY");
+	const dispatch = useAppDispatch();
 	const [selectedProject, setSelectedProject] = useState<{ id: number; menuEl: HTMLElement | null }>({
 		id: 1,
 		menuEl: null
@@ -57,6 +61,14 @@ function ReportsAppHeader() {
 		});
 	}
 
+	const goToday = () => {
+		dispatch(changeStudiesTextFilters({ fecha: moment().subtract(0, 'days').format("YYYY-MM-DD") }));
+	}
+
+	const goYesterday = () => {
+		dispatch(changeStudiesTextFilters({ fecha: moment().subtract(1, 'days').format("YYYY-MM-DD") }));
+	}
+
 	if (isPacServerProviderListLoading) {
 		return <FuseLoading />;
 	}
@@ -71,24 +83,24 @@ function ReportsAppHeader() {
 						</Typography>
 					</div>
 				</div>
-				{/* <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
+				<div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
 					<Button
 						className="whitespace-nowrap"
-						variant={selectedFilter === 'TODAY' ? 'contained' : 'outlined'}
-						onClick={() => { setSelectedFilter('TODAY') }}
-						color={selectedFilter === 'TODAY' ? 'secondary' : 'primary'}
+						variant="outlined"
+						color="primary"
+						onClick={goToday}
 					>
 						{t('REPORTS_HEADER_BUTTON_TODAY')}
 					</Button>
 					<Button
 						className="whitespace-nowrap"
-						variant={selectedFilter === 'YESTERDAY' ? 'contained' : 'outlined'}
-						onClick={() => { setSelectedFilter('YESTERDAY') }}
-						color={selectedFilter === 'YESTERDAY' ? 'secondary' : 'primary'}
+						variant="outlined"
+						color="primary"
+						onClick={goYesterday}
 					>
 						{t('REPORTS_HEADER_BUTTON_YESTERDAY')}
 					</Button>
-				</div> */}
+				</div>
 			</div>
 			<div className="flex items-center">
 				<Button

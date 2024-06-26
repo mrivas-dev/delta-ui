@@ -39,7 +39,7 @@ const PatientListItem = (patient: PatientListItemPropsType) => {
                     className="text-11 font-medium capitalize"
                     color="text.secondary"
                 >
-                    {`${patient?.patient?.PatientID} - ${patient?.patient?.StudyDate}`}
+                    {`${patient?.patient?.PatientID} - ${patient?.patient?.PatientBirthDate}`}
                 </Typography>
             </div>
         </div>

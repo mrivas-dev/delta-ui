@@ -26,6 +26,8 @@ import english from './i18n/en';
 import spanish from './i18n/es';
 import { MODALITY_LIST } from './ReportContent';
 import { es } from 'date-fns/locale';
+import { useAppDispatch, useAppSelector } from 'app/store/hooks';
+import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
 
 i18next.addResourceBundle('en', 'reportsPage', english);
 i18next.addResourceBundle('es', 'reportsPage', spanish);
@@ -46,15 +48,15 @@ const CalendarIcon = () => {
     return <FuseSvgIcon>feather:calendar</FuseSvgIcon>
 }
 
-const ReportFilters = ({ filters, changeFilters }) => {
+const ReportFilters = () => {
     const { t } = useTranslation('reportsPage');
+    const dispatch = useAppDispatch();
+    const filters = useAppSelector(selectStudiesFilter);
     const [showFilters, setShowFilters] = useState(true);
-
     const [studiesInputValue, setStudiesInputValue] = useState("");
 
     const changeTextFilters = (newFilters) => {
-        const textFilters = { ...filters.texto, ...newFilters };
-        changeFilters({ ...filters, ...{ texto: textFilters } });
+        dispatch(changeStudiesTextFilters(newFilters));
     };
 
     useEffect(() => {
@@ -110,7 +112,7 @@ const ReportFilters = ({ filters, changeFilters }) => {
                             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                                 <DatePicker
                                     label="Fecha"
-                                    defaultValue={new Date(filters?.texto?.fecha)}
+                                    value={new Date(filters?.texto?.fecha)}
                                     onChange={(pickedFromDate: any) => {
                                         changeTextFilters({ fecha: new Date(pickedFromDate).toISOString() })
                                     }}
@@ -177,7 +179,7 @@ const ReportFilters = ({ filters, changeFilters }) => {
                                 </Select>
                             </FormControl>
                         </div>
-                        <div>
+                        {/* <div>
                             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                                 <InputLabel id="study-team-label">Equipo</InputLabel>
                                 <Select
@@ -216,22 +218,18 @@ const ReportFilters = ({ filters, changeFilters }) => {
                                     ))}
                                 </Select>
                             </FormControl>
-                        </div>
+                        </div> */}
                     </Stack>
                     <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
                         <Button
                             className="whitespace-nowrap"
                             variant="outlined"
-                            onClick={() => { changeFilters({ searchApproved: !filters.searchApproved }) }}
-                            color={filters.searchApproved ? 'secondary' : 'primary'}
                         >
                             {t('REPORTS_FILTER_APPROVED')}
                         </Button>
                         <Button
                             className="whitespace-nowrap"
                             variant="outlined"
-                            onClick={() => { changeFilters({ searchSigned: !filters.searchSigned }) }}
-                            color={filters.searchSigned ? 'secondary' : 'primary'}
                         >
                             {t('REPORTS_FILTER_SIGNED')}
                         </Button>

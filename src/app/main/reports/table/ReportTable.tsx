@@ -7,23 +7,24 @@ import {
 } from 'material-react-table';
 import tableConfig from "./ReportTableConfig";
 import { ReportTableColumns } from './ReportTableColumns';
+import { changeStudiesFilters, selectStudiesFilter } from '../filters/slice';
+import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 
-const ReportTable = ({ studies, isLoading, filters, changeFilters }) => {
+const ReportTable = ({ studies, isLoading }) => {
+
+	const dispatch = useAppDispatch();
+	const filters = useAppSelector(selectStudiesFilter);
 
 	const [pagination, setPagination] = useState({
 		pageIndex: filters?.pag,
 		pageSize: filters?.cuantos
 	});
 
-
-	const columns = useMemo<MRT_ColumnDef<any>[]>(
-		() => ReportTableColumns,
-		[]
-	);
+	const columns = useMemo<MRT_ColumnDef<any>[]>( () => ReportTableColumns, [] );
 
 	useEffect(() => {
 		if (pagination.pageSize !== filters?.cuantos || pagination.pageIndex !== filters?.pag) {
-			changeFilters({ ...filters, ...{ cuantos: pagination.pageSize, pag: pagination.pageIndex } })
+			dispatch(changeStudiesFilters({ ...filters, ...{ cuantos: pagination.pageSize, pag: pagination.pageIndex } }));
 		}
 	}, [pagination]);
 
