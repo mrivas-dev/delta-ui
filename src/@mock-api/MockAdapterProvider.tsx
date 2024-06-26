@@ -9,7 +9,6 @@ import { analyticsDashboardApiMocks } from './api/dashboards/analytics-api';
 import { cryptoDashboardApiMocks } from './api/dashboards/crypto-api';
 import { financeDashboardApiMocks } from './api/dashboards/finance-api';
 import { projectDashboardApiMocks } from './api/dashboards/project-api';
-import { eCommerceApiMocks } from './api/dashboards/ecommerce-api';
 
 const mockAdapterOptions = {
 	delayResponse: 0
@@ -36,7 +35,6 @@ function MockAdapterProvider(props: MockAdapterProviderProps) {
 				financeDashboardApiMocks,
 				analyticsDashboardApiMocks,
 				cryptoDashboardApiMocks,
-				eCommerceApiMocks,
 				projectDashboardApiMocks
 			].forEach((mockSetup) => {
 				mockSetup(mock);

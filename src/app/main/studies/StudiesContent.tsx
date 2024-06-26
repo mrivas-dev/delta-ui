@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import moment from 'moment';
 import { motion } from 'framer-motion';
-import ReportFilters from './ReportFilters';
-import ReportTable from './table/ReportTable';
-import { useGetStudiesMutation } from './ReportsApi';
+import StudiesFilters from './StudiesFilters';
+import StudiesTable from './table/StudiesTable';
+import { useGetStudiesMutation } from './StudiesApi';
 import usePacServer from 'src/app/pac/usePacServer';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
@@ -11,23 +10,6 @@ import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
 export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR", "OT", "PR", "US", "XA"];
 
 const PAGE_QUANTITY = 30;
-
-const INITIAL_FILTERS = {
-	columna: null,
-	cuantos: PAGE_QUANTITY,
-	direccion: null,
-	pag: 0,
-	texto: {
-		datosEst: "",
-		fecha: moment().format("YYYY-MM-DD"),
-		hasta: "",
-		hastaVisible: false,
-		paciente: "",
-		servidor: 1,
-		tipoBusqueda: "EST",
-		tipoEst: [],
-	}
-};
 
 const container = {
 	show: {
@@ -42,7 +24,7 @@ const item = {
 	show: { opacity: 1, y: 0 }
 };
 
-const ReportContent = () => {
+const StudiesContent = () => {
 
 	const { getSelectedPac } = usePacServer();
 	const dispatch = useAppDispatch();
@@ -78,11 +60,11 @@ const ReportContent = () => {
 				variants={item}
 				className="sm:col-span-2 md:col-span-4"
 			>
-				<ReportFilters />
-				<ReportTable isLoading={studiesLoading} studies={studiesData} />
+				<StudiesFilters />
+				<StudiesTable isLoading={studiesLoading} studies={studiesData} />
 			</motion.div>
 		</motion.div>
 	);
 }
 
-export default ReportContent;
+export default StudiesContent;

@@ -5,12 +5,12 @@ import {
 	useMaterialReactTable,
 	type MRT_ColumnDef
 } from 'material-react-table';
-import tableConfig from "./ReportTableConfig";
-import { ReportTableColumns } from './ReportTableColumns';
+import tableConfig from "./StudiesTableConfig";
+import { StudiesTableColumns } from './StudiesTableColumns';
 import { changeStudiesFilters, selectStudiesFilter } from '../filters/slice';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 
-const ReportTable = ({ studies, isLoading }) => {
+const StudiesTable = ({ studies, isLoading }) => {
 
 	const dispatch = useAppDispatch();
 	const filters = useAppSelector(selectStudiesFilter);
@@ -20,7 +20,7 @@ const ReportTable = ({ studies, isLoading }) => {
 		pageSize: filters?.cuantos
 	});
 
-	const columns = useMemo<MRT_ColumnDef<any>[]>( () => ReportTableColumns, [] );
+	const columns = useMemo<MRT_ColumnDef<any>[]>( () => StudiesTableColumns, [] );
 
 	useEffect(() => {
 		if (pagination.pageSize !== filters?.cuantos || pagination.pageIndex !== filters?.pag) {
@@ -49,4 +49,4 @@ const ReportTable = ({ studies, isLoading }) => {
 	);
 }
 
-export default ReportTable;
+export default StudiesTable;

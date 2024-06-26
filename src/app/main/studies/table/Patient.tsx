@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { darken } from '@mui/material/styles';
-import { StudiesType } from '../ReportType';
+import { StudiesType } from '../StudiesType';
 
 type PatientListItemPropsType = {
     patient: StudiesType;

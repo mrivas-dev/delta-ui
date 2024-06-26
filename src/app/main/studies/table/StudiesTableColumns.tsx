@@ -5,7 +5,7 @@ import {
     renderStudyInfo
 } from './utils';
 
-export const ReportTableColumns = [
+export const StudiesTableColumns = [
     {
         id: 'customer',
         accessorFn: (row) => renderPatient(row),

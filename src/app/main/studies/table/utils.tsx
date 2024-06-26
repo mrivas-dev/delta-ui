@@ -6,7 +6,7 @@ import {
     Delete as DeleteIcon,
     Email as EmailIcon,
 } from '@mui/icons-material';
-import { StudiesType } from '../ReportType';
+import { StudiesType } from '../StudiesType';
 
 export const renderPatient = (row: StudiesType) => {
     return <PatientListItem patient={row} />;

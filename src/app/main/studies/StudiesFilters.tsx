@@ -24,13 +24,13 @@ import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import english from './i18n/en';
 import spanish from './i18n/es';
-import { MODALITY_LIST } from './ReportContent';
+import { MODALITY_LIST } from './StudiesContent';
 import { es } from 'date-fns/locale';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
 
-i18next.addResourceBundle('en', 'reportsPage', english);
-i18next.addResourceBundle('es', 'reportsPage', spanish);
+i18next.addResourceBundle('en', 'studiesPage', english);
+i18next.addResourceBundle('es', 'studiesPage', spanish);
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -48,8 +48,8 @@ const CalendarIcon = () => {
     return <FuseSvgIcon>feather:calendar</FuseSvgIcon>
 }
 
-const ReportFilters = () => {
-    const { t } = useTranslation('reportsPage');
+const StudiesFilters = () => {
+    const { t } = useTranslation('studiesPage');
     const dispatch = useAppDispatch();
     const filters = useAppSelector(selectStudiesFilter);
     const [showFilters, setShowFilters] = useState(true);
@@ -241,4 +241,4 @@ const ReportFilters = () => {
     );
 }
 
-export default ReportFilters;
+export default StudiesFilters;

@@ -17,13 +17,13 @@ import { changeStudiesFilters, changeStudiesTextFilters } from './filters/slice'
 import { StudiesFiltersType } from './filters/types';
 import moment from 'moment';
 
-i18next.addResourceBundle('en', 'reportsPage', en);
-i18next.addResourceBundle('es', 'reportsPage', es);
+i18next.addResourceBundle('en', 'studiesPage', en);
+i18next.addResourceBundle('es', 'studiesPage', es);
 /**
- * The ReportsAppHeader page.
+ * The StudiesHeader page.
  */
-function ReportsAppHeader() {
-	const { t } = useTranslation('reportsPage');
+function StudiesHeader() {
+	const { t } = useTranslation('studiesPage');
 	const { getPacs, isPacServerProviderListLoading, getPacServerProvider, setPacServerProvider } = usePacServer();
 	const [pacList, setPacList] = useState<PacServerType[]>([]);
 	const dispatch = useAppDispatch();
@@ -79,7 +79,7 @@ function ReportsAppHeader() {
 				<div className="flex flex-auto items-center min-w-0">
 					<div className="flex flex-col min-w-0 mx-16">
 						<Typography className="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-							{t('REPORTS_HEADER_TITLE')}
+							{t('STUDIES_HEADER_TITLE')}
 						</Typography>
 					</div>
 				</div>
@@ -90,7 +90,7 @@ function ReportsAppHeader() {
 						color="primary"
 						onClick={goToday}
 					>
-						{t('REPORTS_HEADER_BUTTON_TODAY')}
+						{t('STUDIES_HEADER_BUTTON_TODAY')}
 					</Button>
 					<Button
 						className="whitespace-nowrap"
@@ -98,7 +98,7 @@ function ReportsAppHeader() {
 						color="primary"
 						onClick={goYesterday}
 					>
-						{t('REPORTS_HEADER_BUTTON_YESTERDAY')}
+						{t('STUDIES_HEADER_BUTTON_YESTERDAY')}
 					</Button>
 				</div>
 			</div>
@@ -144,4 +144,4 @@ function ReportsAppHeader() {
 	);
 }
 
-export default ReportsAppHeader;
+export default StudiesHeader;

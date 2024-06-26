@@ -1,7 +1,7 @@
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { styled } from '@mui/material/styles';
-import ReportsAppHeader from './ReportsAppHeader';
-import ReportContent from './ReportContent';
+import StudiesHeader from './StudiesHeader';
+import StudiesContent from './StudiesContent';
 
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
@@ -16,18 +16,18 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-sidebarContent': {}
 }));
 
-function Reports() {
+const Studies = () => {
 
 	return (
 		<Root
-			header={<ReportsAppHeader />}
+			header={<StudiesHeader />}
 			content={
 				<div className="w-full p-12 pt-16 sm:pt-24 lg:ltr:pr-0 lg:rtl:pl-0">
-					<ReportContent />
+					<StudiesContent />
 				</div>
 			}
 		/>
 	);
 }
 
-export default Reports;
+export default Studies;

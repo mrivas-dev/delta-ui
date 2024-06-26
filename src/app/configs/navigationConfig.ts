@@ -24,13 +24,6 @@ const navigationConfig: FuseNavItemType[] = [
 				url: 'home'
 			},
 			{
-				id: 'images.reports',
-				title: 'REPORTS_TITLE',
-				type: 'item',
-				icon: 'heroicons-outline:clipboard-check',
-				url: 'reports'
-			},
-			{
 				id: 'images.studies',
 				title: 'STUDIES_TITLE',
 				type: 'item',
