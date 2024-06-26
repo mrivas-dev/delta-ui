@@ -69,7 +69,7 @@ const StudiesFilters = () => {
     return (
         <Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
             <Box className="pb-12">
-                Filtrar
+                {t('STUDIES_FILTER')}
                 <IconButton
                     disableRipple
                     className="h-16 w-16 p-0 ltr:ml-4 rtl:mr-4"
@@ -95,7 +95,7 @@ const StudiesFilters = () => {
                         direction={{ md: 'column', lg: 'row' }}
                     >
                         <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-studies">Buscar estudios</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-studies">{t('STUDIES_FILTER_SEARCH_STUDIES')}</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-studies"
                                 type="text"
@@ -105,7 +105,7 @@ const StudiesFilters = () => {
                                     </InputAdornment>
                                 }
                                 onChange={(event) => { setStudiesInputValue(event.target.value); }}
-                                label="Buscar estudios"
+                                label={t('STUDIES_FILTER_SEARCH_STUDIES')}
                             />
                         </FormControl>
                         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
@@ -119,7 +119,7 @@ const StudiesFilters = () => {
                                     slotProps={{
                                         textField: {
                                             id: 'filter-date',
-                                            label: 'Fecha',
+                                            label: `${t('STUDIES_FILTER_DATE')}`,
                                             InputLabelProps: {
                                                 shrink: true
                                             },
@@ -142,7 +142,7 @@ const StudiesFilters = () => {
                         </LocalizationProvider>
                         <div>
                             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                                <InputLabel id="study-modality-label">Modality</InputLabel>
+                                <InputLabel id="study-modality-label">{t('STUDIES_FILTER_MODALITY')}</InputLabel>
                                 <Select
                                     labelId="study-modality-label"
                                     id="study-modality"
@@ -163,7 +163,7 @@ const StudiesFilters = () => {
                                                     <FuseSvgIcon>feather:settings</FuseSvgIcon>
                                                 </InputAdornment>
                                             }
-                                            label="Buscar estudios"
+                                            label={t('STUDIES_FILTER_MODALITY')}
                                         />
                                     }
                                     renderValue={(selected: any) => selected.join(', ')}
@@ -225,13 +225,13 @@ const StudiesFilters = () => {
                             className="whitespace-nowrap"
                             variant="outlined"
                         >
-                            {t('REPORTS_FILTER_APPROVED')}
+                            {t('STUDIES_FILTER_APPROVED')}
                         </Button>
                         <Button
                             className="whitespace-nowrap"
                             variant="outlined"
                         >
-                            {t('REPORTS_FILTER_SIGNED')}
+                            {t('STUDIES_FILTER_SIGNED')}
                         </Button>
                     </div>
                 </Stack>
