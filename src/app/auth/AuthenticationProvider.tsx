@@ -34,7 +34,7 @@ export const AuthContext = createContext<AuthContextType>({
 	resetAuthProvider: () => null
 });
 
-const authProviderLocalStorageKey = 'fuseReactAuthProvider';
+const authProviderLocalStorageKey = 'deltaUIAuthProvider';
 
 type AuthenticationProviderProps = { children: React.ReactNode };
 

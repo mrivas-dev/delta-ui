@@ -5,29 +5,38 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import CardContent from '@mui/material/CardContent';
 import _ from '@lodash';
-import CustomSignInTab from './tabs/CustomSignInTab';
+import CustomSignInForm from 'src/app/auth/services/jwt/components/CustomSignInForm';
+import LanguageSwitcher from 'app/theme-layouts/shared-components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 /**
  * The sign in page.
  */
-function SignInPage() {
+const SignInPage = () => {
+	const { t } = useTranslation('signIn');
 	return (
 		<div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start">
-			<Paper className="h-full w-full px-16 py-8 ltr:border-r-1 rtl:border-l-1 sm:h-auto sm:w-auto sm:rounded-2xl sm:p-48 sm:shadow md:flex md:h-full md:w-1/2 md:items-center md:justify-end md:rounded-none md:p-64 md:shadow-none">
-				<CardContent className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
-					<img
-						className="w-48"
-						src="assets/images/logo/logoDelta.png"
-						alt="logo"
-					/>
+			<Paper className="flex-col h-full w-full px-16 py-8 ltr:border-r-1 rtl:border-l-1 sm:h-auto sm:w-auto sm:rounded-2xl sm:p-48 sm:shadow md:flex md:h-full md:w-1/2 md:items-center md:justify-end md:rounded-none md:p-64 md:shadow-none">
+				<div className="flex h-full w-full items-center justify-center">
+					<CardContent className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
+						<img
+							className="w-48"
+							src="assets/images/logo/logoDelta.png"
+							alt="logo"
+						/>
 
-					<Typography className="mt-32 text-4xl font-extrabold leading-tight tracking-tight">
-						Sign in
-					</Typography>
-					<CustomSignInTab />
-				</CardContent>
-			</Paper>
-
+						<Typography className="mt-32 text-4xl font-extrabold leading-tight tracking-tight">
+							{`${t('SIGNIN_LABEL')}`}
+						</Typography>
+						<div className="w-full">
+							<CustomSignInForm />
+						</div>
+						<div className="flex items-center justify-center w-full pt-32">
+							<LanguageSwitcher />
+						</div>
+					</CardContent>
+				</div>
+			</Paper >
 			<Box
 				className="relative hidden h-full flex-auto items-center justify-center overflow-hidden p-64 md:flex lg:px-112"
 				sx={{ backgroundColor: 'primary.main' }}
@@ -123,7 +132,7 @@ function SignInPage() {
 					</div>
 				</div>
 			</Box>
-		</div>
+		</div >
 	);
 }
 

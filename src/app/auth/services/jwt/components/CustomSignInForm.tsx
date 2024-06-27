@@ -11,6 +11,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import useJwtAuth from '../useJwtAuth';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Form Validation Schema
@@ -35,7 +36,9 @@ const defaultValues = {
     remember: true
 };
 
-function CustomSignInForm() {
+const CustomSignInForm = () => {
+    const { t } = useTranslation('signIn');
+
     const [mockUsername, setMockUsername] = useState(null);
     const [mockPassword, setMockPassword] = useState(null);
     const { signIn, isLoading } = useJwtAuth();
@@ -140,7 +143,7 @@ function CustomSignInForm() {
                         render={({ field }) => (
                             <FormControl>
                                 <FormControlLabel
-                                    label="Remember me"
+                                    label={t('SIGNIN_REMEMBER_ME')}
                                     control={
                                         <Checkbox
                                             size="small"
@@ -156,7 +159,7 @@ function CustomSignInForm() {
                         className="text-md font-medium"
                         to="/pages/auth/forgot-password"
                     >
-                        Forgot password?
+                        {t('SIGNIN_FORGOT_PASSWORD')}
                     </Link>
                 </div>
 
@@ -169,7 +172,7 @@ function CustomSignInForm() {
                     type="submit"
                     size="large"
                 >
-                    Sign in
+                    {t('SIGNIN_LABEL')}
                 </Button>
             </form>
         </>

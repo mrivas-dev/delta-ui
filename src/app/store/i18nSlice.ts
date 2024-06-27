@@ -3,32 +3,36 @@ import i18n from 'src/i18n';
 import { AppThunk, RootState } from 'app/store/store';
 import { setDefaultSettings } from '@fuse/core/FuseSettings/fuseSettingsSlice';
 
+export const deltaUILanguageLocalStorageKey = 'deltaUILanguage';
+
 /**
  * Changes the language of the application and updates the settings if necessary.
  */
 export const changeLanguage =
 	(languageId: string): AppThunk =>
-	async (dispatch, getState) => {
-		const AppState = getState();
-		const { direction } = AppState.fuseSettings.defaults;
+		async (dispatch, getState) => {
+			const AppState = getState();
+			const { direction } = AppState.fuseSettings.defaults;
+			const { languages } = AppState.i18n;
 
-		const newLangDirection = i18n.dir(languageId);
+			const newLangDirection = i18n.dir(languageId);
 
-		/*
-		If necessary, change theme direction
-		 */
-		if (newLangDirection !== direction) {
-			await dispatch(setDefaultSettings({ direction: newLangDirection }));
-		}
+			/*
+			If necessary, change theme direction
+			 */
+			if (newLangDirection !== direction) {
+				await dispatch(setDefaultSettings({ direction: newLangDirection }));
+			}
 
-		/*
-		Change Language
-		 */
-		return i18n.changeLanguage(languageId).then(() => {
-			dispatch(i18nSlice.actions.languageChanged(languageId));
-		});
-	};
-
+			/*
+			Change Language
+			 */
+			return i18n.changeLanguage(languageId).then(() => {
+				const selectedLanguage = languages.find((lng) => lng.id === languageId)
+				localStorage.setItem(deltaUILanguageLocalStorageKey, JSON.stringify(selectedLanguage));
+				dispatch(i18nSlice.actions.languageChanged(languageId));
+			});
+		};
 /**
  * The type definition for a language object.
  */
@@ -52,7 +56,7 @@ type I18nState = {
 export const i18nSlice = createSlice({
 	name: 'i18n',
 	initialState: {
-		language: i18n.options.lng,
+		language: JSON.parse(localStorage.getItem(deltaUILanguageLocalStorageKey))?.id || i18n.options.lng,
 		languages: [
 			{ id: 'en', title: 'English', flag: 'US' },
 			{ id: 'es', title: 'Spanish', flag: 'AR' }

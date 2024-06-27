@@ -5,18 +5,18 @@ import MenuItem from '@mui/material/MenuItem';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { changeLanguage, LanguageType, selectCurrentLanguage, selectLanguages } from 'app/store/i18nSlice';
+import { changeLanguage, deltaUILanguageLocalStorageKey, LanguageType, selectCurrentLanguage, selectLanguages } from 'app/store/i18nSlice';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 
 /**
  * The language switcher.
  */
-function LanguageSwitcher() {
+
+const LanguageSwitcher = () => {
+	const dispatch = useAppDispatch();
 	const currentLanguage = useAppSelector(selectCurrentLanguage);
 	const languages = useAppSelector(selectLanguages);
 	const [menu, setMenu] = useState<null | HTMLElement>(null);
-	const dispatch = useAppDispatch();
 
 	const langMenuClick = (event: React.MouseEvent<HTMLElement>) => {
 		setMenu(event.currentTarget);
@@ -28,7 +28,6 @@ function LanguageSwitcher() {
 
 	function handleLanguageChange(lng: LanguageType) {
 		dispatch(changeLanguage(lng.id));
-
 		langMenuClose();
 	}
 
@@ -83,15 +82,6 @@ function LanguageSwitcher() {
 						<ListItemText primary={lng.title} />
 					</MenuItem>
 				))}
-
-				<MenuItem
-					component={Link}
-					to="/documentation/configuration/multi-language"
-					onClick={langMenuClose}
-					role="button"
-				>
-					<ListItemText primary="Learn More" />
-				</MenuItem>
 			</Popover>
 		</>
 	);
