@@ -1,3 +1,4 @@
+import { deltaUILanguageLocalStorageKey } from 'app/store/i18nSlice';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -20,7 +21,7 @@ const resources = {
 i18n.use(initReactI18next) // passes i18n down to react-i18next
 	.init({
 		resources,
-		lng: 'en',
+		lng: JSON.parse(localStorage.getItem('deltaUILanguage'))?.id || 'en',
 
 		keySeparator: false, // we do not use keys in form messages.welcome
 
