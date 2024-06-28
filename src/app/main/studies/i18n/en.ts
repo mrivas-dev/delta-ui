@@ -10,6 +10,7 @@ const locale = {
 	STUDIES_FILTER_MODALITY: 'Modality',
 	STUDIES_FILTER_APPROVED: 'Approved',
 	STUDIES_FILTER_SIGNED: 'Signed',
+	STUDIES_TABLE_NO_DATA: 'No data',
 
 };
 

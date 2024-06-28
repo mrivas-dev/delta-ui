@@ -10,6 +10,7 @@ const locale = {
 	STUDIES_FILTER_MODALITY: 'Modalidad',
 	STUDIES_FILTER_APPROVED: 'Aprobados',
 	STUDIES_FILTER_SIGNED: 'Firmados',
+	STUDIES_TABLE_NO_DATA: 'Sin datos',
 };
 
 export default locale;

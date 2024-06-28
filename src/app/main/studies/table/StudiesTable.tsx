@@ -20,7 +20,7 @@ const StudiesTable = ({ studies, isLoading }) => {
 		pageSize: filters?.cuantos
 	});
 
-	const columns = useMemo<MRT_ColumnDef<any>[]>( () => StudiesTableColumns, [] );
+	const columns = useMemo<MRT_ColumnDef<any>[]>(() => StudiesTableColumns, []);
 
 	useEffect(() => {
 		if (pagination.pageSize !== filters?.cuantos || pagination.pageIndex !== filters?.pag) {

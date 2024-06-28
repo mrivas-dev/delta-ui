@@ -43,6 +43,7 @@ export type StudiesType = {
 
 export interface ModalityList {
     id: string,
-    label: string,
     color: string,
+    label: string,
+    description: string,
 }

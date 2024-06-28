@@ -26,7 +26,9 @@ const PatientListItem = (patient: PatientListItemPropsType) => {
             <Avatar
                 sx={{
                     background: (theme) => darken(theme.palette.background.default, 0.05),
-                    color: (theme) => theme.palette.text.secondary
+                    color: (theme) => theme.palette.text.secondary,
+                    width: 75,
+                    height: 75
                 }}
                 className="md:mx-4"
                 src={imagePath}

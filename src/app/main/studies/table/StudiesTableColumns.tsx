@@ -1,6 +1,6 @@
+import StudiesTableActions from './StudiesTableActions';
 import {
     renderPatient,
-    renderStudyActions,
     renderStudyDescription,
     renderStudyInfo
 } from './utils';
@@ -36,7 +36,7 @@ export const StudiesTableColumns = [
     },
     {
         id: 'actions',
-        accessorFn: (row) => renderStudyActions(row),
+        accessorFn: (row) => <StudiesTableActions study={row}/>,
         header: '',
         enableSorting: false,
         enableColumnActions: false,
