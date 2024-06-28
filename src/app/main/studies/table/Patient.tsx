@@ -2,12 +2,14 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { darken } from '@mui/material/styles';
 import { StudiesType } from '../StudiesType';
+import usePacServer from 'src/app/pac/usePacServer';
 
 type PatientListItemPropsType = {
     patient: StudiesType;
 };
 
 const PatientListItem = (patient: PatientListItemPropsType) => {
+    const { getSelectedPac } = usePacServer();
 
     const parsePatientName = (name: string) => {
         const splitedName = name.split("^");
@@ -17,6 +19,8 @@ const PatientListItem = (patient: PatientListItemPropsType) => {
         return `${lastName}${firstName ? `, ${firstName}` : ''}${secondName ? ` ${secondName}` : ''}`;
     }
 
+    const imagePath = `${getSelectedPac()?.uriVisor}im1/${patient.patient?.StudyInstanceUID}?s=${getSelectedPac()?.id}`;
+
     return (
         <div className="flex">
             <Avatar
@@ -25,9 +29,8 @@ const PatientListItem = (patient: PatientListItemPropsType) => {
                     color: (theme) => theme.palette.text.secondary
                 }}
                 className="md:mx-4"
-            >
-                {patient.patient?.PatientName?.charAt(0)}
-            </Avatar>
+                src={imagePath}
+            />
             <div className="min-h-40 min-w-40 p-0 md:px-16 md:py-6">
                 <Typography
                     component="span"

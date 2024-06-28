@@ -7,10 +7,6 @@ import usePacServer from 'src/app/pac/usePacServer';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
 
-export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR", "OT", "PR", "US", "XA"];
-
-const PAGE_QUANTITY = 30;
-
 const container = {
 	show: {
 		transition: {

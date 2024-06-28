@@ -19,15 +19,15 @@ import Paper from '@mui/material/Paper';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-
-import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { es } from 'date-fns/locale';
 import english from './i18n/en';
 import spanish from './i18n/es';
-import { MODALITY_LIST } from './StudiesContent';
-import { es } from 'date-fns/locale';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
+import { MODALITY } from './table/utils';
+import { ModalityList } from './StudiesType';
 
 i18next.addResourceBundle('en', 'studiesPage', english);
 i18next.addResourceBundle('es', 'studiesPage', spanish);
@@ -170,10 +170,10 @@ const StudiesFilters = () => {
                                     MenuProps={MenuProps}
                                     variant="outlined"
                                 >
-                                    {MODALITY_LIST.map((modality: string) => (
-                                        <MenuItem key={modality} value={modality}>
-                                            <Checkbox checked={filters?.texto?.tipoEst.indexOf(modality) > -1} />
-                                            <ListItemText primary={modality} />
+                                    {MODALITY.map((modality: ModalityList) => (
+                                        <MenuItem key={modality.id} value={modality.label}>
+                                            <Checkbox checked={filters?.texto?.tipoEst.indexOf(modality.id) > -1} />
+                                            <ListItemText primary={modality.label} />
                                         </MenuItem>
                                     ))}
                                 </Select>

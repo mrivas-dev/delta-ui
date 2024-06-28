@@ -6,14 +6,30 @@ import {
     Delete as DeleteIcon,
     Email as EmailIcon,
 } from '@mui/icons-material';
-import { StudiesType } from '../StudiesType';
+import { ModalityList, StudiesType } from '../StudiesType';
+
+export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR", "OT", "PR", "US", "XA"];
+
+
+export const MODALITY: ModalityList[] = [
+    { id: "CR", label: "CR", color: '#0892A5' },
+    { id: "CT", label: "CT", color: '#06908F' },
+    { id: "DX", label: "DX", color: '#0CA4A5' },
+    { id: "MG", label: "MG", color: '#DBB68F' },
+    { id: "MR", label: "MR", color: '#BB7E5D' },
+    { id: "OT", label: "OT", color: '#D4C5E2' },
+    { id: "PR", label: "PR", color: '#C9D7F8' },
+    { id: "US", label: "US", color: '#A7E2E3' },
+    { id: "XA", label: "XA", color: '#80CFA9' }
+]
 
 export const renderPatient = (row: StudiesType) => {
-    return <PatientListItem patient={row} />;
+    return <PatientListItem patient={row}/>;
 };
 
 export const renderStudyInfo = (row) => {
-    return <Chip label={`${row?.Modality} #${row?.StudyInstanceUID.split(".")[0]}`} color="success" />
+    const color = MODALITY.find((mod)=> mod?.id === row?.Modality)?.color;
+    return <Chip label={`${row?.Modality} #${row?.AccessionNumber}`} style={{backgroundColor: color}} />
 };
 
 export const renderStudyDescription = (row) => {

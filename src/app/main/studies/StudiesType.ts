@@ -40,3 +40,9 @@ export type StudiesType = {
 	StudyTime: string;
 	sortStudyDate: string;
 }
+
+export interface ModalityList {
+    id: string,
+    label: string,
+    color: string,
+}

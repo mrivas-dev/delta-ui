@@ -10,12 +10,11 @@ import { useTranslation } from 'react-i18next';
 import en from './i18n/en';
 import es from './i18n/es';
 import i18next from 'i18next';
+import moment from 'moment';
 import usePacServer from 'src/app/pac/usePacServer';
 import { PacServerType } from 'src/app/pac/PacServerTypes';
 import { useAppDispatch } from 'app/store/hooks';
-import { changeStudiesFilters, changeStudiesTextFilters } from './filters/slice';
-import { StudiesFiltersType } from './filters/types';
-import moment from 'moment';
+import { changeStudiesTextFilters } from './filters/slice';
 
 i18next.addResourceBundle('en', 'studiesPage', en);
 i18next.addResourceBundle('es', 'studiesPage', es);
