@@ -1,3 +1,4 @@
+import StudiesTableNoData from "./NoData";
 
 const tableConfig: any = {
     layoutMode: 'semantic',
@@ -15,7 +16,7 @@ const tableConfig: any = {
         shape: 'rounded',
     },
     renderEmptyRowsFallback: ({ table }) => (
-        <span>No data found (TODO)</span>
+        <StudiesTableNoData />
     ),
     paginationDisplayMode: 'pages',
 
