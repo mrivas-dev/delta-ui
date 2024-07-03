@@ -2,7 +2,7 @@ import Chip from '@mui/material/Chip';
 import PatientListItem from "./Patient"
 import { Tooltip } from '@mui/material';
 import { ModalityList, StudiesType } from '../StudiesType';
-import StudiesTableNoData from './NoData';
+import EmptyColumn from './EmptyColumn';
 
 export const MODALITY_LIST = ["CR", "CT", "DX", "MG", "MR", "OT", "PR", "US", "XA"];
 
@@ -37,7 +37,7 @@ export const renderStudyInfo = (row) => {
 export const renderStudyDescription = (row) => {
     return row?.StudyDescription
         ? `${row?.StudyDescription}`
-        : <StudiesTableNoData />
+        : <EmptyColumn />
 };
 
 

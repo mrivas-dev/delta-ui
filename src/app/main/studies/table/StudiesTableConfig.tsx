@@ -1,4 +1,4 @@
-import StudiesTableNoData from "./NoData";
+import StudiesTableNoData from "./StudiesTableNoData";
 
 const tableConfig: any = {
     layoutMode: 'semantic',

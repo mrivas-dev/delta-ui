@@ -10,8 +10,10 @@ const locale = {
 	STUDIES_FILTER_MODALITY: 'Modality',
 	STUDIES_FILTER_APPROVED: 'Approved',
 	STUDIES_FILTER_SIGNED: 'Signed',
-	STUDIES_TABLE_NO_DATA: 'No data',
-
+	STUDIES_TABLE_EMPTY_COLUMN: 'No data',
+	STUDIES_TABLE_NO_DATA_PLACEHOLDER_TITLE: 'Oops',
+	STUDIES_TABLE_NO_DATA_PLACEHOLDER_SUB_TITLE1: "We couldn't find studies on this server",
+	STUDIES_TABLE_NO_DATA_PLACEHOLDER_SUB_TITLE2: 'Try different filters',
 };
 
 export default locale;

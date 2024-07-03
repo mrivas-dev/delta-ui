@@ -10,7 +10,10 @@ const locale = {
 	STUDIES_FILTER_MODALITY: 'Modalidad',
 	STUDIES_FILTER_APPROVED: 'Aprobados',
 	STUDIES_FILTER_SIGNED: 'Firmados',
-	STUDIES_TABLE_NO_DATA: 'Sin datos',
+	STUDIES_TABLE_EMPTY_COLUMN: 'Sin datos',
+	STUDIES_TABLE_NO_DATA_PLACEHOLDER_TITLE: 'Oops',
+	STUDIES_TABLE_NO_DATA_PLACEHOLDER_SUB_TITLE1: 'No encontramos estudios para este servidor',
+	STUDIES_TABLE_NO_DATA_PLACEHOLDER_SUB_TITLE2: 'Puede probar con otros filtros',
 };
 
 export default locale;
