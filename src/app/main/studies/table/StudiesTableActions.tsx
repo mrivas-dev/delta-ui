@@ -1,11 +1,14 @@
 import React from "react";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Avatar, Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { Box, Button, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 import usePacServer from "src/app/pac/usePacServer";
 import { useGetStudyAltViewerMutation } from "../StudiesApi";
 import { showMessage } from "@fuse/core/FuseMessage/fuseMessageSlice";
 import { useAppDispatch } from "app/store/hooks";
+import { useTranslation } from "react-i18next";
+import ShareStudyDialog from "../ShareStudyDialog";
+import { openDialog } from "@fuse/core/FuseDialog/fuseDialogSlice";
 
 const PaperProps = {
     elevation: 0,
@@ -35,6 +38,7 @@ const PaperProps = {
 }
 
 const StudiesTableActions = ({ study }) => {
+    const { t } = useTranslation('studiesPage');
     const { getSelectedPac } = usePacServer();
     const dispatch = useAppDispatch();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -50,18 +54,32 @@ const StudiesTableActions = ({ study }) => {
     };
 
     const openVisor = (visorUrl: string) => {
-        window.open(visorUrl, '_blank').focus();
+        let parsedVisorUrl = visorUrl;
+        Object.keys(study).forEach((key) => {
+            parsedVisorUrl = parsedVisorUrl.replace(`{{${key}}}`, study[key]);
+        });
+
+        window.open(parsedVisorUrl, '_blank').focus();
 
     };
 
     const renderOtherVisor = () => {
         return (
             getSelectedPac().otroVisor?.map((eachVisor) => (
-                <MenuItem key={`visor-menu-${eachVisor?.tipo}`} onClick={() => openVisor(eachVisor?.url)}>
-                    <Avatar /> {eachVisor?.tipo}
-                </MenuItem>
+                <Tooltip title={`${t('STUDIES_TABLE_ACTIONS_OTHER_VISOR')} ${eachVisor?.tipo}`}>
+                    <MenuItem key={`visor-menu-${eachVisor?.tipo}`} onClick={() => openVisor(eachVisor?.url)}>
+                        <FuseSvgIcon className="text-46 mr-6" size={24} color="action">{`material-solid:${eachVisor?.icono}`}</FuseSvgIcon>
+                        {eachVisor?.tipo}
+                    </MenuItem>
+                </Tooltip>
             ))
         )
+    }
+
+    const openShareDialog = () => {
+        dispatch(openDialog({
+            children: <ShareStudyDialog study={study} />
+        }));
     }
 
     const openAltViewer = () => {
@@ -70,7 +88,6 @@ const StudiesTableActions = ({ study }) => {
             server: getSelectedPac()?.id
         }).then(({ data }: any) => {
             if (data.success) {
-                console.log(`${data.uriVisor}${data.link}`);
                 window.open(`${data.uriVisor}${data.link}`, '_blank');
             } else {
                 if (data.error && data.error == 500) {
@@ -78,35 +95,43 @@ const StudiesTableActions = ({ study }) => {
                 }
             }
         });
-    }
+    };
+
+    const createCD = () => { console.log('This is a work in progress') }
 
     return (
         <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
-            <IconButton
-                onClick={openAltViewer}
-            >
-                <FuseSvgIcon className="text-48" size={24} color="action">feather:monitor</FuseSvgIcon>
-            </IconButton>
-            <IconButton
-                onClick={() => {
-                    console.log("Second action click")
-                }}
-            >
-                <FuseSvgIcon className="text-48" size={24} color="action">feather:share-2</FuseSvgIcon>
-            </IconButton>
-            <IconButton
-                onClick={() => {
-                    console.log("Third action click")
-                }}
-            >
-                <FuseSvgIcon className="text-48" size={24} color="action">feather:disc</FuseSvgIcon>
-            </IconButton>
+            <Tooltip title={`${t('STUDIES_TABLE_ACTIONS_VISOR_ALT')}`}>
+                <IconButton
+                    onClick={openAltViewer}
+                >
+                    <FuseSvgIcon className="text-48" size={24} color="action">feather:monitor</FuseSvgIcon>
+                </IconButton>
+            </Tooltip>
+            <Tooltip title={`${t('STUDIES_TABLE_ACTIONS_SHARE')}`}>
+                <IconButton
+                    onClick={() => {
+                        openShareDialog();
+                    }}
+                >
+                    <FuseSvgIcon className="text-48" size={24} color="action">feather:share-2</FuseSvgIcon>
+                </IconButton>
+            </Tooltip>
+            <Tooltip title={`${t('STUDIES_TABLE_ACTIONS_CD')}`}>
+                <IconButton
+                    onClick={() => {
+                        createCD();
+                    }}
+                >
+                    <FuseSvgIcon className="text-48" size={24} color="action">feather:disc</FuseSvgIcon>
+                </IconButton>
+            </Tooltip>
             <Button
                 onClick={handleClick}
                 size="small"
                 sx={{ ml: 2 }}
                 variant="contained"
-                aria-controls={open ? 'account-menu' : undefined}
+                aria-controls={open ? 'extra-visor-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 disableElevation
@@ -116,11 +141,11 @@ const StudiesTableActions = ({ study }) => {
             </Button>
             <Menu
                 anchorEl={anchorEl}
-                id="account-menu"
+                id="extra-visor-menu"
                 open={open}
                 onClose={handleClose}
                 onClick={handleClose}
-                PaperProps={PaperProps}
+                slotProps={{ paper: { ...PaperProps } }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >

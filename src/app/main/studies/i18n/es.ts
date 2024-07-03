@@ -14,6 +14,13 @@ const locale = {
 	STUDIES_TABLE_NO_DATA_PLACEHOLDER_TITLE: 'Oops',
 	STUDIES_TABLE_NO_DATA_PLACEHOLDER_SUB_TITLE1: 'No encontramos estudios para este servidor',
 	STUDIES_TABLE_NO_DATA_PLACEHOLDER_SUB_TITLE2: 'Puede probar con otros filtros',
+	STUDIES_TABLE_ACTIONS_VISOR_ALT: 'Alt. visor',
+	STUDIES_TABLE_ACTIONS_SHARE: 'Compartir',
+	STUDIES_TABLE_ACTIONS_CD: 'Crear CD',
+	STUDIES_TABLE_ACTIONS_OTHER_VISOR: 'Abrir visor',
+	STUDIES_SHARE_DIALOG_TITLE: 'Compartir estudio',
+	STUDIES_SHARE_DIALOG_ACTION_CLOSE: 'Cerrar',
+	STUDIES_SHARE_DIALOG_ACTION_SHARE: 'Compartir'
 };
 
 export default locale;
