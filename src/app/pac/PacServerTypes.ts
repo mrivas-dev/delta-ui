@@ -15,7 +15,7 @@ export type PacServerType = {
 	noupload: boolean;
 	observaciones: number;
 	origenWlscu: string;
-	otroVisor: boolean;
+	otroVisor: any[];
 	pedidomedico: boolean;
 	shareWhat: boolean;
 	teclaInfo: boolean;

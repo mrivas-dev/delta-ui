@@ -166,7 +166,9 @@ const StudiesFilters = () => {
                                             label={t('STUDIES_FILTER_MODALITY')}
                                         />
                                     }
-                                    renderValue={(selected: any) => selected.join(', ')}
+                                    renderValue={(selected: any) => (
+                                        selected.length ? selected.join(', ') : 'Empty'
+                                    )}
                                     MenuProps={MenuProps}
                                     variant="outlined"
                                 >
@@ -179,46 +181,6 @@ const StudiesFilters = () => {
                                 </Select>
                             </FormControl>
                         </div>
-                        {/* <div>
-                            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                                <InputLabel id="study-team-label">Equipo</InputLabel>
-                                <Select
-                                    labelId="study-team-label"
-                                    id="study-team"
-                                    multiple
-                                    onChange={(event: any) => {
-                                        const {
-                                            target: { value },
-                                        } = event;
-                                        changeTextFilters({ tipoEst: value })
-                                    }}
-                                    value={filters?.texto?.tipoEst}
-                                    input={
-                                        <OutlinedInput
-                                            id="outlined-adornment-team"
-                                            type="text"
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    <FuseSvgIcon>feather:file-text</FuseSvgIcon>
-                                                </InputAdornment>
-                                            }
-                                            label="Buscar equipo"
-                                        />
-
-                                    }
-                                    renderValue={(selected: any) => selected.join(', ')}
-                                    MenuProps={MenuProps}
-                                    variant="outlined"
-                                >
-                                    {MODALITY_LIST.map((modality: string) => (
-                                        <MenuItem key={modality} value={modality}>
-                                            <Checkbox checked={filters?.texto?.tipoEst.indexOf(modality) > -1} />
-                                            <ListItemText primary={modality} />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </div> */}
                     </Stack>
                     <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
                         <Button

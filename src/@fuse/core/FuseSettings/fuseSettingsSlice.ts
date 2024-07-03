@@ -16,7 +16,6 @@ import { ThemeOptions } from '@mui/material/styles/createTheme';
 import { PartialDeep } from 'type-fest';
 import { RootState } from 'app/store/store';
 import { resetUser, setUser, setUserSettings } from '../../../app/auth/user/store/userSlice';
-// import { showMessage } from '@fuse/core/FuseMessage/fuseMessageSlice';
 
 export const changeFuseTheme = createAsyncThunk(
 	'fuseSettings/changeFuseTheme',
