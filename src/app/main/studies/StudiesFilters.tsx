@@ -28,6 +28,8 @@ import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
 import { MODALITY } from './table/utils';
 import { ModalityList } from './StudiesType';
+import moment from 'moment';
+import { fixDate } from './utils';
 
 i18next.addResourceBundle('en', 'studiesPage', english);
 i18next.addResourceBundle('es', 'studiesPage', spanish);
@@ -112,7 +114,7 @@ const StudiesFilters = () => {
                             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                                 <DatePicker
                                     label="Fecha"
-                                    value={new Date(filters?.texto?.fecha)}
+                                    value={fixDate(filters?.texto?.fecha)}
                                     onChange={(pickedFromDate: any) => {
                                         changeTextFilters({ fecha: new Date(pickedFromDate).toISOString() })
                                     }}
