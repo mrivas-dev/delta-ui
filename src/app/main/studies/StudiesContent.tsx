@@ -46,20 +46,22 @@ const StudiesContent = () => {
 	}, [filters]);
 
 	return (
-		<motion.div
-			className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0 p-24"
-			variants={container}
-			initial="hidden"
-			animate="show"
-		>
+		<div className="w-full p-12 pt-16 sm:pt-24 lg:ltr:pr-0 lg:rtl:pl-0">
 			<motion.div
-				variants={item}
-				className="sm:col-span-2 md:col-span-4"
+				className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0 p-24"
+				variants={container}
+				initial="hidden"
+				animate="show"
 			>
-				<StudiesFilters />
-				<StudiesTable isLoading={studiesLoading} studies={studiesData} />
+				<motion.div
+					variants={item}
+					className="sm:col-span-2 md:col-span-4"
+				>
+					<StudiesFilters />
+					<StudiesTable isLoading={studiesLoading} studies={studiesData} />
+				</motion.div>
 			</motion.div>
-		</motion.div>
+		</div>
 	);
 }
 

@@ -3,12 +3,14 @@ import Typography from '@mui/material/Typography';
 import { darken } from '@mui/material/styles';
 import { StudiesType } from '../StudiesType';
 import usePacServer from 'src/app/pac/usePacServer';
+import { useNavigate } from 'react-router';
 
 type PatientListItemPropsType = {
     patient: StudiesType;
 };
 
 const PatientListItem = (patient: PatientListItemPropsType) => {
+    const navigate = useNavigate();
     const { getSelectedPac } = usePacServer();
 
     const parsePatientName = (name: string) => {
@@ -21,8 +23,12 @@ const PatientListItem = (patient: PatientListItemPropsType) => {
 
     const imagePath = `${getSelectedPac()?.uriVisor}im1/${patient.patient?.StudyInstanceUID}?s=${getSelectedPac()?.id}`;
 
+    const onPatientClick = () => {
+        navigate(`/studies/${patient.patient.PatientID}`);
+    }
+
     return (
-        <div className="flex">
+        <div className="flex cursor-pointer" onClick={() => onPatientClick()}>
             <Avatar
                 sx={{
                     background: (theme) => darken(theme.palette.background.default, 0.05),

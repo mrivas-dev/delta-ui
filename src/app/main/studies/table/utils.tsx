@@ -1,5 +1,5 @@
 import Chip from '@mui/material/Chip';
-import PatientListItem from "./Patient"
+import PatientListItem from "./PatientListItem"
 import { Tooltip } from '@mui/material';
 import { ModalityList, StudiesType } from '../StudiesType';
 import EmptyColumn from './EmptyColumn';

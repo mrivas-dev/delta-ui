@@ -9,6 +9,7 @@ import SignOutConfig from '../main/sign-out/SignOutConfig';
 import Error404Page from '../main/404/Error404Page';
 import HomeConfig from '../main/home/HomeConfig';
 import Studies from '../main/studies/Studies';
+import Patient from '../main/studies/patient/Patient';
 
 const routeConfigs: FuseRouteConfigsType = [HomeConfig, SignOutConfig, SignInConfig, SignUpConfig];
 
@@ -25,7 +26,12 @@ const routes: FuseRoutesType = [
 	{
 		path: '/studies',
 		element: <Studies />,
-		auth: settingsConfig.defaultAuth
+		auth: settingsConfig.defaultAuth,
+		children: [
+			{
+				path: ':id'
+			},
+		]
 	},
 	{
 		path: 'loading',
