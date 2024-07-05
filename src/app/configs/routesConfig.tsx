@@ -29,7 +29,8 @@ const routes: FuseRoutesType = [
 		auth: settingsConfig.defaultAuth,
 		children: [
 			{
-				path: ':id'
+				path: ':id',
+				element: <Patient />
 			},
 		]
 	},
