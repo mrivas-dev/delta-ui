@@ -28,7 +28,6 @@ import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
 import { MODALITY } from './table/utils';
 import { ModalityList } from './StudiesType';
-import moment from 'moment';
 import { fixDate } from './utils';
 
 i18next.addResourceBundle('en', 'studiesPage', english);
