@@ -187,12 +187,20 @@ const StudiesFilters = () => {
                         <Button
                             className="whitespace-nowrap"
                             variant="outlined"
+                            color={filters?.texto?.ifapproved ? 'secondary' : 'primary'}
+                            onClick={() => {
+                                changeTextFilters({ ifapproved: !filters?.texto?.ifapproved });
+                            }}
                         >
                             {t('STUDIES_FILTER_APPROVED')}
                         </Button>
                         <Button
                             className="whitespace-nowrap"
                             variant="outlined"
+                            color={filters?.texto?.ifsigned ? 'secondary' : 'primary'}
+                            onClick={() => {
+                                changeTextFilters({ ifsigned: !filters?.texto?.ifsigned });
+                            }}
                         >
                             {t('STUDIES_FILTER_SIGNED')}
                         </Button>

@@ -7,6 +7,8 @@ export interface StudiesInnerFilter {
     paciente: string,
     servidor: number
     tipoBusqueda: string,
+    ifapproved: boolean,
+    ifsigned: boolean,
     tipoEst: string[],
 }
 

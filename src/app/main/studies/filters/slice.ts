@@ -1,5 +1,4 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import i18n from 'src/i18n';
 import moment from 'moment';
 import { AppThunk, RootState } from 'app/store/store';
 import { StudiesFiltersType } from './types';
@@ -19,6 +18,8 @@ const INITIAL_FILTERS = {
 		paciente: "",
 		servidor: 1,
 		tipoBusqueda: "EST",
+		ifapproved: false,
+		ifsigned: false,
 		tipoEst: []
 	}
 };
