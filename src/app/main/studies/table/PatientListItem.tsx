@@ -4,6 +4,7 @@ import { darken } from '@mui/material/styles';
 import { StudiesType } from '../StudiesType';
 import usePacServer from 'src/app/pac/usePacServer';
 import { useNavigate } from 'react-router';
+import { parsePatientName } from 'app/theme-layouts/shared-components/userUtils';
 
 type PatientListItemPropsType = {
     patient: StudiesType;
@@ -12,14 +13,6 @@ type PatientListItemPropsType = {
 const PatientListItem = (patient: PatientListItemPropsType) => {
     const navigate = useNavigate();
     const { getSelectedPac } = usePacServer();
-
-    const parsePatientName = (name: string) => {
-        const splitedName = name.split("^");
-        const lastName = splitedName[0]?.charAt(0).toUpperCase() + splitedName[0]?.slice(1).toLocaleLowerCase();
-        const firstName = splitedName[1]?.charAt(0).toUpperCase() + splitedName[1]?.slice(1).toLocaleLowerCase();
-        const secondName = splitedName.length > 1 ? splitedName[2]?.charAt(0).toUpperCase() + splitedName[2]?.slice(1).toLocaleLowerCase() : '';
-        return `${lastName}${firstName ? `, ${firstName}` : ''}${secondName ? ` ${secondName}` : ''}`;
-    }
 
     const imagePath = `${getSelectedPac()?.uriVisor}im1/${patient.patient?.StudyInstanceUID}?s=${getSelectedPac()?.id}`;
 

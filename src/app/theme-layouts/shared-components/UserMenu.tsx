@@ -16,6 +16,7 @@ import { darken } from '@mui/material/styles';
 import { useAppSelector } from 'app/store/hooks';
 import en from './i18n/en';
 import es from './i18n/es';
+import { getNameInitials } from './userUtils';
 
 i18next.addResourceBundle('en', 'userMenu', en);
 i18next.addResourceBundle('es', 'userMenu', es);
@@ -82,7 +83,7 @@ function UserMenu() {
 						}}
 						className="md:mx-4"
 					>
-						{user.user?.name?.charAt(0)}
+						{getNameInitials(user.user?.name)}
 					</Avatar>
 				)}
 			</Button>

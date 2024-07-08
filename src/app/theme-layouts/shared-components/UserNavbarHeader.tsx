@@ -3,6 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
 import { useAppSelector } from 'app/store/hooks';
+import { getNameInitials } from './userUtils';
 
 const Root = styled('div')(({ theme }) => ({
 	'& .username, & .email': {
@@ -43,7 +44,7 @@ function UserNavbarHeader() {
 					src={user.user.image}
 					alt={`${user.user.name}`}
 				>
-					{user.user?.name?.charAt(0)}
+					{getNameInitials(user.user?.name)}
 				</Avatar>
 			</div>
 			<Typography className="username whitespace-nowrap text-14 font-medium">

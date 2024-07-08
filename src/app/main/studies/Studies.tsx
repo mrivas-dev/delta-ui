@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useThemeMediaQuery } from '@fuse/hooks';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { styled } from '@mui/material/styles';
 import StudiesHeader from './StudiesHeader';
@@ -21,6 +21,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 const Studies = () => {
+	const navigate = useNavigate();
 	const pageLayout = useRef(null);
 	const routeParams = useParams();
 	const [rightSidebarOpen, setRightSidebarOpen] = useState(false);
@@ -37,7 +38,10 @@ const Studies = () => {
 			ref={pageLayout}
 			rightSidebarContent={<StudiesSidebarContent />}
 			rightSidebarOpen={rightSidebarOpen}
-			rightSidebarOnClose={() => setRightSidebarOpen(false)}
+			rightSidebarOnClose={() => {
+				setRightSidebarOpen(false);
+				navigate(`/studies/`);
+			}}
 			rightSidebarWidth={640}
 			rightSidebarVariant="temporary"
 			scroll={isMobile ? 'normal' : 'content'}
