@@ -109,6 +109,10 @@ function HomeWidget() {
 		}
 	});
 
+	useEffect(() => {
+		setTabValue(1);
+	}, [])
+
 	return (
 		<Paper className="flex flex-col flex-auto p-24 shadow rounded-2xl overflow-hidden">
 			<div className="flex flex-col sm:flex-row items-start justify-between">
@@ -139,7 +143,7 @@ function HomeWidget() {
 								className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
 								disableRipple
 								key={key}
-								label={label}
+								label={`${t(label)}`}
 							/>
 						))}
 					</Tabs>

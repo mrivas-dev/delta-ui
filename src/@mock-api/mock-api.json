@@ -25743,8 +25743,8 @@
               }
             },
             "ranges": {
-              "this-week": "This Week",
-              "last-week": "Last Week"
+              "this-week": "HOME_WIDGET_CARD_THIS_WEEK",
+              "last-week": "HOME_WIDGET_CARD_LAST_WEEK"
             },
             "labels": [
               "Mon",
