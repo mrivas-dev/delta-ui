@@ -66,7 +66,7 @@ const StudiesTableActions = ({ study }) => {
     const renderOtherVisor = () => {
         return (
             getSelectedPac().otroVisor?.map((eachVisor) => (
-                <Tooltip title={`${t('STUDIES_TABLE_ACTIONS_OTHER_VISOR')} ${eachVisor?.tipo}`}>
+                <Tooltip key={`visor-menu-${eachVisor?.tipo}-tooltip`} title={`${t('STUDIES_TABLE_ACTIONS_OTHER_VISOR')} ${eachVisor?.tipo}`}>
                     <MenuItem key={`visor-menu-${eachVisor?.tipo}`} onClick={() => openVisor(eachVisor?.url)}>
                         <FuseSvgIcon className="text-46 mr-6" size={24} color="action">{`material-solid:${eachVisor?.icono}`}</FuseSvgIcon>
                         {eachVisor?.tipo}
