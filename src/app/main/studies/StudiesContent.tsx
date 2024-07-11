@@ -6,6 +6,7 @@ import { useGetStudiesMutation } from './StudiesApi';
 import usePacServer from 'src/app/pac/usePacServer';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
 import { changeStudiesTextFilters, selectStudiesFilter } from './filters/slice';
+import _ from 'lodash';
 
 const container = {
 	show: {
@@ -24,6 +25,7 @@ const StudiesContent = () => {
 
 	const { getSelectedPac } = usePacServer();
 	const dispatch = useAppDispatch();
+	const [oldFilters, setOldFilters] = useState<any>({});
 	const filters = useAppSelector(selectStudiesFilter);
 	const [studiesData, setStudiesData] = useState<any[]>([]);
 	const [studiesLoading, setStudiesLoading] = useState<boolean>(false);
@@ -36,13 +38,16 @@ const StudiesContent = () => {
 	}, [getSelectedPac]);
 
 	useEffect(() => {
-		setStudiesLoading(true);
-		studiesMutation(filters).then((response: any) => {
-			if (response?.data?.success) {
-				setStudiesData(response?.data?.data);
-			}
-			setStudiesLoading(false);
-		});
+		if (!_.isEqual(filters, oldFilters)) {
+			setOldFilters(filters)
+			setStudiesLoading(true);
+			studiesMutation(filters).then((response: any) => {
+				if (response?.data?.success) {
+					setStudiesData(response?.data?.data);
+				}
+				setStudiesLoading(false);
+			});
+		}
 	}, [filters]);
 
 	return (
